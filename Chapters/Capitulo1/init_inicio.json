@@ -1,0 +1,70 @@
+{
+  "Id": "init_inicio",
+  "Title": "O Último Hacker",
+  "Text": [
+    "Você desperta no seu hideout subterrâneo, iluminado apenas pelo brilho azul de dezenas de monitores.",
+    "Seu nome é {name}, conhecido nas ruas digitais como o último hacker livre de Neo-Tokyo.",
+    "O ano é {year}, e a MegaCorp controlou toda a infraestrutura da cidade após a Grande Fusão.",
+    "Sua saúde está em {health}/100, sua sanidade mental em {psychology}/100.",
+    "Com {strength} pontos de força física, {intelligence} de capacidade hacker e {conversation} de habilidade social.",
+    "",
+    "Um alerta vermelho pisca no seu terminal principal: 'INFILTRAÇÃO DETECTADA - TRACE ATIVO'",
+    "Os agentes corporativos descobriram sua localização. Você tem segundos para decidir.",
+    "Suas opções dependem das suas habilidades desenvolvidas..."
+  ],
+  "Options": [
+    {
+      "Text": "Ativar protocolos de emergência e fugir pelos túneis (opção básica)",
+      "NextChapter": "fuga_tuneis",
+      "Conditions": null,
+      "SkillRequirement": null
+    },
+    {
+      "Text": "Hackear o sistema de rastreamento para confundi-los",
+      "NextChapter": "hack_sistema",
+      "Conditions": null,
+      "SkillRequirement": {
+        "Skill": "intelligence",
+        "MinValue": 0
+      }
+    },
+    {
+      "Text": "Confrontar os agentes diretamente com suas armas cibernéticas",
+      "NextChapter": "confronto_direto", 
+      "Conditions": null,
+      "SkillRequirement": {
+        "Skill": "strength",
+        "MinValue": 0
+      }
+    },
+    {
+      "Text": "Negociar com os agentes oferecendo informações valiosas",
+      "NextChapter": "distrito_comercial",
+      "Conditions": null,
+      "SkillRequirement": {
+        "Skill": "conversation",
+        "MinValue": 0
+      }
+    },
+    {
+      "Text": "Usar implantes médicos para resistir ao estresse da situação",
+      "NextChapter": "dados_secretos",
+      "Conditions": null,
+      "SkillRequirement": {
+        "Skill": "health",
+        "MinValue": 0
+      }
+    },
+    {
+      "Text": "Manter-se calmo e analisar friamente a situação",
+      "NextChapter": "batalha_digital",
+      "Conditions": null,
+      "SkillRequirement": {
+        "Skill": "psychology",
+        "MinValue": 0
+      }
+    }
+  ],
+  "GameEnd": false,
+  "NextChapter": null
+}
