@@ -1,21 +1,16 @@
 {
   "Character": {
-    "Name": "Markos",
+    "Name": "Johnny",
     "Attributes": {
       "Saude": 50,
       "Psicologia": 50,
-      "Forca": 100,
+      "Forca": 50,
       "Inteligencia": 50,
       "Conversacao": 50,
-      "MaxSaude": 100,
-      "MaxPsicologia": 100,
-      "MaxForca": 100,
-      "MaxInteligencia": 100,
-      "MaxConversacao": 100,
-      "PointsToDistribute": 0
+      "PointsToDistribute": 50
     },
     "CreatedAt": "2025-08-28T19:54:21.3696793-03:00",
-    "LastPlayed": "2025-09-02T12:46:22.5167764-03:00",
+    "LastPlayed": "2025-09-03T12:05:28.6248771-03:00",
     "PlaytimeMinutes": 0,
     "CustomData": {}
   }

@@ -7,11 +7,6 @@
       "Forca": 50,
       "Inteligencia": 50,
       "Conversacao": 50,
-      "MaxSaude": 100,
-      "MaxPsicologia": 100,
-      "MaxForca": 100,
-      "MaxInteligencia": 100,
-      "MaxConversacao": 100,
       "PointsToDistribute": 50
     },
     "CreatedAt": "2025-08-28T20:05:44.6282354-03:00",
