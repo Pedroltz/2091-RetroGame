@@ -535,19 +535,16 @@ namespace Historia2092.UI.Menus
                 // Simple progress bar
                 int filled = (int)((double)value / 100 * 20);
                 double percentage = (double)value / 100;
-                ConsoleColor barColor = percentage switch
+                string classification;
+                ConsoleColor barColor;
+                
+                (classification, barColor) = percentage switch
                 {
-                    <= 0.3 => ConsoleColor.Red,
-                    <= 0.6 => ConsoleColor.Yellow,
-                    <= 0.8 => ConsoleColor.Green,
-                    _ => ConsoleColor.Cyan
-                };
-                string levelText = percentage switch
-                {
-                    <= 0.3 => "[BAIXO]",
-                    <= 0.6 => "[MEDIO]", 
-                    <= 0.8 => "[BOM]",
-                    _ => "[ALTO]"
+                    <= 0.3 => ("INADEQUADO", ConsoleColor.Red),
+                    <= 0.5 => ("BÁSICO", ConsoleColor.Yellow),
+                    <= 0.7 => ("COMPETENTE", ConsoleColor.Green),
+                    <= 0.85 => ("AVANÇADO", ConsoleColor.Cyan),
+                    _ => ("EXCEPCIONAL", ConsoleColor.Magenta)
                 };
                 
                 Console.Write("[");
@@ -559,7 +556,7 @@ namespace Historia2092.UI.Menus
                 Console.ResetColor();
                 Console.Write("] ");
                 Console.ForegroundColor = barColor;
-                Console.Write(levelText);
+                Console.Write($"[{classification}]");
                 Console.ResetColor();
                 Console.WriteLine();
             }

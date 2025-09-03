@@ -1,16 +1,16 @@
 {
   "Character": {
-    "Name": "Johnny",
+    "Name": "Johnny Silverhand",
     "Attributes": {
-      "Saude": 55,
+      "Saude": 50,
       "Psicologia": 50,
       "Forca": 50,
       "Inteligencia": 50,
-      "Conversacao": 95,
+      "Conversacao": 100,
       "PointsToDistribute": 0
     },
     "CreatedAt": "2025-08-28T19:54:21.3696793-03:00",
-    "LastPlayed": "2025-09-03T12:11:00.7954683-03:00",
+    "LastPlayed": "2025-09-03T12:38:31.0687423-03:00",
     "PlaytimeMinutes": 0,
     "CustomData": {}
   }
