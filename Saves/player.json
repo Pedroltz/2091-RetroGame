@@ -2,15 +2,15 @@
   "Character": {
     "Name": "Johnny",
     "Attributes": {
-      "Saude": 50,
+      "Saude": 55,
       "Psicologia": 50,
       "Forca": 50,
       "Inteligencia": 50,
-      "Conversacao": 50,
-      "PointsToDistribute": 50
+      "Conversacao": 95,
+      "PointsToDistribute": 0
     },
     "CreatedAt": "2025-08-28T19:54:21.3696793-03:00",
-    "LastPlayed": "2025-09-03T12:05:28.6248771-03:00",
+    "LastPlayed": "2025-09-03T12:11:00.7954683-03:00",
     "PlaytimeMinutes": 0,
     "CustomData": {}
   }
