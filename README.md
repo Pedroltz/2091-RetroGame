@@ -552,53 +552,6 @@ Animado      Navegação Setas  Atributos  Variáveis Ativas
 
 ---
 
-## 🚧 **Roadmap Futuro**
-
-### **✅ Funcionalidades Implementadas:**
-- [x] **Sistema de Combate** baseado em atributos ✅
-- [x] **Inimigos JSON configuráveis** ✅  
-- [x] **Sistema de Música** multiplataforma ✅
-- [x] **Sistema de Áudio** com trilha cyberpunk ✅
-- [x] **Instalação automática do FFmpeg** ✅
-- [x] **Detecção de sistema operacional** ✅
-- [x] **Suporte multiplataforma completo** ✅
-
-### **🎯 Funcionalidades Planejadas:**
-- [ ] **Múltiplas Corporações** (diferentes contratos e benefícios)
-- [ ] **Sistema de Promoções** (progressão na hierarquia corporativa)
-- [ ] **Departamentos Especializados** (Security, R&D, Marketing, etc.)
-- [ ] **Avaliações Periódicas** (revisões de performance)
-- [ ] **Benefícios Corporativos** (equipamentos, acesso, privilégios)
-- [ ] **Múltiplos Contratos** (histórias diferentes por corporação)
-- [ ] **Sistema de Reputação** corporativa
-- [ ] **Rivalidade Intercorporativa** (missões competitivas)
-
-### **🎨 Melhorias de Interface:**
-- [ ] **Templates de Contrato** (diferentes corporações com layouts únicos)
-- [ ] **Animações ASCII** para assinatura de contratos
-- [ ] **Sistema de Notificações** corporativas em tempo real
-- [ ] **Dashboard Executivo** (interface pós-contratação)
-- [ ] **Múltiplos Idiomas** (PT-BR, EN-US, ES, JA)
-
-### **🔧 Melhorias Técnicas:**
-- [ ] **Docker containerização** para deployment
-- [ ] **CI/CD pipeline** com GitHub Actions
-- [ ] **Testes unitários** automatizados
-- [ ] **Benchmark de performance**
-- [ ] **Localização** (PT, EN, ES)
-- [ ] **Sistema de logs** avançado
-
----
-
-## 📖 **Documentação para Desenvolvedores**
-
-Para modificações e extensões do sistema, consulte:
-- 📄 **`DEVELOPMENT_GUIDE.md`** - Guia completo de padrões e modificações
-- 📋 **Código comentado** - CharacterCreationMenu.cs com padrões estabelecidos
-- 🎨 **Sistema de cores** configurável e extensível
-- 🏗️ **Arquitetura SOLID** preparada para expansões
-
----
 
 ## 🚀 **Iniciar Operações Corporativas**
 
