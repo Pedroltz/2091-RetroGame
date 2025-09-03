@@ -1,17 +1,17 @@
 {
   "runtimeTarget": {
-    "name": ".NETCoreApp,Version=v9.0",
+    "name": ".NETCoreApp,Version=v8.0",
     "signature": ""
   },
   "compilationOptions": {},
   "targets": {
-    ".NETCoreApp,Version=v9.0": {
-      "Historia2092/1.0.0": {
+    ".NETCoreApp,Version=v8.0": {
+      "2091/1.0.0": {
         "dependencies": {
           "Newtonsoft.Json": "13.0.3"
         },
         "runtime": {
-          "Historia2092.dll": {}
+          "2091.dll": {}
         }
       },
       "Newtonsoft.Json/13.0.3": {
@@ -25,7 +25,7 @@
     }
   },
   "libraries": {
-    "Historia2092/1.0.0": {
+    "2091/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

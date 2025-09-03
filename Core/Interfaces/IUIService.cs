@@ -1,6 +1,6 @@
-using Historia2092.Core.Models;
+using RetroGame2091.Core.Models;
 
-namespace Historia2092.Core.Interfaces
+namespace RetroGame2091.Core.Interfaces
 {
     public interface IUIService
     {

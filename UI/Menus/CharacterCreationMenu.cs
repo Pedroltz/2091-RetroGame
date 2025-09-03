@@ -1,7 +1,7 @@
-using Historia2092.Core.Interfaces;
-using Historia2092.Core.Models;
+using RetroGame2091.Core.Interfaces;
+using RetroGame2091.Core.Models;
 
-namespace Historia2092.UI.Menus
+namespace RetroGame2091.UI.Menus
 {
     public class CharacterCreationMenu
     {
@@ -142,9 +142,9 @@ namespace Historia2092.UI.Menus
                         namingComplete = true;
                         break;
                     default:
-                        if (char.IsLetterOrDigit(keyInfo.KeyChar) || char.IsWhiteSpace(keyInfo.KeyChar))
+                        if (char.IsLetterOrDigit(keyInfo.KeyChar))
                         {
-                            if (newName.Length < 20)
+                            if (newName.Length < 12)
                             {
                                 newName += keyInfo.KeyChar;
                             }
@@ -212,11 +212,11 @@ namespace Historia2092.UI.Menus
             Console.Write("[");
             Console.ForegroundColor = string.IsNullOrWhiteSpace(currentInput) ? ConsoleColor.DarkGray : _configService.GetColor(_configService.Config.Colors.HighlightedText);
             string displayText = string.IsNullOrWhiteSpace(currentInput) ? "Digite seu nome..." : currentInput;
-            Console.Write(displayText.PadRight(20));
+            Console.Write(displayText.PadRight(12));
             Console.ResetColor();
             Console.Write("]                                        ");
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("║");
+            Console.WriteLine("  ║");
             Console.ResetColor();
             
             // Character count and validation feedback
@@ -231,19 +231,19 @@ namespace Historia2092.UI.Menus
             else if (IsValidName(currentInput))
             {
                 Console.ForegroundColor = ConsoleColor.Green;
-                Console.Write($"✓ Nome válido ({currentInput.Length}/20 caracteres)");
+                Console.Write($"✓ Nome válido ({currentInput.Length}/12 caracteres)");
             }
             else
             {
                 Console.ForegroundColor = _configService.GetColor(_configService.Config.Colors.Error);
-                Console.Write($"✗ {GetNameValidationError(currentInput)} ({currentInput.Length}/20)");
+                Console.Write($"✗ {GetNameValidationError(currentInput)} ({currentInput.Length}/12)");
             }
             Console.ResetColor();
             
             // Calculate remaining space for padding
             string statusText = string.IsNullOrWhiteSpace(currentInput) ? "Aguardando entrada..." : 
-                               IsValidName(currentInput) ? $"✓ Nome válido ({currentInput.Length}/20 caracteres)" :
-                               $"✗ {GetNameValidationError(currentInput)} ({currentInput.Length}/20)";
+                               IsValidName(currentInput) ? $"✓ Nome válido ({currentInput.Length}/12 caracteres)" :
+                               $"✗ {GetNameValidationError(currentInput)} ({currentInput.Length}/12)";
             int remainingSpace = 78 - statusText.Length;
             Console.Write(new string(' ', Math.Max(0, remainingSpace)));
             Console.ForegroundColor = ConsoleColor.Cyan;
@@ -353,20 +353,17 @@ namespace Historia2092.UI.Menus
         {
             if (string.IsNullOrWhiteSpace(name)) return false;
             if (name.Length < 2) return false;
-            if (name.Length > 20) return false;
+            if (name.Length > 12) return false;
             if (name.Trim() != name) return false; // No leading/trailing spaces
             
-            // Check for valid characters (letters, numbers, spaces, some special chars)
+            // Check for valid characters (only letters and numbers)
             foreach (char c in name)
             {
-                if (!char.IsLetterOrDigit(c) && c != ' ' && c != '-' && c != '_')
+                if (!char.IsLetterOrDigit(c))
                 {
                     return false;
                 }
             }
-            
-            // Check for consecutive spaces
-            if (name.Contains("  ")) return false;
             
             return true;
         }
@@ -375,15 +372,13 @@ namespace Historia2092.UI.Menus
         {
             if (string.IsNullOrWhiteSpace(name)) return "Nome não pode estar vazio";
             if (name.Length < 2) return "Nome muito curto (mín. 2 caracteres)";
-            if (name.Length > 20) return "Nome muito longo (máx. 20 caracteres)";
+            if (name.Length > 12) return "Nome muito longo (máx. 12 caracteres)";
             if (name.Trim() != name) return "Remova espaços no início/fim";
-            if (name.Contains("  ")) return "Não use espaços consecutivos";
-            
             foreach (char c in name)
             {
-                if (!char.IsLetterOrDigit(c) && c != ' ' && c != '-' && c != '_')
+                if (!char.IsLetterOrDigit(c))
                 {
-                    return "Caracteres inválidos detectados";
+                    return "Apenas letras e números são permitidos";
                 }
             }
             

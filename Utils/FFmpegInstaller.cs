@@ -1,7 +1,7 @@
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
-namespace Historia2092.Utils
+namespace RetroGame2091.Utils
 {
     public enum OperatingSystemType
     {

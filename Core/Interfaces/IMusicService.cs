@@ -1,4 +1,4 @@
-namespace Historia2092.Core.Interfaces
+namespace RetroGame2091.Core.Interfaces
 {
     public interface IMusicService
     {

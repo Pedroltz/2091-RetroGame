@@ -60,9 +60,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Pedro L. Tunin\\Documents\\Projetos\\Git\\2091-RetroGame\\Historia2092.csproj",
-      "projectName": "Historia2092",
-      "projectPath": "C:\\Users\\Pedro L. Tunin\\Documents\\Projetos\\Git\\2091-RetroGame\\Historia2092.csproj",
+      "projectUniqueName": "C:\\Users\\Pedro L. Tunin\\Documents\\Projetos\\Git\\2091-RetroGame\\2091.csproj",
+      "projectName": "2091",
+      "projectPath": "C:\\Users\\Pedro L. Tunin\\Documents\\Projetos\\Git\\2091-RetroGame\\2091.csproj",
       "packagesPath": "C:\\Users\\Pedro L. Tunin\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\Pedro L. Tunin\\Documents\\Projetos\\Git\\2091-RetroGame\\obj\\",
       "projectStyle": "PackageReference",

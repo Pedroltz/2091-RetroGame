@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace Historia2092.Core.Models
+namespace RetroGame2091.Core.Models
 {
     public class Colors
     {
@@ -22,7 +22,6 @@ namespace Historia2092.Core.Models
 
     public class GameConfig
     {
-        public Protagonist Protagonist { get; set; } = new Protagonist();
         public Colors Colors { get; set; } = new Colors();
         public Settings Settings { get; set; } = new Settings();
 

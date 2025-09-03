@@ -1,6 +1,6 @@
-using Historia2092.Core.Interfaces;
+using RetroGame2091.Core.Interfaces;
 
-namespace Historia2092.UI.Menus
+namespace RetroGame2091.UI.Menus
 {
     public class SettingsMenu
     {
@@ -31,7 +31,7 @@ namespace Historia2092.UI.Menus
                     "Return to Main Menu"
                 };
                 
-                int choice = _uiService.ShowMenu("╔═══════════════════════════════════╗\n║             SETTINGS               ║\n╚═══════════════════════════════════╝", settingsOptions);
+                int choice = _uiService.ShowMenu("╔═══════════════════════════════════╗\n║             SETTINGS              ║\n╚═══════════════════════════════════╝", settingsOptions);
                 
                 switch (choice)
                 {
@@ -129,7 +129,9 @@ namespace Historia2092.UI.Menus
                 
                 Console.ForegroundColor = _configService.GetColor(_configService.Config.Colors.Title);
                 Console.WriteLine("╔══════════════════════════════════════════════╗");
-                Console.WriteLine($"║          SELEÇÃO DE COR - {colorType.ToUpper()}          ║");
+                string title = $"SELEÇÃO DE COR - {colorType.ToUpper()}";
+                string paddedTitle = title.PadLeft((46 + title.Length) / 2).PadRight(46);
+                Console.WriteLine($"║{paddedTitle}║");
                 Console.WriteLine("╚══════════════════════════════════════════════╝");
                 Console.ResetColor();
                 Console.WriteLine();

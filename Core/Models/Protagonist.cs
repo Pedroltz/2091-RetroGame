@@ -1,4 +1,4 @@
-namespace Historia2092.Core.Models
+namespace RetroGame2091.Core.Models
 {
     public class Protagonist
     {

@@ -1,8 +1,8 @@
-using Historia2092.Services;
-using Historia2092.Utils;
-using static Historia2092.Utils.InstallationResult;
+using RetroGame2091.Services;
+using RetroGame2091.Utils;
+using static RetroGame2091.Utils.InstallationResult;
 
-namespace Historia2092
+namespace RetroGame2091
 {
     class Program
     {

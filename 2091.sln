@@ -2,7 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Historia2092", "Historia2092.csproj", "{2A620497-61FC-9F5A-7449-99A21F0CA4CA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "2091", "2091.csproj", "{2A620497-61FC-9F5A-7449-99A21F0CA4CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

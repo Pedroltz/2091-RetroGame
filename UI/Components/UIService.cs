@@ -1,7 +1,7 @@
-using Historia2092.Core.Interfaces;
-using Historia2092.Core.Models;
+using RetroGame2091.Core.Interfaces;
+using RetroGame2091.Core.Models;
 
-namespace Historia2092.UI.Components
+namespace RetroGame2091.UI.Components
 {
     public class UIService : IUIService
     {

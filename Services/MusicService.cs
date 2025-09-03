@@ -1,8 +1,8 @@
-using Historia2092.Core.Interfaces;
+using RetroGame2091.Core.Interfaces;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
-namespace Historia2092.Services
+namespace RetroGame2091.Services
 {
     public class MusicService : IMusicService, IDisposable
     {

@@ -1,8 +1,8 @@
-# 🎮 Historia2092 - Corporate Cyberpunk Adventure
+# 🎮 2091 - Corporate Cyberpunk Adventure
 
-**Uma aventura cyberpunk corporativa ambientada no ano 2092**
+**Uma aventura cyberpunk corporativa ambientada no ano 2091**
 
-Entre no mundo cyberpunk de Neo-Tokyo 2092, onde mega-corporações controlam cada aspecto da sociedade. Como um novo agente corporativo, suas habilidades e decisões moldam completamente sua carreira e a narrativa em tempo real.
+Entre no mundo cyberpunk de Neo-Tokyo 2091, onde mega-corporações controlam cada aspecto da sociedade. Como um novo agente corporativo, suas habilidades e decisões moldam completamente sua carreira e a narrativa em tempo real.
 
 ---
 
@@ -565,7 +565,7 @@ dotnet run
 
 ## 🏆 **Status do Projeto**
 
-**Historia2092** é um projeto **completo e funcional** que oferece:
+**2091** é um projeto **completo e funcional** que oferece:
 - ✅ **Sistema de criação de personagem** totalmente implementado
 - ✅ **Interface profissional** com tema corporativo cyberpunk
 - ✅ **Arquitetura extensível** preparada para futuras expansões

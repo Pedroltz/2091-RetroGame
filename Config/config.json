@@ -1,19 +1,4 @@
 {
-  "Protagonist": {
-    "Name": "Cypher",
-    "Attributes": {
-      "Saude": 50,
-      "Psicologia": 50,
-      "Forca": 50,
-      "Inteligencia": 50,
-      "Conversacao": 50,
-      "PointsToDistribute": 50
-    },
-    "CreatedAt": "2025-08-28T20:05:44.6282354-03:00",
-    "LastPlayed": "2025-08-28T20:05:44.6282375-03:00",
-    "PlaytimeMinutes": 0,
-    "CustomData": {}
-  },
   "Colors": {
     "Title": "Cyan",
     "NormalText": "White",
