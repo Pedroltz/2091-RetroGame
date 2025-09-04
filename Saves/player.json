@@ -1,16 +1,16 @@
 {
   "Character": {
-    "Name": "Markus",
+    "Name": "Alex",
     "Attributes": {
-      "Saude": 100,
+      "Saude": 50,
       "Psicologia": 50,
       "Forca": 50,
       "Inteligencia": 50,
       "Conversacao": 50,
-      "PointsToDistribute": 0
+      "PointsToDistribute": 50
     },
-    "CreatedAt": "2025-08-28T19:54:21.3696793-03:00",
-    "LastPlayed": "2025-09-03T15:22:27.9913576-03:00",
+    "CreatedAt": "2025-09-03T21:54:48.414114-03:00",
+    "LastPlayed": "2025-09-04T16:22:52.4353501-03:00",
     "PlaytimeMinutes": 0,
     "CustomData": {}
   }

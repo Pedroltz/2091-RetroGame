@@ -12,5 +12,7 @@ namespace RetroGame2091.Core.Interfaces
         void WriteChapterTextWithEffect(List<string> lines, string color);
         void ClearScreen();
         void ShowInitialScreen();
+        void ShowStatusPanel();
+        void ShowDialogUI(Chapter chapter);
     }
 }

@@ -95,8 +95,8 @@ namespace RetroGame2091.Services
             
             while (currentChapter != null && !currentChapter.GameEnd)
             {
-                _uiService.ClearScreen();
-                ExecuteChapter(currentChapter);
+                // Use new dialog UI instead of ExecuteChapter
+                _uiService.ShowDialogUI(currentChapter);
                 
                 if (currentChapter.Options.Count > 0)
                 {
@@ -149,27 +149,6 @@ namespace RetroGame2091.Services
             }
         }
 
-        private void ExecuteChapter(Chapter chapter)
-        {
-            if (!string.IsNullOrEmpty(chapter.Title))
-            {
-                Console.ForegroundColor = _configService.GetColor(_configService.Config.Colors.Title);
-                Console.WriteLine($"═══ {chapter.Title.ToUpper()} ═══");
-                Console.ResetColor();
-                Console.WriteLine();
-            }
-            
-            // Show skip hint if text animation is enabled and hints are enabled
-            if (_configService.Config.Settings.TextSpeed > 0 && _configService.Config.Settings.ShowHints)
-            {
-                Console.ForegroundColor = ConsoleColor.DarkGray;
-                Console.WriteLine("(Press Enter to skip text animation)");
-                Console.ResetColor();
-                Console.WriteLine();
-            }
-
-            _uiService.WriteChapterTextWithEffect(chapter.Text, _configService.Config.Colors.NormalText);
-        }
 
     }
 }

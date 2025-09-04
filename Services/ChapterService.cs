@@ -27,61 +27,67 @@ namespace RetroGame2091.Services
             var chapterStart = new Chapter
             {
                 Id = "init_inicio",
-                Title = "O Despertar em 2091",
+                Title = "[EXEMPLO] Capítulo Inicial de Demonstração",
                 Text = new List<string>
                 {
-                    "Você desperta em um apartamento minúsculo no 47º andar de um arranha-céu decadente.",
-                    "O ano é 2091, e a cidade se estende infinitamente através da janela embaçada.",
-                    "Neons piscam através da névoa tóxica que cobre as ruas lá embaixo.",
-                    "Seu nome é {name}, e hoje algo vai mudar sua vida para sempre.",
-                    "Um envelope vermelho foi deslizado sob sua porta durante a noite..."
+                    "*** ESTE É UM CAPÍTULO DE EXEMPLO CRIADO AUTOMATICAMENTE ***",
+                    "",
+                    "Aqui é onde você colocaria o texto narrativo da sua história.",
+                    "Cada linha desta lista representa um parágrafo do texto.",
+                    "Você pode usar variáveis como {name} para o nome do personagem.",
+                    "",
+                    "Este é apenas um exemplo para demonstrar como o sistema funciona.",
+                    "Para criar sua própria história, substitua este arquivo JSON pelos seus capítulos reais."
                 },
                 Options = new List<Option>
                 {
-                    new Option { Text = "Pegar o envelope e lê-lo", NextChapter = "init_envelope" },
-                    new Option { Text = "Ignorar o envelope e sair do apartamento", NextChapter = "rua" },
-                    new Option { Text = "Olhar pela janela primeiro", NextChapter = "init_janela" },
+                    new Option { Text = "[TESTE] Ir para exemplo com opções", NextChapter = "exemplo_opcoes" },
+                    new Option { Text = "[TESTE] Ir para exemplo sem opções", NextChapter = "exemplo_continuacao" },
+                    new Option { Text = "[TESTE] Ver como funcionam os requisitos", NextChapter = "exemplo_opcoes", SkillRequirement = new SkillRequirement { Skill = "Inteligencia", MinValue = 50 } }
                 }
             };
 
-            var chapterEnvelope = new Chapter
+            var chapterOptions = new Chapter
             {
-                Id = "init_envelope",
-                Title = "A Mensagem Misteriosa",
+                Id = "exemplo_opcoes",
+                Title = "[EXEMPLO] Demonstração de Opções",
                 Text = new List<string>
                 {
-                    "Você abre o envelope com mãos trêmulas.",
-                    "Dentro há uma mensagem holográfica que se ativa ao toque:",
-                    "'Se você está lendo isto, sua vida está em perigo.'",
-                    "'Encontre-me no Café Nexus, Setor 7, às 15:00.'",
-                    "'Confie em ninguém. Destrua esta mensagem.'",
-                    "A holografia se auto-destrói em chamas azuis."
+                    "*** CAPÍTULO DE EXEMPLO - DEMONSTRAÇÃO DE OPÇÕES ***",
+                    "",
+                    "Este capítulo mostra como as opções de escolha funcionam.",
+                    "Cada opção pode levar para um capítulo diferente usando 'NextChapter'.",
+                    "Você também pode definir requisitos de habilidades para certas opções.",
+                    "",
+                    "Substitua este conteúdo pela sua própria narrativa."
                 },
                 Options = new List<Option>
                 {
-                    new Option { Text = "Ir ao Café Nexus imediatamente", NextChapter = "cafe" },
-                    new Option { Text = "Investigar quem enviou a mensagem", NextChapter = "investigar" }
+                    new Option { Text = "[TESTE] Voltar ao início", NextChapter = "init_inicio" },
+                    new Option { Text = "[TESTE] Ver exemplo de continuação", NextChapter = "exemplo_continuacao" }
                 }
             };
 
-            var chapterWindow = new Chapter
+            var chapterContinuation = new Chapter
             {
-                Id = "init_janela",
-                Title = "A Cidade Desperta",
+                Id = "exemplo_continuacao",
+                Title = "[EXEMPLO] Demonstração de Continuação Automática",
                 Text = new List<string>
                 {
-                    "Pela janela, você vê a metrópole cyberpunk em toda sua glória sombria.",
-                    "Carros voadores cortam entre os prédios como insetos luminosos.",
-                    "Hologramas gigantes anunciam produtos que você nunca poderá comprar.",
-                    "No reflexo do vidro, você nota algo estranho...",
-                    "Há pessoas de casacos escuros observando seu prédio lá embaixo."
+                    "*** CAPÍTULO DE EXEMPLO - CONTINUAÇÃO AUTOMÁTICA ***",
+                    "",
+                    "Este capítulo demonstra como funciona a continuação automática.",
+                    "Quando um capítulo não tem opções, mas tem 'NextChapter' definido,",
+                    "o jogador pressiona uma tecla e vai automaticamente para o próximo capítulo.",
+                    "",
+                    "Isto é útil para sequências narrativas longas sem escolhas."
                 },
                 NextChapter = "init_inicio"
             };
 
             SaveChapter(chapterStart);
-            SaveChapter(chapterEnvelope);
-            SaveChapter(chapterWindow);
+            SaveChapter(chapterOptions);
+            SaveChapter(chapterContinuation);
         }
     }
 }
