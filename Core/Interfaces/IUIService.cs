@@ -14,5 +14,8 @@ namespace RetroGame2091.Core.Interfaces
         void ShowInitialScreen();
         void ShowStatusPanel();
         void ShowDialogUI(Chapter chapter);
+        void ShowDialogUI(Chapter chapter, ChapterNode node);
+        void ShowContinuePrompt();
+        void SafeReadKey();
     }
 }

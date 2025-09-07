@@ -1,70 +1,370 @@
 {
   "Id": "init_inicio",
   "Title": "O Último Hacker",
-  "Text": [
-    "Você desperta no seu hideout subterrâneo, iluminado apenas pelo brilho azul de dezenas de monitores.",
-    "Seu nome é {name}, conhecido nas ruas digitais como o último hacker livre de Neo-Tokyo.",
-    "O ano é {year}, e a MegaCorp controlou toda a infraestrutura da cidade após a Grande Fusão.",
-    "Sua saúde está em {health}/100, sua sanidade mental em {psychology}/100.",
-    "Com {strength} pontos de força física, {intelligence} de capacidade hacker e {conversation} de habilidade social.",
-    "",
-    "Um alerta vermelho pisca no seu terminal principal: 'INFILTRAÇÃO DETECTADA - TRACE ATIVO'",
-    "Os agentes corporativos descobriram sua localização. Você tem segundos para decidir.",
-    "Suas opções dependem das suas habilidades desenvolvidas..."
-  ],
-  "Options": [
-    {
-      "Text": "Ativar protocolos de emergência e fugir pelos túneis (opção básica)",
-      "NextChapter": "fuga_tuneis",
-      "Conditions": null,
-      "SkillRequirement": null
+  "StartNode": "despertar",
+  "Nodes": {
+    "despertar": {
+      "Text": [
+        "Você desperta no seu hideout subterrâneo, iluminado apenas pelo brilho azul de dezenas de monitores.",
+        "Seu nome é {name}, conhecido nas ruas digitais como o último hacker livre de Neo-Tokyo.",
+        "O ano é {year}, e a MegaCorp controlou toda a infraestrutura da cidade após a Grande Fusão.",
+        "Sua saúde está em {health}/100, sua sanidade mental em {psychology}/100.",
+        "Com {strength} pontos de força física, {intelligence} de capacidade hacker e {conversation} de habilidade social.",
+        "",
+        "Um alerta vermelho pisca no seu terminal principal: 'INFILTRAÇÃO DETECTADA - TRACE ATIVO'",
+        "Os agentes corporativos descobriram sua localização. Você tem segundos para decidir."
+      ],
+      "Options": [
+        {
+          "Text": "Verificar os sistemas de segurança primeiro",
+          "NextNode": "verificar_sistemas"
+        },
+        {
+          "Text": "Analisar o alerta de infiltração em detalhes",
+          "NextNode": "analisar_alerta"
+        },
+        {
+          "Text": "Agir imediatamente sem pensar muito",
+          "NextNode": "acao_rapida"
+        },
+        {
+          "Text": "Explorar o hideout em busca de recursos ocultos",
+          "NextChapter": "capitulo1_exploracao"
+        }
+      ]
     },
-    {
-      "Text": "Hackear o sistema de rastreamento para confundi-los",
-      "NextChapter": "hack_sistema",
-      "Conditions": null,
-      "SkillRequirement": {
-        "Skill": "intelligence",
-        "MinValue": 0
-      }
+    "verificar_sistemas": {
+      "Text": [
+        "Você rapidamente verifica os sistemas de segurança do seu hideout.",
+        "Os sensores mostram múltiplas assinaturas térmicas se aproximando pelos túneis.",
+        "Seus firewalls estão sendo bombardeados com ataques de força bruta.",
+        "",
+        "Tempo estimado até chegada: 3 minutos.",
+        "Seus sistemas de defesa ainda estão operacionais, mas não por muito tempo."
+      ],
+      "Options": [
+        {
+          "Text": "Ativar contramedidas defensivas automáticas",
+          "NextNode": "contramedidas",
+          "SkillRequirement": {
+            "Skill": "intelligence",
+            "MinValue": 30
+          }
+        },
+        {
+          "Text": "Preparar fuga pelos túneis de emergência",
+          "NextNode": "preparar_fuga"
+        },
+        {
+          "Text": "Tentar hackear os sistemas dos invasores",
+          "NextNode": "hack_invasores",
+          "SkillRequirement": {
+            "Skill": "intelligence",
+            "MinValue": 50
+          }
+        }
+      ]
     },
-    {
-      "Text": "Confrontar os agentes diretamente com suas armas cibernéticas",
-      "NextChapter": "confronto_direto", 
-      "Conditions": null,
-      "SkillRequirement": {
-        "Skill": "strength",
-        "MinValue": 0
-      }
+    "analisar_alerta": {
+      "Text": [
+        "Você examina detalhadamente o alerta de infiltração.",
+        "Os logs mostram que o trace começou há 20 minutos, originando de múltiplas fontes.",
+        "Interessante... isso não é um ataque coordenado comum da MegaCorp.",
+        "",
+        "Há algo diferente neste padrão de ataque.",
+        "Parecem estar procurando por algo específico nos seus sistemas."
+      ],
+      "Options": [
+        {
+          "Text": "Investigar o que eles estão procurando",
+          "NextNode": "investigar_busca",
+          "SkillRequirement": {
+            "Skill": "intelligence",
+            "MinValue": 40
+          }
+        },
+        {
+          "Text": "Não vale a pena o risco, é hora de fugir",
+          "NextNode": "preparar_fuga"
+        },
+        {
+          "Text": "Usar isso como vantagem para contra-atacar",
+          "NextNode": "contra_ataque"
+        }
+      ]
     },
-    {
-      "Text": "Negociar com os agentes oferecendo informações valiosas",
-      "NextChapter": "distrito_comercial",
-      "Conditions": null,
-      "SkillRequirement": {
-        "Skill": "conversation",
-        "MinValue": 0
-      }
+    "acao_rapida": {
+      "Text": [
+        "Sem tempo para análises! Você age por instinto.",
+        "Suas mãos voam sobre o teclado enquanto executa protocolos de emergência.",
+        "Os sistemas começam a desligar em sequência segura.",
+        "",
+        "Você ouve passos metálicos ecoando pelos corredores.",
+        "Eles estão mais perto do que você pensava!"
+      ],
+      "Options": [
+        {
+          "Text": "Fugir imediatamente pelos túneis",
+          "NextChapter": "fuga_tuneis"
+        },
+        {
+          "Text": "Tentar apagar todos os dados antes de fugir",
+          "NextNode": "apagar_dados"
+        },
+        {
+          "Text": "Preparar uma emboscada",
+          "NextNode": "preparar_emboscada",
+          "SkillRequirement": {
+            "Skill": "strength",
+            "MinValue": 35
+          }
+        }
+      ]
     },
-    {
-      "Text": "Usar implantes médicos para resistir ao estresse da situação",
-      "NextChapter": "dados_secretos",
-      "Conditions": null,
-      "SkillRequirement": {
-        "Skill": "health",
-        "MinValue": 0
-      }
+    "contramedidas": {
+      "Text": [
+        "Você ativa as contramedidas defensivas do hideout.",
+        "Campos eletromagnéticos bloqueiam temporariamente os sinais de rastreamento.",
+        "Sistemas de desorientação acústica começam a operar.",
+        "",
+        "Isso deve ganhar alguns minutos preciosos.",
+        "Mas suas defesas não vão aguentar por muito tempo."
+      ],
+      "NextNode": "decisao_final"
     },
-    {
-      "Text": "Manter-se calmo e analisar friamente a situação",
-      "NextChapter": "batalha_digital",
-      "Conditions": null,
-      "SkillRequirement": {
-        "Skill": "psychology",
-        "MinValue": 0
-      }
+    "hack_invasores": {
+      "Text": [
+        "Com perícia excepcional, você inverte o hack e penetra nos sistemas dos invasores.",
+        "Incrível! Você consegue ver através das câmeras deles.",
+        "São 6 agentes cibernéticos de elite, equipamento militar de última geração.",
+        "",
+        "Você agora tem acesso aos sistemas de comunicação deles.",
+        "Esta é uma oportunidade única!"
+      ],
+      "Options": [
+        {
+          "Text": "Sabotar os sistemas de comunicação deles",
+          "NextNode": "sabotagem"
+        },
+        {
+          "Text": "Usar os dados para negociar",
+          "NextChapter": "distrito_comercial"
+        },
+        {
+          "Text": "Redirecionar eles para localização falsa",
+          "NextNode": "redirecionamento"
+        }
+      ]
+    },
+    "preparar_fuga": {
+      "Text": [
+        "Você prepara rapidamente sua fuga pelos túneis de emergência.",
+        "Equipamentos essenciais são empacotados em uma mochila blindada.",
+        "Os sistemas são configurados para auto-destruição em 5 minutos.",
+        "",
+        "Você ouve explosões distantes. Eles estão forçando a entrada principal."
+      ],
+      "Options": [
+        {
+          "Text": "Fugir pelos túneis do subsolo",
+          "NextChapter": "fuga_tuneis"
+        },
+        {
+          "Text": "Usar saída secreta pelo sistema de ventilação",
+          "NextNode": "saida_ventilacao"
+        },
+        {
+          "Text": "Tentar sair pela cobertura",
+          "NextChapter": "confronto_direto"
+        }
+      ]
+    },
+    "investigar_busca": {
+      "Text": [
+        "Sua análise revela algo perturbador...",
+        "Eles não estão apenas te rastreando. Estão procurando pelos 'Arquivos Prometheus'.",
+        "Dados que você pensou ter destruído há anos.",
+        "",
+        "Se eles conseguirem esses arquivos, toda a resistência cibernética estará comprometida.",
+        "Você é o único que sabe onde estão os backups ocultos."
+      ],
+      "Options": [
+        {
+          "Text": "Proteger os arquivos a qualquer custo",
+          "NextChapter": "dados_secretos"
+        },
+        {
+          "Text": "Destruir definitivamente os backups",
+          "NextNode": "destruir_backups"
+        },
+        {
+          "Text": "Usar os arquivos como moeda de troca",
+          "NextChapter": "distrito_comercial"
+        }
+      ]
+    },
+    "contra_ataque": {
+      "Text": [
+        "Você decide usar o próprio ataque deles contra eles.",
+        "Infiltra-se no sistema de coordenação da operação.",
+        "Com alguns comandos precisos, você redireciona metade da equipe para o lado oposto da cidade.",
+        "",
+        "Agora são apenas 3 agentes em vez de 6.",
+        "As chances melhoraram significativamente."
+      ],
+      "Options": [
+        {
+          "Text": "Enfrentar os 3 agentes restantes",
+          "NextChapter": "confronto_direto"
+        },
+        {
+          "Text": "Usar a confusão para escapar",
+          "NextChapter": "fuga_tuneis"
+        },
+        {
+          "Text": "Hackear mais sistemas da MegaCorp",
+          "NextChapter": "hack_sistema"
+        }
+      ]
+    },
+    "apagar_dados": {
+      "Text": [
+        "Você executa protocolos de limpeza total dos sistemas.",
+        "Terabytes de informação sensível são permanentemente apagados.",
+        "Os passos estão cada vez mais próximos...",
+        "",
+        "CRASH! A porta principal é derrubada!",
+        "'Freeze! Mãos ao alto!' - gritos ecoam pelo corredor."
+      ],
+      "Options": [
+        {
+          "Text": "Render-se e tentar negociar",
+          "NextChapter": "distrito_comercial"
+        },
+        {
+          "Text": "Fazer última resistência",
+          "NextChapter": "confronto_direto"
+        },
+        {
+          "Text": "Ativar bomba EMP de emergência",
+          "NextNode": "emp_final"
+        }
+      ]
+    },
+    "preparar_emboscada": {
+      "Text": [
+        "Com sua força física superior, você prepara uma emboscada letal.",
+        "Armadilhas improvisadas são rapidamente montadas nos pontos de entrada.",
+        "Suas armas cibernéticas são carregadas e calibradas.",
+        "",
+        "Você ouve os primeiros passos no corredor principal.",
+        "É agora ou nunca."
+      ],
+      "NextChapter": "confronto_direto"
+    },
+    "decisao_final": {
+      "Text": [
+        "Com as contramedidas ativas, você tem alguns minutos para decidir seu próximo passo.",
+        "Os sistemas mostram que suas defesas estão segurando, mas por pouco tempo.",
+        "",
+        "Este é o momento crucial que definirá seu destino.",
+        "Suas opções dependem das suas habilidades desenvolvidas..."
+      ],
+      "Options": [
+        {
+          "Text": "Hackear o sistema de rastreamento para confundi-los",
+          "NextChapter": "hack_sistema",
+          "SkillRequirement": {
+            "Skill": "intelligence",
+            "MinValue": 0
+          }
+        },
+        {
+          "Text": "Confrontar os agentes diretamente com suas armas cibernéticas",
+          "NextChapter": "confronto_direto",
+          "SkillRequirement": {
+            "Skill": "strength",
+            "MinValue": 0
+          }
+        },
+        {
+          "Text": "Negociar com os agentes oferecendo informações valiosas",
+          "NextChapter": "distrito_comercial",
+          "SkillRequirement": {
+            "Skill": "conversation",
+            "MinValue": 0
+          }
+        },
+        {
+          "Text": "Usar implantes médicos para resistir ao estresse da situação",
+          "NextChapter": "dados_secretos",
+          "SkillRequirement": {
+            "Skill": "health",
+            "MinValue": 0
+          }
+        },
+        {
+          "Text": "Manter-se calmo e analisar friamente a situação",
+          "NextChapter": "batalha_digital",
+          "SkillRequirement": {
+            "Skill": "psychology",
+            "MinValue": 0
+          }
+        }
+      ]
+    },
+    "sabotagem": {
+      "Text": [
+        "Você executa uma sabotagem perfeita nos sistemas de comunicação.",
+        "Os agentes ficam completamente isolados uns dos outros.",
+        "Sem coordenação, eles se tornam alvos muito mais fáceis.",
+        "",
+        "A vantagem tática agora é sua."
+      ],
+      "NextChapter": "confronto_direto"
+    },
+    "redirecionamento": {
+      "Text": [
+        "Geniosamente, você redireciona toda a equipe para um endereço falso do outro lado da cidade.",
+        "Eles vão demorar pelo menos 2 horas para descobrir o engano.",
+        "Tempo mais do que suficiente para desaparecer.",
+        "",
+        "Você conseguiu uma vitória sem derramamento de sangue."
+      ],
+      "NextChapter": "fuga_tuneis"
+    },
+    "saida_ventilacao": {
+      "Text": [
+        "Você rasteja através do complexo sistema de ventilação do edifício.",
+        "É um caminho apertado e desconfortável, mas completamente invisível.",
+        "",
+        "Após 20 minutos de escalada, você emerge em um prédio abandonado 3 quarteirões adiante.",
+        "A fuga foi um sucesso total."
+      ],
+      "NextChapter": "fuga_tuneis"
+    },
+    "destruir_backups": {
+      "Text": [
+        "Com determinação férrea, você localiza e destrói todos os backups dos Arquivos Prometheus.",
+        "Terabytes de dados cruciais são permanentemente apagados da existência.",
+        "",
+        "A resistência cibernética perdeu uma ferramenta valiosa, mas os dados não cairão em mãos erradas.",
+        "Às vezes, a destruição é a única forma de proteção."
+      ],
+      "NextChapter": "fuga_tuneis"
+    },
+    "emp_final": {
+      "Text": [
+        "Você ativa a bomba EMP de emergência escondida no hideout.",
+        "Uma onda eletromagnética devastadora desliga todos os equipamentos num raio de 500 metros.",
+        "",
+        "Os agentes ficam temporariamente cegos e surdos, seus equipamentos fritados.",
+        "Você aproveita a confusão total para escapar na escuridão.",
+        "",
+        "Sua base está destruída, mas você está vivo."
+      ],
+      "GameEnd": false,
+      "NextChapter": "fuga_tuneis"
     }
-  ],
-  "GameEnd": false,
-  "NextChapter": null
+  }
 }

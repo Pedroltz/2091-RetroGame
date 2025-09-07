@@ -1,16 +1,16 @@
 {
   "Character": {
-    "Name": "Alex",
+    "Name": "Kenny",
     "Attributes": {
-      "Saude": 50,
+      "Saude": 100,
       "Psicologia": 50,
       "Forca": 50,
       "Inteligencia": 50,
       "Conversacao": 50,
-      "PointsToDistribute": 50
+      "PointsToDistribute": 0
     },
     "CreatedAt": "2025-09-03T21:54:48.414114-03:00",
-    "LastPlayed": "2025-09-04T16:22:52.4353501-03:00",
+    "LastPlayed": "2025-09-07T11:54:54.8805484-03:00",
     "PlaytimeMinutes": 0,
     "CustomData": {}
   }

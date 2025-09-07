@@ -1,0 +1,6 @@
+C:\Users\Pedro L. Tunin\Documents\Projetos\Git\2091-Prototype-v2\2091.exe
+C:\Users\Pedro L. Tunin\Documents\Projetos\Git\2091-Prototype-v2\2091.dll
+C:\Users\Pedro L. Tunin\Documents\Projetos\Git\2091-Prototype-v2\2091.deps.json
+C:\Users\Pedro L. Tunin\Documents\Projetos\Git\2091-Prototype-v2\2091.runtimeconfig.json
+C:\Users\Pedro L. Tunin\Documents\Projetos\Git\2091-Prototype-v2\2091.pdb
+C:\Users\Pedro L. Tunin\Documents\Projetos\Git\2091-Prototype-v2\Newtonsoft.Json.dll

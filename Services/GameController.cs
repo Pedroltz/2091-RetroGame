@@ -93,37 +93,59 @@ namespace RetroGame2091.Services
                 currentChapter = _chapterService.LoadChapter("init_inicio");
             }
             
-            while (currentChapter != null && !currentChapter.GameEnd)
+            string? currentNodeId = null;
+            
+            while (currentChapter != null)
             {
-                // Use new dialog UI instead of ExecuteChapter
-                _uiService.ShowDialogUI(currentChapter);
+                ChapterNode? currentNode = currentChapter.GetCurrentNode(currentNodeId);
                 
-                if (currentChapter.Options.Count > 0)
+                if (currentNode == null || currentNode.GameEnd)
+                    break;
+
+                // Use new dialog UI with current node
+                _uiService.ShowDialogUI(currentChapter, currentNode);
+                
+                if (currentNode.Options.Count > 0)
                 {
-                    int choice = _uiService.ShowChapterOptions(currentChapter.Options);
-                    if (choice >= 0 && choice < currentChapter.Options.Count)
+                    int choice = _uiService.ShowChapterOptions(currentNode.Options);
+                    if (choice >= 0 && choice < currentNode.Options.Count)
                     {
-                        string nextId = currentChapter.Options[choice].NextChapter;
-                        currentChapter = _chapterService.LoadChapter(nextId);
+                        var selectedOption = currentNode.Options[choice];
+                        
+                        // Check if navigating to another node within same chapter
+                        if (!string.IsNullOrEmpty(selectedOption.NextNode))
+                        {
+                            currentNodeId = selectedOption.NextNode;
+                            // Stay in same chapter
+                        }
+                        // Check if navigating to another chapter
+                        else if (!string.IsNullOrEmpty(selectedOption.NextChapter))
+                        {
+                            currentChapter = _chapterService.LoadChapter(selectedOption.NextChapter);
+                            currentNodeId = null; // Reset to start node of new chapter
+                        }
+                        else
+                        {
+                            break;
+                        }
                     }
                     else
                     {
                         break;
                     }
                 }
-                else if (!string.IsNullOrEmpty(currentChapter.NextChapter))
+                else if (!string.IsNullOrEmpty(currentNode.NextNode))
                 {
-                    Console.WriteLine();
-                    _uiService.WriteWithColor("Pressione qualquer tecla para continuar...", _configService.Config.Colors.NormalText);
-                    try
-            {
-                Console.ReadKey();
-            }
-            catch (InvalidOperationException)
-            {
-                Console.Read();
-            }
-                    currentChapter = _chapterService.LoadChapter(currentChapter.NextChapter);
+                    _uiService.ShowContinuePrompt();
+                    _uiService.SafeReadKey();
+                    currentNodeId = currentNode.NextNode;
+                }
+                else if (!string.IsNullOrEmpty(currentNode.NextChapter))
+                {
+                    _uiService.ShowContinuePrompt();
+                    _uiService.SafeReadKey();
+                    currentChapter = _chapterService.LoadChapter(currentNode.NextChapter);
+                    currentNodeId = null; // Reset to start node of new chapter
                 }
                 else
                 {
@@ -131,7 +153,8 @@ namespace RetroGame2091.Services
                 }
             }
             
-            if (currentChapter?.GameEnd == true)
+            ChapterNode? finalNode = currentChapter?.GetCurrentNode(currentNodeId);
+            if (finalNode?.GameEnd == true)
             {
                 Console.WriteLine();
                 _uiService.WriteWithColor("═══════ FIM DE JOGO ═══════", _configService.Config.Colors.Title);
@@ -139,14 +162,7 @@ namespace RetroGame2091.Services
             
             Console.WriteLine();
             _uiService.WriteWithColor("Pressione qualquer tecla para voltar ao menu...", _configService.Config.Colors.NormalText);
-            try
-            {
-                Console.ReadKey();
-            }
-            catch (InvalidOperationException)
-            {
-                Console.Read();
-            }
+            _uiService.SafeReadKey();
         }
 
 

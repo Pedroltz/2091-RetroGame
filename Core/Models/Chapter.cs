@@ -12,18 +12,58 @@ namespace RetroGame2091.Core.Models
     {
         public string Text { get; set; } = "";
         public string NextChapter { get; set; } = "";
+        public string NextNode { get; set; } = "";
         public Dictionary<string, object>? Conditions { get; set; }
         public SkillRequirement? SkillRequirement { get; set; }
+    }
+
+    public class ChapterNode
+    {
+        public List<string> Text { get; set; } = new List<string>();
+        public List<Option> Options { get; set; } = new List<Option>();
+        public string? NextNode { get; set; }
+        public string? NextChapter { get; set; }
+        public bool GameEnd { get; set; } = false;
     }
 
     public class Chapter
     {
         public string Id { get; set; } = "";
         public string Title { get; set; } = "";
+        
+        // Legacy format support (old structure)
         public List<string> Text { get; set; } = new List<string>();
         public List<Option> Options { get; set; } = new List<Option>();
         public bool GameEnd { get; set; } = false;
         public string? NextChapter { get; set; }
+        
+        // New format support (multiple nodes)
+        public string? StartNode { get; set; }
+        public Dictionary<string, ChapterNode> Nodes { get; set; } = new Dictionary<string, ChapterNode>();
+
+        // Helper methods
+        public bool IsNewFormat => Nodes.Any();
+        public bool IsLegacyFormat => !IsNewFormat;
+
+        public ChapterNode? GetCurrentNode(string? nodeId = null)
+        {
+            if (IsLegacyFormat)
+            {
+                // Convert legacy format to node format on-the-fly
+                return new ChapterNode
+                {
+                    Text = this.Text,
+                    Options = this.Options,
+                    NextChapter = this.NextChapter,
+                    GameEnd = this.GameEnd
+                };
+            }
+
+            if (string.IsNullOrEmpty(nodeId))
+                nodeId = StartNode;
+
+            return !string.IsNullOrEmpty(nodeId) && Nodes.ContainsKey(nodeId) ? Nodes[nodeId] : null;
+        }
 
         public static Chapter? LoadChapter(string id)
         {

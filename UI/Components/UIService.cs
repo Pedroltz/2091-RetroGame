@@ -330,24 +330,8 @@ namespace RetroGame2091.UI.Components
             
             while (true)
             {
-                // Clear options area with enhanced safety check
-                int maxClearLine = Math.Min(startOptionsLine + optionTexts.Length + 5, Console.WindowHeight - 1);
-                for (int clearLine = startOptionsLine; clearLine < maxClearLine; clearLine++)
-                {
-                    if (clearLine >= 0 && clearLine < Console.WindowHeight && clearLine <= Console.BufferHeight - 1)
-                    {
-                        try
-                        {
-                            Console.SetCursorPosition(0, clearLine);
-                            Console.Write(new string(' ', Math.Min(leftColumnWidth, Console.WindowWidth)));
-                        }
-                        catch (ArgumentOutOfRangeException)
-                        {
-                            // Skip this line if cursor position is invalid
-                            continue;
-                        }
-                    }
-                }
+                // Clear options area
+                ClearOptionsArea(startOptionsLine, optionTexts.Length, leftColumnWidth);
                 
                 // Display options in simple format with safety checks
                 int optionLine = startOptionsLine;
@@ -422,48 +406,16 @@ namespace RetroGame2091.UI.Components
                     case ConsoleKey.Enter:
                         if (CheckSkillRequirement(options[currentIndex]))
                         {
-                            // Clear options area before returning with enhanced safety
-                            int maxClear = Math.Min(startOptionsLine + optionTexts.Length + 5, Console.WindowHeight - 1);
-                            for (int clearLine = startOptionsLine; clearLine < maxClear; clearLine++)
-                            {
-                                if (clearLine >= 0 && clearLine < Console.WindowHeight && clearLine <= Console.BufferHeight - 1)
-                                {
-                                    try
-                                    {
-                                        Console.SetCursorPosition(0, clearLine);
-                                        Console.Write(new string(' ', Math.Min(leftColumnWidth, Console.WindowWidth)));
-                                    }
-                                    catch (ArgumentOutOfRangeException)
-                                    {
-                                        // Skip clearing this line if cursor position is invalid
-                                        continue;
-                                    }
-                                }
-                            }
+                            // Clear options area before returning
+                            ClearOptionsArea(startOptionsLine, optionTexts.Length, leftColumnWidth);
                             return currentIndex;
                         }
                         break;
                     case ConsoleKey.D0:
                     case ConsoleKey.NumPad0:
                     case ConsoleKey.Escape:
-                        // Clear options area before returning with enhanced safety
-                        int maxClearEsc = Math.Min(startOptionsLine + optionTexts.Length + 5, Console.WindowHeight - 1);
-                        for (int clearLine = startOptionsLine; clearLine < maxClearEsc; clearLine++)
-                        {
-                            if (clearLine >= 0 && clearLine < Console.WindowHeight && clearLine <= Console.BufferHeight - 1)
-                            {
-                                try
-                                {
-                                    Console.SetCursorPosition(0, clearLine);
-                                    Console.Write(new string(' ', Math.Min(leftColumnWidth, Console.WindowWidth)));
-                                }
-                                catch (ArgumentOutOfRangeException)
-                                {
-                                    // Skip clearing this line if cursor position is invalid
-                                    continue;
-                                }
-                            }
-                        }
+                        // Clear options area before returning
+                        ClearOptionsArea(startOptionsLine, optionTexts.Length, leftColumnWidth);
                         return -1;
                 }
             }
@@ -516,34 +468,6 @@ namespace RetroGame2091.UI.Components
             };
         }
 
-        private string GetSkillRequirementText(Option option)
-        {
-            if (option.SkillRequirement == null)
-                return "";
-
-            var character = _playerSaveService.PlayerSave.Character;
-            int currentValue = option.SkillRequirement.Skill.ToLower() switch
-            {
-                "health" or "saude" => character.Attributes.Saude,
-                "psychology" or "psicologia" => character.Attributes.Psicologia,
-                "strength" or "forca" => character.Attributes.Forca,
-                "intelligence" or "inteligencia" => character.Attributes.Inteligencia,
-                "conversation" or "conversacao" => character.Attributes.Conversacao,
-                _ => 0
-            };
-
-            string skillName = option.SkillRequirement.Skill.ToLower() switch
-            {
-                "health" or "saude" => "Saúde",
-                "psychology" or "psicologia" => "Psicologia",
-                "strength" or "forca" => "Força",
-                "intelligence" or "inteligencia" => "Inteligência",
-                "conversation" or "conversacao" => "Conversação",
-                _ => option.SkillRequirement.Skill
-            };
-
-            return $"{skillName} {option.SkillRequirement.MinValue} (Atual: {currentValue})";
-        }
 
         private ConsoleKeyInfo SafeReadKey(bool intercept = false)
         {
@@ -566,23 +490,29 @@ namespace RetroGame2091.UI.Components
             }
         }
 
-        private void SafeReadKey()
+        public void SafeReadKey()
         {
-            try
+            SafeReadKey(true); // Reutiliza o método com parâmetro, ignorando o resultado
+        }
+
+        private void ClearOptionsArea(int startLine, int optionsCount, int maxWidth)
+        {
+            int maxClearLine = Math.Min(startLine + optionsCount + 5, Console.WindowHeight - 1);
+            for (int clearLine = startLine; clearLine < maxClearLine; clearLine++)
             {
-                // Check if running in interactive mode
-                if (Console.IsInputRedirected || !Environment.UserInteractive)
+                if (clearLine >= 0 && clearLine < Console.WindowHeight && clearLine <= Console.BufferHeight - 1)
                 {
-                    // Non-interactive mode - just wait briefly
-                    Thread.Sleep(1000);
-                    return;
+                    try
+                    {
+                        Console.SetCursorPosition(0, clearLine);
+                        Console.Write(new string(' ', Math.Min(maxWidth, Console.WindowWidth)));
+                    }
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        // Skip this line if cursor position is invalid
+                        continue;
+                    }
                 }
-                Console.ReadKey();
-            }
-            catch (InvalidOperationException)
-            {
-                // Console input redirected - just wait briefly
-                Thread.Sleep(1000);
             }
         }
 
@@ -668,11 +598,18 @@ namespace RetroGame2091.UI.Components
 
         public void ShowDialogUI(Chapter chapter)
         {
+            // Use legacy format or convert to node
+            ChapterNode node = chapter.GetCurrentNode() ?? new ChapterNode();
+            ShowDialogUI(chapter, node);
+        }
+
+        public void ShowDialogUI(Chapter chapter, ChapterNode node)
+        {
             ClearScreen();
-            ShowEnhancedDialogUI(chapter);
+            ShowEnhancedDialogUI(chapter, node);
         }
         
-        private void ShowEnhancedDialogUI(Chapter chapter)
+        private void ShowEnhancedDialogUI(Chapter chapter, ChapterNode node)
         {
             // Simplified dialog with clean layout
             int rightColumnWidth = 26; // Compact width
@@ -681,11 +618,11 @@ namespace RetroGame2091.UI.Components
             // Draw simplified HUD
             ShowSimplifiedRightColumnHUD(rightColumnWidth);
             
-            // Show main content without frames
-            ShowLeftColumnContent(chapter, 0, leftColumnWidth);
+            // Show main content without frames using node data
+            ShowLeftColumnContent(chapter, node, 0, leftColumnWidth);
         }
         
-        private void ShowLeftColumnContent(Chapter chapter, int columnStart, int columnWidth)
+        private void ShowLeftColumnContent(Chapter chapter, ChapterNode node, int columnStart, int columnWidth)
         {
             int currentLine = 0;
             
@@ -709,8 +646,8 @@ namespace RetroGame2091.UI.Components
                 currentLine += 2;
             }
             
-            // Clean text content without frames
-            WriteColumnTextFixed(chapter.Text, columnStart, currentLine, columnWidth);
+            // Clean text content without frames using node data
+            WriteColumnTextFixed(node.Text, columnStart, currentLine, columnWidth);
         }
         
         private void ShowSimplifiedRightColumnHUD(int columnWidth)
@@ -880,6 +817,31 @@ namespace RetroGame2091.UI.Components
             Console.ResetColor();
         }
         
+        public void ShowContinuePrompt()
+        {
+            // Add some spacing before the prompt
+            Console.WriteLine();
+            Console.WriteLine();
+            
+            // Position the prompt similar to how options are displayed
+            int rightColumnWidth = 26;
+            int leftColumnWidth = Console.WindowWidth - rightColumnWidth - 2;
+            int currentRow = Console.CursorTop;
+            
+            // Make sure we have enough space
+            if (currentRow > Console.WindowHeight - 4)
+            {
+                currentRow = Console.WindowHeight - 4;
+                Console.SetCursorPosition(0, currentRow);
+            }
+            
+            // Display the prompt with the same highlighting as selected options
+            Console.SetCursorPosition(0, currentRow);
+            Console.ForegroundColor = _configService.GetColor(_configService.Config.Colors.HighlightedText);
+            Console.WriteLine("► Pressione qualquer tecla para continuar...");
+            Console.ResetColor();
+        }
+
         private List<string> WrapTextForColumn(string text, int maxWidth)
         {
             List<string> lines = new List<string>();
