@@ -2,15 +2,15 @@
   "Character": {
     "Name": "Kenny",
     "Attributes": {
-      "Saude": 100,
+      "Saude": 50,
       "Psicologia": 50,
       "Forca": 50,
       "Inteligencia": 50,
-      "Conversacao": 50,
+      "Conversacao": 100,
       "PointsToDistribute": 0
     },
     "CreatedAt": "2025-09-03T21:54:48.414114-03:00",
-    "LastPlayed": "2025-09-07T11:54:54.8805484-03:00",
+    "LastPlayed": "2025-09-07T12:16:04.5465491-03:00",
     "PlaytimeMinutes": 0,
     "CustomData": {}
   }

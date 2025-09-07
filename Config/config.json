@@ -11,6 +11,6 @@
     "TextSpeed": 35,
     "ClearScreen": true,
     "SoundEnabled": false,
-    "ShowHints": true
+    "ShowHints": false
   }
 }
