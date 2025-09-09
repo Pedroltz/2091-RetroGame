@@ -1,0 +1,23 @@
+{
+  "Id": "derrota_drone",
+  "Title": "Capturado pela Segurança",
+  "Text": [
+    "Suas forças se esgotam diante do poder de fogo do drone de segurança.",
+    "Você cai no chão, ferido e incapaz de continuar lutando.",
+    "O drone se aproxima, emitindo um sinal de alerta para outras unidades de segurança.",
+    "Em questão de minutos, guardas corporativos chegam ao local.",
+    "'Mais um intruso neutralizado', diz um dos guardas enquanto te algemam.",
+    "Sua missão chegou ao fim, {name}. A corporação sempre vence..."
+  ],
+  "Options": [
+    {
+      "Text": "Tentar negociar com os guardas",
+      "NextChapter": "tentativa_negociacao"
+    },
+    {
+      "Text": "Aceitar a derrota silenciosamente",
+      "NextChapter": "fim_captura"
+    }
+  ],
+  "GameEnd": false
+}

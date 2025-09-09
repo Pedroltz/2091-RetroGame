@@ -1,0 +1,33 @@
+{
+  "Id": "vitoria_guarda_inicial",
+  "Title": "Guarda Derrotado",
+  "Text": [
+    "O guarda corporativo cai pesadamente, sua armadura fazendo eco no chão do hideout.",
+    "Sua estratégia de ignorar o drone para atacar diretamente o humano se mostrou eficaz.",
+    "Contudo, o drone continua ativo e agora está extremamente agitado.",
+    "",
+    "'AGENTE CAÍDO - ATIVANDO PROTOCOLO DE VINGANÇA' ecoa a voz metálica do drone.",
+    "Seus sensores vermelhos brilham mais intensamente enquanto se prepara para atacar.",
+    "",
+    "Você se sente mais confiante após derrotar o guarda. (+5 Psicologia)",
+    "Mas o drone agora está em modo de combate letal..."
+  ],
+  "Options": [
+    {
+      "Text": "Enfrentar o drone em modo de vingança",
+      "StartCombat": "security_drone",
+      "VictoryChapter": "vitoria_completa_hideout",
+      "DefeatChapter": "derrota_pos_guarda",
+      "FleeChapter": "fuga_pos_guarda"
+    },
+    {
+      "Text": "Tentar hackear o drone usando o terminal do guarda",
+      "NextChapter": "hack_sistema"
+    },
+    {
+      "Text": "Fugir rapidamente antes que o drone ataque",
+      "NextChapter": "fuga_tuneis"
+    }
+  ],
+  "GameEnd": false
+}

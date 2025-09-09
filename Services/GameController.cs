@@ -1,6 +1,7 @@
 using RetroGame2091.Core.Interfaces;
 using RetroGame2091.Core.Models;
 using RetroGame2091.UI.Menus;
+using RetroGame2091.Controllers;
 
 namespace RetroGame2091.Services
 {
@@ -13,6 +14,7 @@ namespace RetroGame2091.Services
         private readonly CharacterCreationMenu _characterCreationMenu;
         private readonly SettingsMenu _settingsMenu;
         private readonly IMusicService _musicService;
+        private readonly CombatController _combatController;
 
         public GameController(
             IUIService uiService,
@@ -21,7 +23,8 @@ namespace RetroGame2091.Services
             IGameConfigService configService,
             CharacterCreationMenu characterCreationMenu,
             SettingsMenu settingsMenu,
-            IMusicService musicService)
+            IMusicService musicService,
+            CombatController combatController)
         {
             _uiService = uiService;
             _playerSaveService = playerSaveService;
@@ -30,6 +33,7 @@ namespace RetroGame2091.Services
             _characterCreationMenu = characterCreationMenu;
             _settingsMenu = settingsMenu;
             _musicService = musicService;
+            _combatController = combatController;
         }
 
         public void Run()
@@ -112,8 +116,27 @@ namespace RetroGame2091.Services
                     {
                         var selectedOption = currentNode.Options[choice];
                         
+                        // Check if this option starts combat
+                        if (!string.IsNullOrEmpty(selectedOption.StartCombat))
+                        {
+                            string? nextChapter = _combatController.StartCombat(
+                                selectedOption.StartCombat,
+                                selectedOption.VictoryChapter,
+                                selectedOption.DefeatChapter,
+                                selectedOption.FleeChapter);
+                            
+                            if (!string.IsNullOrEmpty(nextChapter))
+                            {
+                                currentChapter = _chapterService.LoadChapter(nextChapter);
+                                currentNodeId = null; // Reset to start node of new chapter
+                            }
+                            else
+                            {
+                                break; // Exit if no next chapter or combat was cancelled
+                            }
+                        }
                         // Check if navigating to another node within same chapter
-                        if (!string.IsNullOrEmpty(selectedOption.NextNode))
+                        else if (!string.IsNullOrEmpty(selectedOption.NextNode))
                         {
                             currentNodeId = selectedOption.NextNode;
                             // Stay in same chapter

@@ -67,6 +67,61 @@ namespace RetroGame2091.UI.Components
             }
         }
 
+        public int ShowMenuWithoutClear(string title, string[] options, int startIndex = 0)
+        {
+            int currentIndex = startIndex;
+            int menuStartLine = Console.CursorTop;
+            
+            while (true)
+            {
+                // Move cursor to menu start position
+                Console.SetCursorPosition(0, menuStartLine);
+                
+                Console.ForegroundColor = _configService.GetColor(_configService.Config.Colors.Title);
+                Console.WriteLine(title);
+                Console.ResetColor();
+                Console.WriteLine();
+                
+                for (int i = 0; i < options.Length; i++)
+                {
+                    if (i == currentIndex)
+                    {
+                        Console.ForegroundColor = _configService.GetColor(_configService.Config.Colors.HighlightedText);
+                        Console.WriteLine($"► {options[i]}");
+                        Console.ResetColor();
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = _configService.GetColor(_configService.Config.Colors.Options);
+                        Console.WriteLine($"  {options[i]}");
+                        Console.ResetColor();
+                    }
+                }
+                
+                Console.WriteLine();
+                if (_configService.Config.Settings.ShowHints)
+                {
+                    WriteWithColor("Use ↑↓ para navegar, Enter para selecionar", _configService.Config.Colors.NormalText);
+                }
+                
+                var keyInfo = SafeReadKey(true);
+                
+                switch (keyInfo.Key)
+                {
+                    case ConsoleKey.UpArrow:
+                        currentIndex = currentIndex > 0 ? currentIndex - 1 : options.Length - 1;
+                        break;
+                    case ConsoleKey.DownArrow:
+                        currentIndex = currentIndex < options.Length - 1 ? currentIndex + 1 : 0;
+                        break;
+                    case ConsoleKey.Enter:
+                        return currentIndex;
+                    case ConsoleKey.Escape:
+                        return -1;
+                }
+            }
+        }
+
         public string GetUserInput(string prompt, string currentValue = "")
         {
             Console.WriteLine();

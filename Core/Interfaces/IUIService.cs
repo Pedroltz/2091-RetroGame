@@ -5,6 +5,7 @@ namespace RetroGame2091.Core.Interfaces
     public interface IUIService
     {
         int ShowMenu(string title, string[] options, int startIndex = 0);
+        int ShowMenuWithoutClear(string title, string[] options, int startIndex = 0);
         int ShowChapterOptions(List<Option> options);
         string GetUserInput(string prompt, string currentValue = "");
         void WriteWithColor(string text, string color);

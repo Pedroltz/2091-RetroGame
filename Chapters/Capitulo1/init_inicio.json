@@ -11,25 +11,47 @@
         "Sua saúde está em {health}/100, sua sanidade mental em {psychology}/100.",
         "Com {strength} pontos de força física, {intelligence} de capacidade hacker e {conversation} de habilidade social.",
         "",
-        "Um alerta vermelho pisca no seu terminal principal: 'INFILTRAÇÃO DETECTADA - TRACE ATIVO'",
-        "Os agentes corporativos descobriram sua localização. Você tem segundos para decidir."
+        "CRASH! A porta do seu hideout explode em pedaços!",
+        "Um drone de segurança corporativo entra voando, seus sensores vermelhos focalizando em você.",
+        "'INTRUSO IDENTIFICADO - EXECUTANDO PROTOCOLOS DE NEUTRALIZAÇÃO'",
+        "",
+        "Atrás do drone, você vê a silhueta de um guarda corporativo pesadamente armado.",
+        "Não há tempo para planos elaborados - é hora de agir!"
       ],
       "Options": [
         {
-          "Text": "Verificar os sistemas de segurança primeiro",
-          "NextNode": "verificar_sistemas"
+          "Text": "Enfrentar o drone de segurança em combate direto",
+          "StartCombat": "security_drone",
+          "VictoryChapter": "vitoria_drone_inicial",
+          "DefeatChapter": "derrota_drone_inicial",
+          "FleeChapter": "fuga_drone_inicial"
         },
         {
-          "Text": "Analisar o alerta de infiltração em detalhes",
-          "NextNode": "analisar_alerta"
+          "Text": "Ignorar o drone e atacar o guarda corporativo",
+          "StartCombat": "corpo_guard",
+          "VictoryChapter": "vitoria_guarda_inicial",
+          "DefeatChapter": "derrota_guarda_inicial",
+          "FleeChapter": "fuga_guarda_inicial"
         },
         {
-          "Text": "Agir imediatamente sem pensar muito",
-          "NextNode": "acao_rapida"
+          "Text": "Tentar fugir pelos túneis de emergência",
+          "NextNode": "tentativa_fuga_inicial"
         },
         {
-          "Text": "Explorar o hideout em busca de recursos ocultos",
-          "NextChapter": "capitulo1_exploracao"
+          "Text": "Usar sistemas do hideout para contra-atacar",
+          "NextNode": "contra_ataque_sistemas",
+          "SkillRequirement": {
+            "Skill": "intelligence",
+            "MinValue": 60
+          }
+        },
+        {
+          "Text": "Tentar negociar com os invasores",
+          "NextNode": "tentativa_negociacao",
+          "SkillRequirement": {
+            "Skill": "conversation",
+            "MinValue": 50
+          }
         }
       ]
     },
@@ -365,6 +387,136 @@
       ],
       "GameEnd": false,
       "NextChapter": "fuga_tuneis"
+    },
+    "tentativa_fuga_inicial": {
+      "Text": [
+        "Você se joga em direção à saída de emergência dos túneis.",
+        "O drone dispara rajadas de energia que passam zunindo próximo à sua cabeça.",
+        "Você consegue alcançar a entrada do túnel, mas ouve passos pesados te seguindo.",
+        "",
+        "A fuga não será tão simples quanto esperava...",
+        "Você precisa decidir rapidamente seu próximo movimento."
+      ],
+      "Options": [
+        {
+          "Text": "Continuar correndo pelos túneis",
+          "NextChapter": "fuga_tuneis"
+        },
+        {
+          "Text": "Se esconder e esperar eles passarem",
+          "NextNode": "esconder_tuneis"
+        },
+        {
+          "Text": "Preparar uma emboscada no túnel",
+          "StartCombat": "security_drone",
+          "VictoryChapter": "vitoria_emboscada",
+          "DefeatChapter": "derrota_tuneis",
+          "FleeChapter": "fuga_tuneis"
+        }
+      ]
+    },
+    "contra_ataque_sistemas": {
+      "Text": [
+        "Com sua inteligência superior, você rapidamente acessa os sistemas defensivos do hideout.",
+        "Campos eletromagnéticos são ativados, criando interferência nos equipamentos inimigos.",
+        "O drone começa a apresentar falhas de navegação.",
+        "",
+        "Você conseguiu virar o jogo a seu favor!",
+        "Os sistemas do hideout respondem aos seus comandos."
+      ],
+      "Options": [
+        {
+          "Text": "Usar o sistema para atacar o drone",
+          "StartCombat": "security_drone",
+          "VictoryChapter": "vitoria_sistema",
+          "DefeatChapter": "derrota_sistema",
+          "FleeChapter": "fuga_sistema"
+        },
+        {
+          "Text": "Hackear os sistemas do guarda",
+          "StartCombat": "corpo_guard",
+          "VictoryChapter": "vitoria_hack_guarda",
+          "DefeatChapter": "derrota_hack_guarda",
+          "FleeChapter": "fuga_hack_guarda"
+        },
+        {
+          "Text": "Ativar lockdown total e fugir",
+          "NextChapter": "fuga_tuneis"
+        }
+      ]
+    },
+    "tentativa_negociacao": {
+      "Text": [
+        "Com suas habilidades sociais, você tenta uma abordagem diplomática.",
+        "'Esperem! Podemos resolver isso sem violência!'",
+        "O guarda hesita por um momento, mas o drone continua sua aproximação ameaçadora.",
+        "",
+        "Sua tentativa de negociação criou uma breve pausa.",
+        "Mas você precisa agir rápido para aproveitá-la."
+      ],
+      "Options": [
+        {
+          "Text": "Oferecer informações valiosas",
+          "NextChapter": "distrito_comercial"
+        },
+        {
+          "Text": "Atacar durante a distração",
+          "StartCombat": "corpo_guard",
+          "VictoryChapter": "vitoria_surpresa",
+          "DefeatChapter": "derrota_negociacao",
+          "FleeChapter": "fuga_negociacao"
+        },
+        {
+          "Text": "Continuar tentando convencê-los",
+          "NextNode": "negociacao_avancada"
+        }
+      ]
+    },
+    "esconder_tuneis": {
+      "Text": [
+        "Você se esconde em uma alcova escura do túnel.",
+        "O drone passa voando, seus sensores varrendo a área.",
+        "Por alguns momentos tensos, você segura a respiração.",
+        "",
+        "O drone se afasta, mas você ouve vozes de mais agentes chegando.",
+        "Sua posição pode não ser segura por muito tempo."
+      ],
+      "Options": [
+        {
+          "Text": "Continuar escondido",
+          "NextChapter": "fuga_tuneis"
+        },
+        {
+          "Text": "Atacar de surpresa o próximo que passar",
+          "StartCombat": "cyber_thug",
+          "VictoryChapter": "vitoria_emboscada_thug",
+          "DefeatChapter": "derrota_emboscada",
+          "FleeChapter": "fuga_emboscada"
+        }
+      ]
+    },
+    "negociacao_avancada": {
+      "Text": [
+        "Você usa toda sua perícia social para convencer os agentes.",
+        "'Vocês não entendem! Eu tenho informações sobre uma ameaça maior à MegaCorp!'",
+        "O guarda baixa ligeiramente sua arma, interessado.",
+        "",
+        "Mas o drone não foi programado para negociações...",
+        "Ele se prepara para atacar independentemente."
+      ],
+      "Options": [
+        {
+          "Text": "Hackear o drone durante a conversa",
+          "StartCombat": "security_drone",
+          "VictoryChapter": "vitoria_hack_conversa",
+          "DefeatChapter": "derrota_hack_conversa",
+          "FleeChapter": "fuga_hack_conversa"
+        },
+        {
+          "Text": "Pedir ao guarda para desativar o drone",
+          "NextChapter": "distrito_comercial"
+        }
+      ]
     }
   }
 }

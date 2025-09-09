@@ -1,0 +1,37 @@
+{
+  "Id": "vitoria_completa_hideout",
+  "Title": "Domínio Total",
+  "Text": [
+    "Silêncio. Finalmente, silêncio no seu hideout.",
+    "Tanto o drone quanto o guarda estão neutralizados aos seus pés.",
+    "Você conseguiu defender sua base contra a investida corporativa.",
+    "",
+    "Mas esta é apenas a primeira onda. Mais agentes certamente virão.",
+    "Você examina os equipamentos dos invasores e encontra:",
+    "- Um cartão de acesso de alta segurança",
+    "- Códigos de comunicação criptografados",
+    "- Um mapa dos túneis da cidade com rotas marcadas",
+    "",
+    "Suas habilidades de combate se provaram superiores. (+10 Psicologia)",
+    "Agora você tem informações valiosas e tempo para planejar."
+  ],
+  "Options": [
+    {
+      "Text": "Usar o cartão de acesso para infiltrar instalações corporativas",
+      "NextChapter": "infiltracao_megacorp"
+    },
+    {
+      "Text": "Seguir as rotas marcadas no mapa dos túneis",
+      "NextChapter": "fuga_tuneis"
+    },
+    {
+      "Text": "Decodificar as comunicações criptografadas",
+      "NextChapter": "dados_secretos"
+    },
+    {
+      "Text": "Abandonar o hideout e procurar refúgio",
+      "NextChapter": "distrito_comercial"
+    }
+  ],
+  "GameEnd": false
+}

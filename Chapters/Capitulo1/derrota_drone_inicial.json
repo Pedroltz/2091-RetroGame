@@ -1,0 +1,33 @@
+{
+  "Id": "derrota_drone_inicial",
+  "Title": "Derrota Rápida",
+  "Text": [
+    "O drone de segurança se mostrou mais poderoso do que você esperava.",
+    "Suas rajadas de energia drenam rapidamente sua saúde e resistência.",
+    "Você cai de joelhos, ferido e exausto, diante dos invasores.",
+    "",
+    "O guarda corporativo se aproxima, sua arma ainda apontada para você.",
+    "'Bem, bem... o famoso hacker {name} não é tão impressionante assim.'",
+    "",
+    "Sua derrota inicial afeta profundamente sua confiança. (-10 Psicologia)",
+    "Mas talvez ainda haja uma chance de reverter a situação..."
+  ],
+  "Options": [
+    {
+      "Text": "Tentar um último ataque desesperado",
+      "StartCombat": "corpo_guard",
+      "VictoryChapter": "vitoria_desespero",
+      "DefeatChapter": "captura_final",
+      "FleeChapter": "fuga_ferido"
+    },
+    {
+      "Text": "Oferecer se render em troca de informações",
+      "NextChapter": "distrito_comercial"
+    },
+    {
+      "Text": "Ativar bomba EMP como último recurso",
+      "NextChapter": "emp_final"
+    }
+  ],
+  "GameEnd": false
+}

@@ -1,0 +1,33 @@
+{
+  "Id": "fuga_drone_inicial",
+  "Title": "Fuga do Hideout",
+  "Text": [
+    "Você consegue escapar do combate com o drone, correndo em direção aos túneis de emergência.",
+    "Atrás de você, ouve o zumbido mecânico do drone e os gritos do guarda:",
+    "'Ele está fugindo! Não o deixem escapar!'",
+    "",
+    "Sua fuga foi bem-sucedida, mas custou sua confiança. (-5 Psicologia)",
+    "Você alcança a entrada dos túneis, mas os passos dos perseguidores ecoam atrás de você.",
+    "",
+    "O hideout está perdido, mas você ainda tem uma chance de sobreviver.",
+    "A perseguição pelos túneis está apenas começando..."
+  ],
+  "Options": [
+    {
+      "Text": "Correr pelos túneis principais",
+      "NextChapter": "fuga_tuneis"
+    },
+    {
+      "Text": "Tentar se esconder nas passagens laterais",
+      "NextChapter": "esconder_tuneis_fuga"
+    },
+    {
+      "Text": "Preparar emboscada nos túneis",
+      "StartCombat": "security_drone",
+      "VictoryChapter": "vitoria_emboscada_tuneis",
+      "DefeatChapter": "derrota_emboscada_tuneis",
+      "FleeChapter": "fuga_tuneis"
+    }
+  ],
+  "GameEnd": false
+}

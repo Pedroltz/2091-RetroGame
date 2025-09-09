@@ -1,0 +1,27 @@
+{
+  "Id": "vitoria_drone",
+  "Title": "Vitória sobre o Drone",
+  "Text": [
+    "O drone de segurança finalmente sucumbe aos seus ataques, suas luzes se apagando lentamente.",
+    "Você consegue! O corredor agora está livre para passage.",
+    "Ao examinar os destroços do drone, você encontra um cartão de acesso corporativo.",
+    "Suas habilidades em combate se mostraram eficazes contra a tecnologia de segurança.",
+    "Com o caminho liberado, você pode prosseguir mais fundo na instalação.",
+    "Congratulations, {name}! Sua força e determinação prevaleceram."
+  ],
+  "Options": [
+    {
+      "Text": "Continuar explorando a instalação",
+      "NextChapter": "corredor_liberado"
+    },
+    {
+      "Text": "Examinar o drone destruído mais cuidadosamente",
+      "NextChapter": "analise_drone"
+    },
+    {
+      "Text": "Usar o cartão de acesso encontrado",
+      "NextChapter": "usar_cartao_acesso"
+    }
+  ],
+  "GameEnd": false
+}

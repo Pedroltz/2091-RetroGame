@@ -15,6 +15,12 @@ namespace RetroGame2091.Core.Models
         public string NextNode { get; set; } = "";
         public Dictionary<string, object>? Conditions { get; set; }
         public SkillRequirement? SkillRequirement { get; set; }
+        
+        // Combat support
+        public string? StartCombat { get; set; }
+        public string? VictoryChapter { get; set; }
+        public string? DefeatChapter { get; set; }
+        public string? FleeChapter { get; set; }
     }
 
     public class ChapterNode

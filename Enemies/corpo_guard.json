@@ -1,0 +1,55 @@
+{
+  "Id": "corpo_guard",
+  "Name": "Guarda Corporativo",
+  "Description": "Um guarda corporativo veterano, vestido com armadura tática pesada e portando armas de última geração.",
+  "DetailedDescription": [
+    "O guarda possui treinamento militar extensivo e reflexos apurados.",
+    "Sua armadura é resistente a ataques físicos, mas limitada contra ataques cibernéticos.",
+    "Sistemas de fuga: O guarda é lento devido à armadura pesada.",
+    "Ponto fraco: Seu capacete possui um visor eletrônico vulnerável."
+  ],
+  "Stats": {
+    "Health": 120,
+    "Defense": 60,
+    "Attack": 70,
+    "HackingDefense": 30,
+    "FleeThreshold": 40
+  },
+  "Dialogs": {
+    "OnEncounter": [
+      "Alto aí! Esta é uma área restrita!",
+      "Identifique-se ou será neutralizado!",
+      "Código vermelho ativado. Preparando para combate."
+    ],
+    "OnAttack": [
+      "Você escolheu o caminho difícil!",
+      "Vou acabar com você rapidamente!",
+      "O guarda saca sua arma e dispara em sua direção!"
+    ],
+    "OnHacked": [
+      "Que diabos? Meus sistemas estão falhando!",
+      "Impossível! Alguém está mexendo na minha armadura!",
+      "Contramedidas ativadas! Não vai me hackear!"
+    ],
+    "OnObserved": [
+      "Você estuda os movimentos do guarda, procurando por aberturas.",
+      "Sua experiência militar permite identificar padrões de combate."
+    ],
+    "OnFlee": [
+      "Está fugindo? Covarde!",
+      "Volte aqui! Não terminamos!",
+      "Pode correr, mas não pode se esconder!"
+    ],
+    "OnDefeat": [
+      "Impossível... como você me derrotou?",
+      "Maldito... você é melhor do que eu pensava...",
+      "O guarda cai pesadamente, sua armadura fazendo eco no chão."
+    ],
+    "OnVictory": [
+      "Mais um intruso neutralizado.",
+      "Trabalho concluído. Voltando à patrulha.",
+      "O guarda guarda sua arma com um sorriso de satisfação."
+    ]
+  },
+  "IsObserved": false
+}
