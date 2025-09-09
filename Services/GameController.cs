@@ -1,7 +1,6 @@
 using RetroGame2091.Core.Interfaces;
 using RetroGame2091.Core.Models;
 using RetroGame2091.UI.Menus;
-using RetroGame2091.Controllers;
 
 namespace RetroGame2091.Services
 {
@@ -14,7 +13,7 @@ namespace RetroGame2091.Services
         private readonly CharacterCreationMenu _characterCreationMenu;
         private readonly SettingsMenu _settingsMenu;
         private readonly IMusicService _musicService;
-        private readonly CombatController _combatController;
+        private readonly ICombatOrchestrationService _combatOrchestrationService;
 
         public GameController(
             IUIService uiService,
@@ -24,7 +23,7 @@ namespace RetroGame2091.Services
             CharacterCreationMenu characterCreationMenu,
             SettingsMenu settingsMenu,
             IMusicService musicService,
-            CombatController combatController)
+            ICombatOrchestrationService combatOrchestrationService)
         {
             _uiService = uiService;
             _playerSaveService = playerSaveService;
@@ -33,7 +32,7 @@ namespace RetroGame2091.Services
             _characterCreationMenu = characterCreationMenu;
             _settingsMenu = settingsMenu;
             _musicService = musicService;
-            _combatController = combatController;
+            _combatOrchestrationService = combatOrchestrationService;
         }
 
         public void Run()
@@ -119,7 +118,7 @@ namespace RetroGame2091.Services
                         // Check if this option starts combat
                         if (!string.IsNullOrEmpty(selectedOption.StartCombat))
                         {
-                            string? nextChapter = _combatController.StartCombat(
+                            string? nextChapter = _combatOrchestrationService.StartCombat(
                                 selectedOption.StartCombat,
                                 selectedOption.VictoryChapter,
                                 selectedOption.DefeatChapter,
