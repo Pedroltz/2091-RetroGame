@@ -7,6 +7,11 @@ namespace RetroGame2091.Core.Models
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime LastPlayed { get; set; } = DateTime.Now;
         public int PlaytimeMinutes { get; set; } = 0;
+        public string CurrentChapter { get; set; } = "init_inicio";
+        public string? CurrentNode { get; set; } = null;
         public Dictionary<string, object> CustomData { get; set; } = new Dictionary<string, object>();
+        
+        [Newtonsoft.Json.JsonIgnore]
+        public DateTime SessionStartTime { get; set; } = DateTime.Now;
     }
 }

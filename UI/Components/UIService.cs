@@ -445,6 +445,10 @@ namespace RetroGame2091.UI.Components
                     optionLine++;
                     Console.SetCursorPosition(0, optionLine);
                     Console.WriteLine("Verde = Disponível | Cinza = Não atende requisitos");
+                    optionLine++;
+                    Console.SetCursorPosition(0, optionLine);
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("Pressione [F5] para salvar o progresso atual");
                     Console.ResetColor();
                 }
                 
@@ -466,6 +470,13 @@ namespace RetroGame2091.UI.Components
                             return currentIndex;
                         }
                         break;
+                    case ConsoleKey.F5:
+                        // Save game functionality
+                        _playerSaveService.SaveGameWithConfirmation(this, _configService);
+                        // Clear options area before returning
+                        ClearOptionsArea(startOptionsLine, optionTexts.Length, leftColumnWidth);
+                        // Return -2 to signal that save was performed and screen needs refresh
+                        return -2;
                     case ConsoleKey.D0:
                     case ConsoleKey.NumPad0:
                     case ConsoleKey.Escape:
@@ -548,6 +559,60 @@ namespace RetroGame2091.UI.Components
         public void SafeReadKey()
         {
             SafeReadKey(true); // Reutiliza o método com parâmetro, ignorando o resultado
+        }
+
+        public ConsoleKeyInfo SafeReadKeyNoCombatSave(bool intercept = false)
+        {
+            try
+            {
+                // Check if running in interactive mode
+                if (Console.IsInputRedirected || !Environment.UserInteractive)
+                {
+                    // Non-interactive mode - wait longer and provide escape hatch
+                    Thread.Sleep(1000);
+                    return new ConsoleKeyInfo((char)27, ConsoleKey.Escape, false, false, false); // ESC key to exit loops
+                }
+                
+                while (true)
+                {
+                    var key = Console.ReadKey(intercept);
+                    
+                    // Block F5 during combat - show message and ignore
+                    if (key.Key == ConsoleKey.F5)
+                    {
+                        // Show brief message that save is blocked during combat
+                        var currentColor = Console.ForegroundColor;
+                        var currentPosition = Console.GetCursorPosition();
+                        
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine();
+                        Console.WriteLine("⚠️  Não é possível salvar durante o combate!");
+                        Thread.Sleep(1500); // Show message for 1.5 seconds
+                        
+                        // Clear the message lines
+                        Console.SetCursorPosition(0, currentPosition.Top);
+                        Console.Write(new string(' ', Console.WindowWidth));
+                        Console.SetCursorPosition(0, currentPosition.Top + 1);
+                        Console.Write(new string(' ', Console.WindowWidth));
+                        Console.SetCursorPosition(currentPosition.Left, currentPosition.Top);
+                        
+                        Console.ForegroundColor = currentColor;
+                        continue; // Ignore F5 and read next key
+                    }
+                    
+                    return key;
+                }
+            }
+            catch (InvalidOperationException)
+            {
+                // Handle console not available in non-interactive environments
+                return new ConsoleKeyInfo(' ', ConsoleKey.Spacebar, false, false, false);
+            }
+        }
+
+        public void SafeReadKeyNoCombatSave()
+        {
+            SafeReadKeyNoCombatSave(true); // Reutiliza o método com parâmetro, ignorando o resultado
         }
 
         private void ClearOptionsArea(int startLine, int optionsCount, int maxWidth)
@@ -884,9 +949,9 @@ namespace RetroGame2091.UI.Components
             int currentRow = Console.CursorTop;
             
             // Make sure we have enough space
-            if (currentRow > Console.WindowHeight - 4)
+            if (currentRow > Console.WindowHeight - 6)
             {
-                currentRow = Console.WindowHeight - 4;
+                currentRow = Console.WindowHeight - 6;
                 Console.SetCursorPosition(0, currentRow);
             }
             
@@ -895,6 +960,16 @@ namespace RetroGame2091.UI.Components
             Console.ForegroundColor = _configService.GetColor(_configService.Config.Colors.HighlightedText);
             Console.WriteLine("► Pressione qualquer tecla para continuar...");
             Console.ResetColor();
+            
+            // Add save hint if enabled
+            if (_configService.Config.Settings.ShowHints)
+            {
+                currentRow++;
+                Console.SetCursorPosition(0, currentRow);
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("  Pressione [F5] para salvar o progresso atual");
+                Console.ResetColor();
+            }
         }
 
         private List<string> WrapTextForColumn(string text, int maxWidth)

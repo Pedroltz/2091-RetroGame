@@ -39,7 +39,7 @@ namespace RetroGame2091.UI.Components
             
             Console.WriteLine();
             _uiService.WriteWithColor("Pressione qualquer tecla para iniciar o combate...", _configService.Config.Colors.HighlightedText);
-            _uiService.SafeReadKey();
+            _uiService.SafeReadKeyNoCombatSave();
         }
 
         public CombatAction? GetPlayerCombatActionWithHUD(CombatState combatState, Protagonist player)
@@ -140,7 +140,7 @@ namespace RetroGame2091.UI.Components
             Console.WriteLine();
             
             _uiService.WriteWithColor("Pressione qualquer tecla para ver o ataque...", _configService.Config.Colors.NormalText);
-            _uiService.SafeReadKey();
+            _uiService.SafeReadKeyNoCombatSave();
         }
 
         private string CenterTextInBox(string text, int boxWidth)

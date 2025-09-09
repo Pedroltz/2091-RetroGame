@@ -51,6 +51,9 @@ namespace RetroGame2091.Core.Models
         public string? VictoryChapter { get; set; }
         public string? DefeatChapter { get; set; }
         public string? FleeChapter { get; set; }
+        public string? VictoryNode { get; set; }
+        public string? DefeatNode { get; set; }
+        public string? FleeNode { get; set; }
 
         public CombatState(Enemy enemy)
         {

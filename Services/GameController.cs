@@ -57,7 +57,7 @@ namespace RetroGame2091.Services
                 switch (choice)
                 {
                     case 0: // Play
-                        StartGame();
+                        ShowPlayMenu();
                         break;
                     case 1: // Settings
                         _settingsMenu.ShowSettings();
@@ -73,20 +73,132 @@ namespace RetroGame2091.Services
             _uiService.WriteWithColor("\nThank you for playing 2091!\n", _configService.Config.Colors.HighlightedText);
         }
 
-        private void StartGame()
+        private void ShowPlayMenu()
+        {
+            bool hasSave = _playerSaveService.HasSaveFile();
+            
+            if (hasSave)
+            {
+                string[] playMenuOptions = {
+                    "New Game",
+                    "Load Game",
+                    "Back"
+                };
+                
+                int choice = _uiService.ShowMenu("╔═══════════════════════════════════╗\n║            JOGAR JOGO             ║\n╚═══════════════════════════════════╝", playMenuOptions);
+                
+                switch (choice)
+                {
+                    case 0: // New Game
+                        if (ConfirmNewGame())
+                        {
+                            StartNewGame();
+                        }
+                        break;
+                    case 1: // Load Game
+                        LoadGame();
+                        break;
+                    case 2: // Back
+                    case -1: // Escape
+                        break;
+                }
+            }
+            else
+            {
+                StartNewGame();
+            }
+        }
+
+        private bool ConfirmNewGame()
+        {
+            string[] confirmOptions = {
+                "Sim - Começar novo jogo",
+                "Não - Voltar"
+            };
+            
+            int choice = _uiService.ShowMenu("╔═══════════════════════════════════╗\n║     CONFIRMAR NOVO JOGO           ║\n║                                   ║\n║ Isso apagará seu progresso atual! ║\n╚═══════════════════════════════════╝", confirmOptions);
+            
+            return choice == 0;
+        }
+
+        private void StartNewGame()
+        {
+            _playerSaveService.PlayerSave.Character = new Protagonist();
+            _playerSaveService.StartNewSession(); // Initialize session timer
+            _playerSaveService.SaveGame();
+            StartGame(true);
+        }
+
+        private void LoadGame()
+        {
+            _playerSaveService.LoadSave();
+            var character = _playerSaveService.PlayerSave.Character;
+            
+            Console.WriteLine();
+            Console.WriteLine();
+            
+            // Show save info inline
+            _uiService.WriteWithColor("╔═══════════════════════════════════╗", _configService.Config.Colors.Title);
+            _uiService.WriteWithColor("║         INFORMAÇÕES DO SAVE       ║", _configService.Config.Colors.Title);
+            _uiService.WriteWithColor("╚═══════════════════════════════════╝", _configService.Config.Colors.Title);
+            Console.WriteLine();
+            
+            _uiService.WriteWithColor($"Personagem: {character.Name}", _configService.Config.Colors.HighlightedText);
+            _uiService.WriteWithColor($"Última sessão: {character.LastPlayed:dd/MM/yyyy HH:mm}", _configService.Config.Colors.NormalText);
+            _uiService.WriteWithColor($"Tempo de jogo: {character.PlaytimeMinutes} minutos", _configService.Config.Colors.NormalText);
+            Console.WriteLine();
+            
+            // Show character stats in compact format
+            _uiService.WriteWithColor("Status:", _configService.Config.Colors.HighlightedText);
+            _uiService.WriteWithColor($"Saúde: {character.Attributes.Saude} | Psicologia: {character.Attributes.Psicologia} | Força: {character.Attributes.Forca}", _configService.Config.Colors.NormalText);
+            _uiService.WriteWithColor($"Inteligência: {character.Attributes.Inteligencia} | Conversação: {character.Attributes.Conversacao}", _configService.Config.Colors.NormalText);
+            Console.WriteLine();
+            
+            _uiService.WriteWithColor("Pressione ENTER para continuar ou ESC para voltar...", _configService.Config.Colors.HighlightedText);
+            
+            var keyInfo = Console.ReadKey(true);
+            if (keyInfo.Key == ConsoleKey.Escape)
+            {
+                return; // Return to play menu
+            }
+            
+            _playerSaveService.StartNewSession(); // Initialize session timer for loaded game
+            StartGame(false);
+        }
+
+        private void StartGame(bool isNewGame = true)
         {
             _uiService.ClearScreen();
             
-            // Show character creation screen
-            _characterCreationMenu.ShowCharacterCreation();
+            Chapter? currentChapter;
+            string? currentNodeId = null;
             
-            // Stop title music after character creation
-            _musicService.StopMusic();
-            
-            _uiService.WriteWithColor($"Welcome to the story, {_playerSaveService.PlayerSave.Character.Name}!", _configService.Config.Colors.HighlightedText);
-            Console.WriteLine();
-            
-            Chapter? currentChapter = _chapterService.LoadChapter("init_inicio");
+            if (isNewGame)
+            {
+                // Show character creation screen
+                _characterCreationMenu.ShowCharacterCreation();
+                
+                // Stop title music after character creation
+                _musicService.StopMusic();
+                
+                _uiService.WriteWithColor($"Welcome to the story, {_playerSaveService.PlayerSave.Character.Name}!", _configService.Config.Colors.HighlightedText);
+                Console.WriteLine();
+                
+                currentChapter = _chapterService.LoadChapter("init_inicio");
+                _playerSaveService.UpdateGameProgress("init_inicio", null);
+            }
+            else
+            {
+                // Stop title music for loaded game
+                _musicService.StopMusic();
+                
+                var character = _playerSaveService.PlayerSave.Character;
+                currentChapter = _chapterService.LoadChapter(character.CurrentChapter);
+                currentNodeId = character.CurrentNode;
+                
+                _uiService.WriteWithColor($"Continuando a história, {character.Name}!", _configService.Config.Colors.HighlightedText);
+                Console.WriteLine();
+            }
             
             if (currentChapter == null)
             {
@@ -96,8 +208,6 @@ namespace RetroGame2091.Services
                 currentChapter = _chapterService.LoadChapter("init_inicio");
             }
             
-            string? currentNodeId = null;
-            
             while (currentChapter != null)
             {
                 ChapterNode? currentNode = currentChapter.GetCurrentNode(currentNodeId);
@@ -105,12 +215,26 @@ namespace RetroGame2091.Services
                 if (currentNode == null || currentNode.GameEnd)
                     break;
 
+                // Update progress before showing dialog
+                _playerSaveService.UpdateGameProgress(currentChapter.Id ?? "init_inicio", currentNodeId);
+
                 // Use new dialog UI with current node
                 _uiService.ShowDialogUI(currentChapter, currentNode);
                 
                 if (currentNode.Options.Count > 0)
                 {
-                    int choice = _uiService.ShowChapterOptions(currentNode.Options);
+                    int choice;
+                    do
+                    {
+                        choice = _uiService.ShowChapterOptions(currentNode.Options);
+                        // If choice is -2, it means F5 was pressed and save was completed
+                        // Re-render the dialog and options
+                        if (choice == -2)
+                        {
+                            _uiService.ShowDialogUI(currentChapter, currentNode);
+                        }
+                    } while (choice == -2);
+                    
                     if (choice >= 0 && choice < currentNode.Options.Count)
                     {
                         var selectedOption = currentNode.Options[choice];
@@ -118,16 +242,29 @@ namespace RetroGame2091.Services
                         // Check if this option starts combat
                         if (!string.IsNullOrEmpty(selectedOption.StartCombat))
                         {
-                            string? nextChapter = _combatOrchestrationService.StartCombat(
+                            string? nextDestination = _combatOrchestrationService.StartCombat(
                                 selectedOption.StartCombat,
                                 selectedOption.VictoryChapter,
                                 selectedOption.DefeatChapter,
-                                selectedOption.FleeChapter);
+                                selectedOption.FleeChapter,
+                                selectedOption.VictoryNode,
+                                selectedOption.DefeatNode,
+                                selectedOption.FleeNode);
                             
-                            if (!string.IsNullOrEmpty(nextChapter))
+                            if (!string.IsNullOrEmpty(nextDestination))
                             {
-                                currentChapter = _chapterService.LoadChapter(nextChapter);
-                                currentNodeId = null; // Reset to start node of new chapter
+                                // Check if it's a node in current chapter or a new chapter
+                                if (currentChapter.Nodes.ContainsKey(nextDestination))
+                                {
+                                    // It's a node within the same chapter
+                                    currentNodeId = nextDestination;
+                                }
+                                else
+                                {
+                                    // It's a new chapter
+                                    currentChapter = _chapterService.LoadChapter(nextDestination);
+                                    currentNodeId = null; // Reset to start node of new chapter
+                                }
                             }
                             else
                             {
@@ -159,13 +296,13 @@ namespace RetroGame2091.Services
                 else if (!string.IsNullOrEmpty(currentNode.NextNode))
                 {
                     _uiService.ShowContinuePrompt();
-                    _uiService.SafeReadKey();
+                    HandleContinueWithSave();
                     currentNodeId = currentNode.NextNode;
                 }
                 else if (!string.IsNullOrEmpty(currentNode.NextChapter))
                 {
                     _uiService.ShowContinuePrompt();
-                    _uiService.SafeReadKey();
+                    HandleContinueWithSave();
                     currentChapter = _chapterService.LoadChapter(currentNode.NextChapter);
                     currentNodeId = null; // Reset to start node of new chapter
                 }
@@ -187,6 +324,23 @@ namespace RetroGame2091.Services
             _uiService.SafeReadKey();
         }
 
-
+        private void HandleContinueWithSave()
+        {
+            while (true)
+            {
+                var keyInfo = Console.ReadKey(true);
+                
+                if (keyInfo.Key == ConsoleKey.F5)
+                {
+                    _playerSaveService.SaveGameWithConfirmation(_uiService, _configService);
+                    // Force screen refresh by breaking and letting the game re-render
+                    return;
+                }
+                else
+                {
+                    break; // Any other key continues the game
+                }
+            }
+        }
     }
 }

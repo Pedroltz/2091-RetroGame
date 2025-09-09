@@ -9,8 +9,8 @@
     "Ponto fraco: Seus implantes são instáveis e podem falhar sob pressão."
   ],
   "Stats": {
-    "Health": 90,
-    "Defense": 25,
+    "Health": 45,
+    "Defense": 10,
     "Attack": 55,
     "HackingDefense": 45,
     "FleeThreshold": 80

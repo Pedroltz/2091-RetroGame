@@ -28,7 +28,7 @@ namespace RetroGame2091.Services
             _configService = configService;
         }
 
-        public string? StartCombat(string enemyId, string? victoryChapter = null, string? defeatChapter = null, string? fleeChapter = null)
+        public string? StartCombat(string enemyId, string? victoryChapter = null, string? defeatChapter = null, string? fleeChapter = null, string? victoryNode = null, string? defeatNode = null, string? fleeNode = null)
         {
             var enemy = _enemyService.LoadEnemy(enemyId);
             if (enemy == null)
@@ -41,7 +41,10 @@ namespace RetroGame2091.Services
             {
                 VictoryChapter = victoryChapter,
                 DefeatChapter = defeatChapter,
-                FleeChapter = fleeChapter
+                FleeChapter = fleeChapter,
+                VictoryNode = victoryNode,
+                DefeatNode = defeatNode,
+                FleeNode = fleeNode
             };
 
             return RunCombatLoop(combatState);
@@ -75,15 +78,16 @@ namespace RetroGame2091.Services
                         combatState.IsActive = false;
                         
                         _uiService.ShowContinuePrompt();
-                        _uiService.SafeReadKey();
+                        _uiService.SafeReadKeyNoCombatSave();
                         
-                        _playerSaveService.SaveGame();
+                        // Não salvar automaticamente - deixar para o jogador decidir
                         
-                        return result.NextChapter;
+                        // Return node if available, otherwise chapter
+                        return GetDestinationFromResult(result, combatState);
                     }
                     
                     _uiService.ShowContinuePrompt();
-                    _uiService.SafeReadKey();
+                    _uiService.SafeReadKeyNoCombatSave();
                 }
                 else if (combatState.CurrentTurn == TurnOwner.Enemy)
                 {
@@ -98,19 +102,31 @@ namespace RetroGame2091.Services
                         combatState.IsActive = false;
                         
                         _uiService.ShowContinuePrompt();
-                        _uiService.SafeReadKey();
+                        _uiService.SafeReadKeyNoCombatSave();
                         
-                        _playerSaveService.SaveGame();
+                        // Não salvar automaticamente - deixar para o jogador decidir
                         
-                        return result.NextChapter ?? combatState.DefeatChapter;
+                        // Return node if available, otherwise chapter
+                        return GetDestinationFromResult(result, combatState) ?? combatState.DefeatNode ?? combatState.DefeatChapter;
                     }
                     
                     _uiService.ShowContinuePrompt();
-                    _uiService.SafeReadKey();
+                    _uiService.SafeReadKeyNoCombatSave();
                 }
             }
 
             return null;
+        }
+
+        private string? GetDestinationFromResult(CombatResult result, CombatState combatState)
+        {
+            return result.Outcome switch
+            {
+                CombatOutcome.Victory => combatState.VictoryNode ?? combatState.VictoryChapter,
+                CombatOutcome.Defeat => combatState.DefeatNode ?? combatState.DefeatChapter,
+                CombatOutcome.Fled => combatState.FleeNode ?? combatState.FleeChapter,
+                _ => result.NextChapter
+            };
         }
     }
 }

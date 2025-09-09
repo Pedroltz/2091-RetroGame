@@ -21,6 +21,11 @@ namespace RetroGame2091.Core.Models
         public string? VictoryChapter { get; set; }
         public string? DefeatChapter { get; set; }
         public string? FleeChapter { get; set; }
+        
+        // Combat support for nodes (within same chapter)
+        public string? VictoryNode { get; set; }
+        public string? DefeatNode { get; set; }
+        public string? FleeNode { get; set; }
     }
 
     public class ChapterNode
@@ -75,7 +80,7 @@ namespace RetroGame2091.Core.Models
         {
             try
             {
-                string chapterPath = Path.Combine("Chapters", "Capitulo1", $"{id}.json");
+                string chapterPath = Path.Combine("Chapters", "Prologo", $"{id}.json");
                 if (File.Exists(chapterPath))
                 {
                     string json = File.ReadAllText(chapterPath);
@@ -94,7 +99,7 @@ namespace RetroGame2091.Core.Models
         {
             try
             {
-                string chapterPath = Path.Combine("Chapters", "Capitulo1", $"{Id}.json");
+                string chapterPath = Path.Combine("Chapters", "Prologo", $"{Id}.json");
                 Directory.CreateDirectory(Path.GetDirectoryName(chapterPath)!);
                 string json = JsonConvert.SerializeObject(this, Formatting.Indented);
                 File.WriteAllText(chapterPath, json);

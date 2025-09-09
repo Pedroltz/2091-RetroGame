@@ -18,5 +18,6 @@ namespace RetroGame2091.Core.Interfaces
         void ShowDialogUI(Chapter chapter, ChapterNode node);
         void ShowContinuePrompt();
         void SafeReadKey();
+        void SafeReadKeyNoCombatSave();
     }
 }

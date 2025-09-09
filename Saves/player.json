@@ -1,17 +1,19 @@
 {
   "Character": {
-    "Name": "Kenny",
+    "Name": "Akarui",
     "Attributes": {
-      "Saude": 65,
+      "Saude": 80,
       "Psicologia": 50,
-      "Forca": 85,
+      "Forca": 70,
       "Inteligencia": 50,
       "Conversacao": 50,
       "PointsToDistribute": 0
     },
-    "CreatedAt": "2025-09-03T21:54:48.414114-03:00",
-    "LastPlayed": "2025-09-09T08:47:10.1428601-03:00",
+    "CreatedAt": "2025-09-09T20:16:12.2758804-03:00",
+    "LastPlayed": "2025-09-09T20:16:32.3048494-03:00",
     "PlaytimeMinutes": 0,
+    "CurrentChapter": "init_inicio",
+    "CurrentNode": null,
     "CustomData": {}
   }
 }

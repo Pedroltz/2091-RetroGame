@@ -9,5 +9,10 @@ namespace RetroGame2091.Core.Interfaces
         void LoadSave();
         void UpdateCharacterName(string name);
         void UpdateAttribute(string attributeName, int value);
+        void UpdateGameProgress(string currentChapter, string? currentNode = null);
+        bool SaveGameWithConfirmation(IUIService uiService, IGameConfigService configService);
+        bool HasSaveFile();
+        void UpdatePlaytime();
+        void StartNewSession();
     }
 }
