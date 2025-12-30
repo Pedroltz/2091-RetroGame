@@ -1,16 +1,16 @@
 {
   "Character": {
-    "Name": "Alex",
+    "Name": "ALex",
     "Attributes": {
-      "Saude": 55,
-      "Psicologia": 65,
-      "Forca": 60,
+      "Saude": 75,
+      "Psicologia": 50,
+      "Forca": 75,
       "Inteligencia": 50,
-      "Conversacao": 70,
+      "Conversacao": 50,
       "PointsToDistribute": 0
     },
-    "CreatedAt": "2025-12-30T09:30:19.5941892-03:00",
-    "LastPlayed": "2025-12-30T09:31:08.2756243-03:00",
+    "CreatedAt": "2025-12-29T21:12:06.0101507-03:00",
+    "LastPlayed": "2025-12-29T21:12:15.3302253-03:00",
     "PlaytimeMinutes": 0,
     "CurrentChapter": "init_inicio",
     "CurrentNode": null,

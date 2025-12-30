@@ -1,18 +1,41 @@
-C:\Users\Pedro L. Tunin\Documents\Projetos\Git\2091-RetroGame\obj\Debug\net8.0\2091.csproj.AssemblyReference.cache
-C:\Users\Pedro L. Tunin\Documents\Projetos\Git\2091-RetroGame\obj\Debug\net8.0\2091.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\Pedro L. Tunin\Documents\Projetos\Git\2091-RetroGame\obj\Debug\net8.0\2091.AssemblyInfoInputs.cache
-C:\Users\Pedro L. Tunin\Documents\Projetos\Git\2091-RetroGame\obj\Debug\net8.0\2091.AssemblyInfo.cs
-C:\Users\Pedro L. Tunin\Documents\Projetos\Git\2091-RetroGame\obj\Debug\net8.0\2091.csproj.CoreCompileInputs.cache
-C:\Users\Pedro L. Tunin\Documents\Projetos\Git\2091-RetroGame\obj\Debug\net8.0\2091.sourcelink.json
-C:\Users\Pedro L. Tunin\Documents\Projetos\Git\2091-RetroGame\bin\Debug\net8.0\2091.exe
-C:\Users\Pedro L. Tunin\Documents\Projetos\Git\2091-RetroGame\bin\Debug\net8.0\2091.deps.json
-C:\Users\Pedro L. Tunin\Documents\Projetos\Git\2091-RetroGame\bin\Debug\net8.0\2091.runtimeconfig.json
-C:\Users\Pedro L. Tunin\Documents\Projetos\Git\2091-RetroGame\bin\Debug\net8.0\2091.dll
-C:\Users\Pedro L. Tunin\Documents\Projetos\Git\2091-RetroGame\bin\Debug\net8.0\2091.pdb
-C:\Users\Pedro L. Tunin\Documents\Projetos\Git\2091-RetroGame\bin\Debug\net8.0\Newtonsoft.Json.dll
-C:\Users\Pedro L. Tunin\Documents\Projetos\Git\2091-RetroGame\obj\Debug\net8.0\2091.csproj.Up2Date
-C:\Users\Pedro L. Tunin\Documents\Projetos\Git\2091-RetroGame\obj\Debug\net8.0\2091.dll
-C:\Users\Pedro L. Tunin\Documents\Projetos\Git\2091-RetroGame\obj\Debug\net8.0\refint\2091.dll
-C:\Users\Pedro L. Tunin\Documents\Projetos\Git\2091-RetroGame\obj\Debug\net8.0\2091.pdb
-C:\Users\Pedro L. Tunin\Documents\Projetos\Git\2091-RetroGame\obj\Debug\net8.0\2091.genruntimeconfig.cache
-C:\Users\Pedro L. Tunin\Documents\Projetos\Git\2091-RetroGame\obj\Debug\net8.0\ref\2091.dll
+C:/Users/Pedro L. Tunin/Documents/Projetos/Git/2091-RetroGame/obj/Debug/net8.0/2091.csproj.AssemblyReference.cache
+C:/Users/Pedro L. Tunin/Documents/Projetos/Git/2091-RetroGame/obj/Debug/net8.0/2091.GeneratedMSBuildEditorConfig.editorconfig
+C:/Users/Pedro L. Tunin/Documents/Projetos/Git/2091-RetroGame/obj/Debug/net8.0/2091.AssemblyInfoInputs.cache
+C:/Users/Pedro L. Tunin/Documents/Projetos/Git/2091-RetroGame/obj/Debug/net8.0/2091.AssemblyInfo.cs
+C:/Users/Pedro L. Tunin/Documents/Projetos/Git/2091-RetroGame/obj/Debug/net8.0/2091.csproj.CoreCompileInputs.cache
+C:/Users/Pedro L. Tunin/Documents/Projetos/Git/2091-RetroGame/obj/Debug/net8.0/2091.sourcelink.json
+C:/Users/Pedro L. Tunin/Documents/Projetos/Git/2091-RetroGame/bin/Debug/net8.0/2091.exe
+C:/Users/Pedro L. Tunin/Documents/Projetos/Git/2091-RetroGame/bin/Debug/net8.0/2091.deps.json
+C:/Users/Pedro L. Tunin/Documents/Projetos/Git/2091-RetroGame/bin/Debug/net8.0/2091.runtimeconfig.json
+C:/Users/Pedro L. Tunin/Documents/Projetos/Git/2091-RetroGame/bin/Debug/net8.0/2091.dll
+C:/Users/Pedro L. Tunin/Documents/Projetos/Git/2091-RetroGame/bin/Debug/net8.0/2091.pdb
+C:/Users/Pedro L. Tunin/Documents/Projetos/Git/2091-RetroGame/bin/Debug/net8.0/Newtonsoft.Json.dll
+C:/Users/Pedro L. Tunin/Documents/Projetos/Git/2091-RetroGame/obj/Debug/net8.0/2091.csproj.Up2Date
+C:/Users/Pedro L. Tunin/Documents/Projetos/Git/2091-RetroGame/obj/Debug/net8.0/2091.dll
+C:/Users/Pedro L. Tunin/Documents/Projetos/Git/2091-RetroGame/obj/Debug/net8.0/refint/2091.dll
+C:/Users/Pedro L. Tunin/Documents/Projetos/Git/2091-RetroGame/obj/Debug/net8.0/2091.pdb
+C:/Users/Pedro L. Tunin/Documents/Projetos/Git/2091-RetroGame/obj/Debug/net8.0/2091.genruntimeconfig.cache
+C:/Users/Pedro L. Tunin/Documents/Projetos/Git/2091-RetroGame/obj/Debug/net8.0/ref/2091.dll
+/home/pedrolt/Documentos/Projs/2091-RetroGame/bin/Debug/net8.0/Chapters/Prologo/init_inicio.json
+/home/pedrolt/Documentos/Projs/2091-RetroGame/bin/Debug/net8.0/Config/config.json
+/home/pedrolt/Documentos/Projs/2091-RetroGame/bin/Debug/net8.0/Enemies/cyber_thug.json
+/home/pedrolt/Documentos/Projs/2091-RetroGame/bin/Debug/net8.0/Saves/player.json
+/home/pedrolt/Documentos/Projs/2091-RetroGame/bin/Debug/net8.0/Sounds/Menus/Cyberpunk 2077 - Never Fade Away __ Knight972 ret..mp3
+/home/pedrolt/Documentos/Projs/2091-RetroGame/bin/Debug/net8.0/2091
+/home/pedrolt/Documentos/Projs/2091-RetroGame/bin/Debug/net8.0/2091.deps.json
+/home/pedrolt/Documentos/Projs/2091-RetroGame/bin/Debug/net8.0/2091.runtimeconfig.json
+/home/pedrolt/Documentos/Projs/2091-RetroGame/bin/Debug/net8.0/2091.dll
+/home/pedrolt/Documentos/Projs/2091-RetroGame/bin/Debug/net8.0/2091.pdb
+/home/pedrolt/Documentos/Projs/2091-RetroGame/bin/Debug/net8.0/Newtonsoft.Json.dll
+/home/pedrolt/Documentos/Projs/2091-RetroGame/obj/Debug/net8.0/2091.csproj.AssemblyReference.cache
+/home/pedrolt/Documentos/Projs/2091-RetroGame/obj/Debug/net8.0/2091.GeneratedMSBuildEditorConfig.editorconfig
+/home/pedrolt/Documentos/Projs/2091-RetroGame/obj/Debug/net8.0/2091.AssemblyInfoInputs.cache
+/home/pedrolt/Documentos/Projs/2091-RetroGame/obj/Debug/net8.0/2091.AssemblyInfo.cs
+/home/pedrolt/Documentos/Projs/2091-RetroGame/obj/Debug/net8.0/2091.csproj.CoreCompileInputs.cache
+/home/pedrolt/Documentos/Projs/2091-RetroGame/obj/Debug/net8.0/2091.sourcelink.json
+/home/pedrolt/Documentos/Projs/2091-RetroGame/obj/Debug/net8.0/2091.csproj.Up2Date
+/home/pedrolt/Documentos/Projs/2091-RetroGame/obj/Debug/net8.0/2091.dll
+/home/pedrolt/Documentos/Projs/2091-RetroGame/obj/Debug/net8.0/refint/2091.dll
+/home/pedrolt/Documentos/Projs/2091-RetroGame/obj/Debug/net8.0/2091.pdb
+/home/pedrolt/Documentos/Projs/2091-RetroGame/obj/Debug/net8.0/2091.genruntimeconfig.cache
+/home/pedrolt/Documentos/Projs/2091-RetroGame/obj/Debug/net8.0/ref/2091.dll

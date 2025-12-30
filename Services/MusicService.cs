@@ -15,7 +15,7 @@ namespace RetroGame2091.Services
 
         public MusicService()
         {
-            _musicFilePath = Path.Combine(Directory.GetCurrentDirectory(), "sounds", "Menus", "Cyberpunk 2077 - Never Fade Away __ Knight972 ret..mp3");
+            _musicFilePath = Path.Combine(Directory.GetCurrentDirectory(), "Sounds", "Menus", "Cyberpunk 2077 - Never Fade Away __ Knight972 ret..mp3");
             _isMusicPlaying = false;
             
             // Detect operating system
@@ -99,7 +99,7 @@ namespace RetroGame2091.Services
                     RedirectStandardOutput = true,
                     RedirectStandardError = true
                 };
-                
+
                 process.Start();
                 process.WaitForExit();
                 return process.ExitCode == 0;
@@ -107,6 +107,32 @@ namespace RetroGame2091.Services
             catch
             {
                 return false;
+            }
+        }
+
+        private string GetCurrentUserUid()
+        {
+            try
+            {
+                using var process = new Process();
+                process.StartInfo = new ProcessStartInfo
+                {
+                    FileName = "id",
+                    Arguments = "-u",
+                    UseShellExecute = false,
+                    CreateNoWindow = true,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true
+                };
+
+                process.Start();
+                var output = process.StandardOutput.ReadToEnd().Trim();
+                process.WaitForExit();
+                return process.ExitCode == 0 && !string.IsNullOrEmpty(output) ? output : "1000";
+            }
+            catch
+            {
+                return "1000"; // Default to user ID 1000
             }
         }
 
@@ -125,7 +151,7 @@ namespace RetroGame2091.Services
                     startInfo = new ProcessStartInfo
                     {
                         FileName = "flatpak",
-                        Arguments = $@"run org.ffmpeg.ffplay -nodisp -loop 0 -autoexit ""{_musicFilePath}""",
+                        Arguments = $@"run org.ffmpeg.ffplay -nodisp -volume 70 -loop 0 -autoexit -loglevel quiet ""{_musicFilePath}""",
                         UseShellExecute = false,
                         CreateNoWindow = !_isLinux, // Linux terminals may need visible process
                         RedirectStandardOutput = true,
@@ -134,10 +160,11 @@ namespace RetroGame2091.Services
                 }
                 else
                 {
+                    // Volume 70% (-volume 70), no display window, loop forever, exit on file end
                     startInfo = new ProcessStartInfo
                     {
                         FileName = _ffplayCommand,
-                        Arguments = $@"-nodisp -loop 0 -autoexit ""{_musicFilePath}""",
+                        Arguments = $@"-nodisp -volume 70 -loop 0 -autoexit -loglevel quiet ""{_musicFilePath}""",
                         UseShellExecute = false,
                         CreateNoWindow = !_isLinux, // Linux terminals may need visible process
                         RedirectStandardOutput = true,
@@ -152,14 +179,42 @@ namespace RetroGame2091.Services
                 }
                 else if (_isLinux)
                 {
-                    // Set audio environment variables for Linux compatibility
-                    startInfo.EnvironmentVariables["PULSE_SERVER"] = Environment.GetEnvironmentVariable("PULSE_SERVER") ?? "";
-                    startInfo.EnvironmentVariables["DISPLAY"] = Environment.GetEnvironmentVariable("DISPLAY") ?? ":0";
-                    
-                    // Try to use ALSA if PulseAudio is not available
-                    if (string.IsNullOrEmpty(startInfo.EnvironmentVariables["PULSE_SERVER"]))
+                    // Set audio environment variables for Linux compatibility (PipeWire/PulseAudio)
+                    var display = Environment.GetEnvironmentVariable("DISPLAY");
+                    var xdgRuntimeDir = Environment.GetEnvironmentVariable("XDG_RUNTIME_DIR");
+
+                    // Set DISPLAY for SDL
+                    if (!string.IsNullOrEmpty(display))
+                        startInfo.EnvironmentVariables["DISPLAY"] = display;
+                    else
+                        startInfo.EnvironmentVariables["DISPLAY"] = ":0";
+
+                    // Set XDG_RUNTIME_DIR for PulseAudio socket discovery
+                    if (!string.IsNullOrEmpty(xdgRuntimeDir))
+                        startInfo.EnvironmentVariables["XDG_RUNTIME_DIR"] = xdgRuntimeDir;
+
+                    // Force SDL to use PulseAudio (works with PipeWire's pulse emulation)
+                    startInfo.EnvironmentVariables["SDL_AUDIODRIVER"] = "pulseaudio";
+
+                    // Set PulseAudio server socket path for the current user
+                    var uid = GetCurrentUserUid();
+                    var pulseSocket = $"/run/user/{uid}/pulse/native";
+                    if (File.Exists(pulseSocket))
                     {
-                        startInfo.Arguments += " -af alsa";
+                        startInfo.EnvironmentVariables["PULSE_SERVER"] = $"unix:{pulseSocket}";
+                    }
+                    else
+                    {
+                        // Try common locations
+                        var commonPaths = new[] { "/run/user/1000/pulse/native", "/run/user/1001/pulse/native" };
+                        foreach (var path in commonPaths)
+                        {
+                            if (File.Exists(path))
+                            {
+                                startInfo.EnvironmentVariables["PULSE_SERVER"] = $"unix:{path}";
+                                break;
+                            }
+                        }
                     }
                 }
 
@@ -183,9 +238,14 @@ namespace RetroGame2091.Services
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // Silently ignore music errors - ffplay might not be installed
+                // Log error for debugging (can be removed in production)
+                Console.Error.WriteLine($"[Music Service] Failed to start music: {ex.Message}");
+                Console.Error.WriteLine($"[Music Service] Music file path: {_musicFilePath}");
+                Console.Error.WriteLine($"[Music Service] File exists: {File.Exists(_musicFilePath)}");
+                Console.Error.WriteLine($"[Music Service] FFplay command: {_ffplayCommand}");
+                // Continue without music - not critical for gameplay
             }
         }
 

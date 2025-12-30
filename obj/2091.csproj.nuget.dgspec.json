@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Pedro L. Tunin\\Documents\\Projetos\\Git\\2091-RetroGame\\2091.csproj": {}
+    "/home/pedrolt/Documentos/Projs/2091-RetroGame/2091.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Pedro L. Tunin\\Documents\\Projetos\\Git\\2091-RetroGame\\2091.csproj": {
+    "/home/pedrolt/Documentos/Projs/2091-RetroGame/2091.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Pedro L. Tunin\\Documents\\Projetos\\Git\\2091-RetroGame\\2091.csproj",
+        "projectUniqueName": "/home/pedrolt/Documentos/Projs/2091-RetroGame/2091.csproj",
         "projectName": "2091",
-        "projectPath": "C:\\Users\\Pedro L. Tunin\\Documents\\Projetos\\Git\\2091-RetroGame\\2091.csproj",
-        "packagesPath": "C:\\Users\\Pedro L. Tunin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Pedro L. Tunin\\Documents\\Projetos\\Git\\2091-RetroGame\\obj\\",
+        "projectPath": "/home/pedrolt/Documentos/Projs/2091-RetroGame/2091.csproj",
+        "packagesPath": "/home/pedrolt/.nuget/packages/",
+        "outputPath": "/home/pedrolt/Documentos/Projs/2091-RetroGame/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Pedro L. Tunin\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/home/pedrolt/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -37,8 +37,7 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        },
-        "SdkAnalysisLevel": "9.0.300"
+        }
       },
       "frameworks": {
         "net8.0": {
@@ -60,30 +59,12 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[8.0.19, 8.0.19]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[8.0.19, 8.0.19]"
-            },
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[8.0.19, 8.0.19]"
-            },
-            {
-              "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[8.0.19, 8.0.19]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.416/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
