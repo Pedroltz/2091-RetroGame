@@ -1,5 +1,6 @@
 using RetroGame2091.Services;
 using RetroGame2091.Utils;
+using System.Text;
 using static RetroGame2091.Utils.InstallationResult;
 
 namespace RetroGame2091
@@ -8,6 +9,13 @@ namespace RetroGame2091
     {
         static async Task Main(string[] args)
         {
+            // Configure UTF-8 encoding BEFORE any console output
+            Console.OutputEncoding = Encoding.UTF8;
+            Console.InputEncoding = Encoding.UTF8;
+
+            // Register code pages encoding provider for extended character support
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
             // Check and install FFmpeg if needed
             var installationResult = await FFmpegInstaller.CheckAndInstallFFmpegAsync();
             

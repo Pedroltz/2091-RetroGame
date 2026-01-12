@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "kpqZ1oRaIDQ=",
+  "dgSpecHash": "Eeez4X84wUs=",
   "success": true,
   "projectFilePath": "C:\\Users\\Usuario\\Documents\\Projetos\\2091-RetroGame\\2091.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Usuario\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+    "C:\\Users\\Usuario\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
+    "C:\\Users\\Usuario\\.nuget\\packages\\system.text.encoding.codepages\\8.0.0\\system.text.encoding.codepages.8.0.0.nupkg.sha512"
   ],
   "logs": []
 }

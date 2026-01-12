@@ -1,0 +1,9 @@
+C:\Users\Usuario\Documents\Projetos\2091-RetroGame\Build-Portable\2091\2091.pdb
+C:\Users\Usuario\Documents\Projetos\2091-RetroGame\Build-Portable\2091\Chapters\Prologo\init_inicio.json
+C:\Users\Usuario\Documents\Projetos\2091-RetroGame\Build-Portable\2091\Config\config.json
+C:\Users\Usuario\Documents\Projetos\2091-RetroGame\Build-Portable\2091\Enemies\cyber_thug.json
+C:\Users\Usuario\Documents\Projetos\2091-RetroGame\Build-Portable\2091\Items\access_card.json
+C:\Users\Usuario\Documents\Projetos\2091-RetroGame\Build-Portable\2091\Items\medkit.json
+C:\Users\Usuario\Documents\Projetos\2091-RetroGame\Build-Portable\2091\Items\synth_calm.json
+C:\Users\Usuario\Documents\Projetos\2091-RetroGame\Build-Portable\2091\Saves\player.json
+C:\Users\Usuario\Documents\Projetos\2091-RetroGame\Build-Portable\2091\2091.exe
