@@ -35,6 +35,8 @@ namespace RetroGame2091.UI.Menus
             // Reset attributes to base values
             _playerSaveService.PlayerSave.Character.Attributes.Saude = 50;
             _playerSaveService.PlayerSave.Character.Attributes.Psicologia = 50;
+            _playerSaveService.PlayerSave.Character.Attributes.MaxSaude = 50;
+            _playerSaveService.PlayerSave.Character.Attributes.MaxPsicologia = 50;
             _playerSaveService.PlayerSave.Character.Attributes.Forca = 50;
             _playerSaveService.PlayerSave.Character.Attributes.Inteligencia = 50;
             _playerSaveService.PlayerSave.Character.Attributes.Conversacao = 50;
@@ -90,6 +92,9 @@ namespace RetroGame2091.UI.Menus
                 switch (keyInfo.Key)
                 {
                     case ConsoleKey.Enter:
+                        // Definir valores máximos baseados nos pontos distribuídos
+                        _playerSaveService.PlayerSave.Character.Attributes.MaxSaude = _playerSaveService.PlayerSave.Character.Attributes.Saude;
+                        _playerSaveService.PlayerSave.Character.Attributes.MaxPsicologia = _playerSaveService.PlayerSave.Character.Attributes.Psicologia;
                         _playerSaveService.SaveGame();
                         return;
                     case ConsoleKey.Escape:

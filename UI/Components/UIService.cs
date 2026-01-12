@@ -768,7 +768,7 @@ namespace RetroGame2091.UI.Components
         private void ShowEnhancedDialogUI(Chapter chapter, ChapterNode node)
         {
             // Simplified dialog with clean layout
-            int rightColumnWidth = 26; // Compact width
+            int rightColumnWidth = 30; // Compact width (increased for health/psy display)
             int leftColumnWidth = Console.WindowWidth - rightColumnWidth - 2;
             
             // Draw simplified HUD
@@ -838,16 +838,19 @@ namespace RetroGame2091.UI.Components
             Console.Write("♥ SAÚDE ");
             Console.Write("[");
             Console.ForegroundColor = GetHealthColor(character.Attributes.Saude);
-            int healthFilled = (int)((double)character.Attributes.Saude / 100 * 8);
+            int healthFilled = (int)((double)character.Attributes.Saude / character.Attributes.MaxSaude * 8);
             Console.Write(new string('█', healthFilled));
             Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.Write(new string('░', 8 - healthFilled));
             Console.ResetColor();
             Console.Write("] ");
             Console.ForegroundColor = GetHealthColor(character.Attributes.Saude);
-            Console.Write($"{character.Attributes.Saude}");
+            string healthText = $"{character.Attributes.Saude}/{character.Attributes.MaxSaude}";
+            Console.Write(healthText);
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("  ║  ");
+            int healthPadding = columnWidth - 22 - healthText.Length;
+            Console.Write(new string(' ', Math.Max(0, healthPadding)));
+            Console.WriteLine("║");
             
             // Psychology with number
             Console.SetCursorPosition(columnStart, ++currentLine);
@@ -856,16 +859,19 @@ namespace RetroGame2091.UI.Components
             Console.Write("◈ MENTE ");
             Console.Write("[");
             Console.ForegroundColor = GetHealthColor(character.Attributes.Psicologia);
-            int psyFilled = (int)((double)character.Attributes.Psicologia / 100 * 8);
+            int psyFilled = (int)((double)character.Attributes.Psicologia / character.Attributes.MaxPsicologia * 8);
             Console.Write(new string('█', psyFilled));
             Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.Write(new string('░', 8 - psyFilled));
             Console.ResetColor();
             Console.Write("] ");
             Console.ForegroundColor = GetHealthColor(character.Attributes.Psicologia);
-            Console.Write($"{character.Attributes.Psicologia}");
+            string psyText = $"{character.Attributes.Psicologia}/{character.Attributes.MaxPsicologia}";
+            Console.Write(psyText);
             Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("  ║  ");
+            int psyPadding = columnWidth - 22 - psyText.Length;
+            Console.Write(new string(' ', Math.Max(0, psyPadding)));
+            Console.WriteLine("║");
 
             // Separator for inventory
             Console.SetCursorPosition(columnStart, ++currentLine);
@@ -885,7 +891,7 @@ namespace RetroGame2091.UI.Components
                     string itemIcon = itemDef.IconSymbol ?? "▸";
                     Console.Write($"{itemIcon} ");
                     Console.ForegroundColor = ConsoleColor.White;
-                    string itemName = itemDef.Name.Length > 14 ? itemDef.Name.Substring(0, 11) + "..." : itemDef.Name;
+                    string itemName = itemDef.Name.Length > 18 ? itemDef.Name.Substring(0, 15) + "..." : itemDef.Name;
                     Console.Write(itemName);
                     Console.ForegroundColor = ConsoleColor.Gray;
                     Console.Write($" x{invItem.Quantity}");
@@ -1262,10 +1268,10 @@ namespace RetroGame2091.UI.Components
                                 switch (itemDef.Effect.Type)
                                 {
                                     case EffectType.RestoreHealth:
-                                        Console.WriteLine($"Saude: {character.Attributes.Saude}/100");
+                                        Console.WriteLine($"Saude: {character.Attributes.Saude}/{character.Attributes.MaxSaude}");
                                         break;
                                     case EffectType.RestorePsychology:
-                                        Console.WriteLine($"Psicologia: {character.Attributes.Psicologia}/100");
+                                        Console.WriteLine($"Psicologia: {character.Attributes.Psicologia}/{character.Attributes.MaxPsicologia}");
                                         break;
                                 }
 

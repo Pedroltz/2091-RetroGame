@@ -50,9 +50,9 @@ namespace RetroGame2091.Services
             while (play)
             {
                 string[] mainMenuOptions = {
-                    "Play",
-                    "Settings", 
-                    "Exit"
+                    "Jogar",
+                    "Configurações",
+                    "Sair"
                 };
                 
                 int choice = _uiService.ShowMenu("╔═══════════════════════════════════╗\n║           MENU PRINCIPAL          ║\n╚═══════════════════════════════════╝", mainMenuOptions);
@@ -73,7 +73,7 @@ namespace RetroGame2091.Services
             }
             
             _musicService.StopMusic();
-            _uiService.WriteWithColor("\nThank you for playing 2091!\n", _configService.Config.Colors.HighlightedText);
+            _uiService.WriteWithColor("\nObrigado por jogar 2091!\n", _configService.Config.Colors.HighlightedText);
         }
 
         private void ShowPlayMenu()
@@ -83,9 +83,9 @@ namespace RetroGame2091.Services
             if (hasSave)
             {
                 string[] playMenuOptions = {
-                    "New Game",
-                    "Load Game",
-                    "Back"
+                    "Novo Jogo",
+                    "Carregar Jogo",
+                    "Voltar"
                 };
                 
                 int choice = _uiService.ShowMenu("╔═══════════════════════════════════╗\n║            JOGAR JOGO             ║\n╚═══════════════════════════════════╝", playMenuOptions);

@@ -215,7 +215,7 @@ namespace RetroGame2091.UI.Components
         private void DrawHealthRow(Protagonist player, Enemy enemy)
         {
             WriteColoredText("│ SAUDE: ", ConsoleColor.Cyan, false);
-            DrawWideHealthBar(player.Attributes.Saude, 100, 20, GetHealthColor(player.Attributes.Saude));
+            DrawWideHealthBar(player.Attributes.Saude, player.Attributes.MaxSaude, 20, GetHealthColor(player.Attributes.Saude));
             WriteColoredText($" {player.Attributes.Saude:D3}", ConsoleColor.Green, false);
             Console.Write("      ");
             WriteColoredText("│", ConsoleColor.Cyan, false);
@@ -231,7 +231,7 @@ namespace RetroGame2091.UI.Components
         private void DrawSecondStatRow(Protagonist player, Enemy enemy)
         {
             WriteColoredText("│ MENTE: ", ConsoleColor.Cyan, false);
-            DrawWideHealthBar(player.Attributes.Psicologia, 100, 20, GetHealthColor(player.Attributes.Psicologia));
+            DrawWideHealthBar(player.Attributes.Psicologia, player.Attributes.MaxPsicologia, 20, GetHealthColor(player.Attributes.Psicologia));
             WriteColoredText($" {player.Attributes.Psicologia:D3}", ConsoleColor.Magenta, false);
             Console.Write("      ");
             WriteColoredText("│", ConsoleColor.Cyan, false);

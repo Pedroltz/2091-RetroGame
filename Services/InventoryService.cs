@@ -99,11 +99,11 @@ namespace RetroGame2091.Services
             switch (itemDef.Effect.Type)
             {
                 case EffectType.RestoreHealth:
-                    character.Attributes.Saude = Math.Min(100, character.Attributes.Saude + itemDef.Effect.Value);
+                    character.Attributes.Saude = Math.Min(character.Attributes.MaxSaude, character.Attributes.Saude + itemDef.Effect.Value);
                     break;
 
                 case EffectType.RestorePsychology:
-                    character.Attributes.Psicologia = Math.Min(100, character.Attributes.Psicologia + itemDef.Effect.Value);
+                    character.Attributes.Psicologia = Math.Min(character.Attributes.MaxPsicologia, character.Attributes.Psicologia + itemDef.Effect.Value);
                     break;
 
                 case EffectType.TemporaryStrength:

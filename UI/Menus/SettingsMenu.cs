@@ -22,16 +22,16 @@ namespace RetroGame2091.UI.Menus
             while (!returnToMenu)
             {
                 string[] settingsOptions = {
-                    $"Protagonist Name: {_playerSaveService.PlayerSave.Character.Name}",
-                    "View Character Attributes",
-                    $"Title Color: {_configService.Config.Colors.Title}",
-                    $"Text Color: {_configService.Config.Colors.NormalText}",
-                    $"Text Speed: {_configService.Config.Settings.TextSpeed}ms",
-                    $"Show Hints: {(_configService.Config.Settings.ShowHints ? "Enabled" : "Disabled")}",
-                    "Return to Main Menu"
+                    $"Nome do Protagonista: {_playerSaveService.PlayerSave.Character.Name}",
+                    "Ver Atributos do Personagem",
+                    $"Cor do Título: {_configService.Config.Colors.Title}",
+                    $"Cor do Texto: {_configService.Config.Colors.NormalText}",
+                    $"Velocidade do Texto: {_configService.Config.Settings.TextSpeed}ms",
+                    $"Mostrar Dicas: {(_configService.Config.Settings.ShowHints ? "Ativado" : "Desativado")}",
+                    "Voltar ao Menu Principal"
                 };
-                
-                int choice = _uiService.ShowMenu("╔═══════════════════════════════════╗\n║             SETTINGS              ║\n╚═══════════════════════════════════╝", settingsOptions);
+
+                int choice = _uiService.ShowMenu("╔═══════════════════════════════════╗\n║          CONFIGURAÇÕES            ║\n╚═══════════════════════════════════╝", settingsOptions);
                 
                 switch (choice)
                 {
@@ -90,8 +90,8 @@ namespace RetroGame2091.UI.Menus
             Console.ResetColor();
             Console.WriteLine();
             
-            _uiService.WriteWithColor($"💚 Saúde: {_playerSaveService.PlayerSave.Character.Attributes.Saude}/100 (Pontos de Vida)", _configService.Config.Colors.HighlightedText);
-            _uiService.WriteWithColor($"🧠 Psicologia: {_playerSaveService.PlayerSave.Character.Attributes.Psicologia}/100 (Pontos de Sanidade)", _configService.Config.Colors.HighlightedText);
+            _uiService.WriteWithColor($"💚 Saúde: {_playerSaveService.PlayerSave.Character.Attributes.Saude}/{_playerSaveService.PlayerSave.Character.Attributes.MaxSaude} (Pontos de Vida)", _configService.Config.Colors.HighlightedText);
+            _uiService.WriteWithColor($"🧠 Psicologia: {_playerSaveService.PlayerSave.Character.Attributes.Psicologia}/{_playerSaveService.PlayerSave.Character.Attributes.MaxPsicologia} (Pontos de Sanidade)", _configService.Config.Colors.HighlightedText);
             _uiService.WriteWithColor($"💪 Força: {_playerSaveService.PlayerSave.Character.Attributes.Forca}/100 (Pontos de Força)", _configService.Config.Colors.HighlightedText);
             _uiService.WriteWithColor($"🧮 Inteligência: {_playerSaveService.PlayerSave.Character.Attributes.Inteligencia}/100 (Capacidade de Hackear)", _configService.Config.Colors.HighlightedText);
             
