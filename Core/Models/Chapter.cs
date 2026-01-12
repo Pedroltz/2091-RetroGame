@@ -8,6 +8,18 @@ namespace RetroGame2091.Core.Models
         public int MinValue { get; set; } = 0;
     }
 
+    public class ItemDrop
+    {
+        public string ItemId { get; set; } = "";
+        public int Quantity { get; set; } = 1;
+    }
+
+    public class ItemRequirement
+    {
+        public string ItemId { get; set; } = "";
+        public int MinQuantity { get; set; } = 1;
+    }
+
     public class Option
     {
         public string Text { get; set; } = "";
@@ -26,6 +38,11 @@ namespace RetroGame2091.Core.Models
         public string? VictoryNode { get; set; }
         public string? DefeatNode { get; set; }
         public string? FleeNode { get; set; }
+
+        // Inventory support
+        public List<ItemDrop>? GiveItems { get; set; }
+        public List<ItemDrop>? RemoveItems { get; set; }
+        public ItemRequirement? RequireItem { get; set; }
     }
 
     public class ChapterNode

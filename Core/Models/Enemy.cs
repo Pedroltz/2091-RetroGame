@@ -30,6 +30,7 @@ namespace RetroGame2091.Core.Models
         public List<string> DetailedDescription { get; set; } = new List<string>(); // Revealed through Observe
         public EnemyStats Stats { get; set; } = new EnemyStats();
         public EnemyDialogs Dialogs { get; set; } = new EnemyDialogs();
+        public List<ItemDrop>? DropItems { get; set; }  // Items dropped on victory
         public bool IsObserved { get; set; } = false; // Runtime flag for whether enemy has been observed
         
         [JsonIgnore]

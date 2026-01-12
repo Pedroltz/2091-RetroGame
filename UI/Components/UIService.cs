@@ -7,11 +7,13 @@ namespace RetroGame2091.UI.Components
     {
         private readonly IGameConfigService _configService;
         private readonly IPlayerSaveService _playerSaveService;
+        private readonly IInventoryService _inventoryService;
 
-        public UIService(IGameConfigService configService, IPlayerSaveService playerSaveService)
+        public UIService(IGameConfigService configService, IPlayerSaveService playerSaveService, IInventoryService inventoryService)
         {
             _configService = configService;
             _playerSaveService = playerSaveService;
+            _inventoryService = inventoryService;
         }
 
         public int ShowMenu(string title, string[] options, int startIndex = 0)
@@ -448,7 +450,7 @@ namespace RetroGame2091.UI.Components
                     optionLine++;
                     Console.SetCursorPosition(0, optionLine);
                     Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("Pressione [F5] para salvar o progresso atual");
+                    Console.WriteLine("Pressione [F5] para salvar o progresso atual | [I] para abrir inventario");
                     Console.ResetColor();
                 }
                 
@@ -476,6 +478,13 @@ namespace RetroGame2091.UI.Components
                         // Clear options area before returning
                         ClearOptionsArea(startOptionsLine, optionTexts.Length, leftColumnWidth);
                         // Return -2 to signal that save was performed and screen needs refresh
+                        return -2;
+                    case ConsoleKey.I:
+                        // Open inventory menu
+                        ShowInventoryMenu();
+                        // Clear options area before returning
+                        ClearOptionsArea(startOptionsLine, optionTexts.Length, leftColumnWidth);
+                        // Return -2 to signal screen needs refresh
                         return -2;
                     case ConsoleKey.D0:
                     case ConsoleKey.NumPad0:
@@ -512,26 +521,53 @@ namespace RetroGame2091.UI.Components
             text = text.Replace("{date}", DateTime.Now.ToString("dd/MM/yyyy"));
             text = text.Replace("{time}", DateTime.Now.ToString("HH:mm"));
             text = text.Replace("{year}", DateTime.Now.Year.ToString());
-            
+
+            // Replace inventory variables
+            text = text.Replace("{item_count}", _inventoryService.GetAllItems().Count.ToString());
+            text = text.Replace("{inventory_slots}", _inventoryService.GetAvailableSlots().ToString());
+
+            // Replace item check variables {has_item_medkit} → "sim" ou "não"
+            var itemCheckPattern = @"\{has_item_(\w+)\}";
+            var matches = System.Text.RegularExpressions.Regex.Matches(text, itemCheckPattern);
+            foreach (System.Text.RegularExpressions.Match match in matches)
+            {
+                string itemId = match.Groups[1].Value;
+                bool hasItem = _inventoryService.HasItem(itemId);
+                text = text.Replace(match.Value, hasItem ? "sim" : "não");
+            }
+
             return text;
         }
 
         private bool CheckSkillRequirement(Option option)
         {
-            if (option.SkillRequirement == null)
-                return true;
-
-            var character = _playerSaveService.PlayerSave.Character;
-            
-            return option.SkillRequirement.Skill.ToLower() switch
+            // Check skill requirements
+            if (option.SkillRequirement != null)
             {
-                "health" or "saude" => character.Attributes.Saude >= option.SkillRequirement.MinValue,
-                "psychology" or "psicologia" => character.Attributes.Psicologia >= option.SkillRequirement.MinValue,
-                "strength" or "forca" => character.Attributes.Forca >= option.SkillRequirement.MinValue,
-                "intelligence" or "inteligencia" => character.Attributes.Inteligencia >= option.SkillRequirement.MinValue,
-                "conversation" or "conversacao" => character.Attributes.Conversacao >= option.SkillRequirement.MinValue,
-                _ => true
-            };
+                var character = _playerSaveService.PlayerSave.Character;
+
+                bool meetsSkillRequirement = option.SkillRequirement.Skill.ToLower() switch
+                {
+                    "health" or "saude" => character.Attributes.Saude >= option.SkillRequirement.MinValue,
+                    "psychology" or "psicologia" => character.Attributes.Psicologia >= option.SkillRequirement.MinValue,
+                    "strength" or "forca" => character.Attributes.Forca >= option.SkillRequirement.MinValue,
+                    "intelligence" or "inteligencia" => character.Attributes.Inteligencia >= option.SkillRequirement.MinValue,
+                    "conversation" or "conversacao" => character.Attributes.Conversacao >= option.SkillRequirement.MinValue,
+                    _ => true
+                };
+
+                if (!meetsSkillRequirement)
+                    return false;
+            }
+
+            // Check item requirements
+            if (option.RequireItem != null)
+            {
+                if (!_inventoryService.HasItem(option.RequireItem.ItemId, option.RequireItem.MinQuantity))
+                    return false;
+            }
+
+            return true;
         }
 
 
@@ -830,7 +866,49 @@ namespace RetroGame2091.UI.Components
             Console.Write($"{character.Attributes.Psicologia}");
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("  ║  ");
-            
+
+            // Separator for inventory
+            Console.SetCursorPosition(columnStart, ++currentLine);
+            Console.WriteLine($"╠{new string('─', columnWidth - 2)}╣");
+
+            // Inventory section
+            var items = _inventoryService.GetAllItems();
+            int itemsShown = 0;
+            foreach (var invItem in items.Take(5))
+            {
+                var itemDef = _inventoryService.LoadItemDefinition(invItem.ItemId);
+                if (itemDef != null)
+                {
+                    Console.SetCursorPosition(columnStart, ++currentLine);
+                    Console.Write("║ ");
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    string itemIcon = itemDef.IconSymbol ?? "▸";
+                    Console.Write($"{itemIcon} ");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    string itemName = itemDef.Name.Length > 14 ? itemDef.Name.Substring(0, 11) + "..." : itemDef.Name;
+                    Console.Write(itemName);
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    Console.Write($" x{invItem.Quantity}");
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    int padding = columnWidth - 7 - itemName.Length - invItem.Quantity.ToString().Length;
+                    Console.Write(new string(' ', Math.Max(0, padding)));
+                    Console.WriteLine("║");
+                    itemsShown++;
+                }
+            }
+
+            // Empty slots
+            for (int i = itemsShown; i < 5; i++)
+            {
+                Console.SetCursorPosition(columnStart, ++currentLine);
+                Console.Write("║ ");
+                Console.ForegroundColor = ConsoleColor.DarkGray;
+                Console.Write("▸ [vazio]");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write(new string(' ', columnWidth - 12));
+                Console.WriteLine("║");
+            }
+
             // Bottom frame
             Console.SetCursorPosition(columnStart, ++currentLine);
             Console.WriteLine($"╚{new string('═', columnWidth - 2)}╝");
@@ -1011,8 +1089,230 @@ namespace RetroGame2091.UI.Components
             {
                 lines.Add(currentLine);
             }
-            
+
             return lines;
+        }
+
+        public int ShowInventoryMenu()
+        {
+            var items = _inventoryService.GetAllItems();
+
+            if (items.Count == 0)
+            {
+                ClearScreen();
+                Console.ForegroundColor = _configService.GetColor(_configService.Config.Colors.Title);
+                Console.WriteLine("=== INVENTARIO ===\n");
+                Console.ResetColor();
+
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("Seu inventario esta vazio.\n");
+                Console.ResetColor();
+
+                Console.ForegroundColor = ConsoleColor.Gray;
+                Console.WriteLine("Pressione qualquer tecla para voltar...");
+                Console.ResetColor();
+
+                SafeReadKey();
+                return -2; // Return refresh code
+            }
+
+            int selectedIndex = 0;
+            bool exitMenu = false;
+
+            while (!exitMenu)
+            {
+                ClearScreen();
+
+                // Title
+                Console.ForegroundColor = _configService.GetColor(_configService.Config.Colors.Title);
+                Console.WriteLine("=== INVENTARIO ===");
+                Console.WriteLine($"Slots: {items.Count}/5\n");
+                Console.ResetColor();
+
+                // Display items
+                for (int i = 0; i < items.Count; i++)
+                {
+                    var item = items[i];
+                    var itemDef = _inventoryService.LoadItemDefinition(item.ItemId);
+
+                    if (itemDef != null)
+                    {
+                        if (i == selectedIndex)
+                        {
+                            Console.ForegroundColor = _configService.GetColor(_configService.Config.Colors.HighlightedText);
+                            Console.Write("► ");
+                        }
+                        else
+                        {
+                            Console.ForegroundColor = _configService.GetColor(_configService.Config.Colors.Options);
+                            Console.Write("  ");
+                        }
+
+                        string icon = itemDef.IconSymbol ?? "▸";
+                        Console.Write($"{icon} {itemDef.Name}");
+
+                        if (itemDef.IsStackable && item.Quantity > 1)
+                        {
+                            Console.Write($" x{item.Quantity}");
+                        }
+
+                        Console.WriteLine();
+                        Console.ResetColor();
+                    }
+                }
+
+                Console.WriteLine();
+
+                // Show selected item details
+                if (selectedIndex >= 0 && selectedIndex < items.Count)
+                {
+                    var selectedItem = items[selectedIndex];
+                    var itemDef = _inventoryService.LoadItemDefinition(selectedItem.ItemId);
+
+                    if (itemDef != null)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Cyan;
+                        Console.WriteLine("--- Detalhes ---");
+                        Console.ResetColor();
+
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Console.WriteLine($"Nome: {itemDef.Name}");
+                        Console.WriteLine($"Tipo: {itemDef.Type}");
+                        Console.WriteLine($"Descricao: {itemDef.Description}");
+
+                        if (itemDef.Type == ItemType.Consumable)
+                        {
+                            Console.WriteLine();
+                            Console.ForegroundColor = ConsoleColor.Green;
+
+                            switch (itemDef.Effect.Type)
+                            {
+                                case EffectType.RestoreHealth:
+                                    Console.WriteLine($"Efeito: Restaura {itemDef.Effect.Value} de saude");
+                                    break;
+                                case EffectType.RestorePsychology:
+                                    Console.WriteLine($"Efeito: Restaura {itemDef.Effect.Value} de psicologia");
+                                    break;
+                                case EffectType.TemporaryStrength:
+                                    Console.WriteLine($"Efeito: Aumenta forca em {itemDef.Effect.Value} por {itemDef.Effect.Duration} turnos");
+                                    break;
+                                case EffectType.TemporaryIntelligence:
+                                    Console.WriteLine($"Efeito: Aumenta inteligencia em {itemDef.Effect.Value} por {itemDef.Effect.Duration} turnos");
+                                    break;
+                                case EffectType.TemporaryConversation:
+                                    Console.WriteLine($"Efeito: Aumenta conversacao em {itemDef.Effect.Value} por {itemDef.Effect.Duration} turnos");
+                                    break;
+                            }
+                        }
+
+                        Console.ResetColor();
+                    }
+                }
+
+                Console.WriteLine();
+                Console.WriteLine();
+
+                // Controls
+                if (_configService.Config.Settings.ShowHints)
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("Use ↑↓ para navegar");
+
+                    var selectedItem = items[selectedIndex];
+                    var itemDef = _inventoryService.LoadItemDefinition(selectedItem.ItemId);
+
+                    if (itemDef != null && itemDef.Type == ItemType.Consumable)
+                    {
+                        Console.WriteLine("Pressione [Enter] para usar o item");
+                    }
+
+                    Console.WriteLine("Pressione [ESC] para voltar");
+                    Console.ResetColor();
+                }
+
+                // Read input
+                var key = SafeReadKey(true);
+
+                switch (key.Key)
+                {
+                    case ConsoleKey.UpArrow:
+                        selectedIndex = (selectedIndex - 1 + items.Count) % items.Count;
+                        break;
+
+                    case ConsoleKey.DownArrow:
+                        selectedIndex = (selectedIndex + 1) % items.Count;
+                        break;
+
+                    case ConsoleKey.Enter:
+                        var selectedItem = items[selectedIndex];
+                        var itemDef = _inventoryService.LoadItemDefinition(selectedItem.ItemId);
+
+                        if (itemDef != null && itemDef.Type == ItemType.Consumable)
+                        {
+                            // Try to use the item
+                            if (_inventoryService.UseItem(selectedItem.ItemId))
+                            {
+                                // Show success message
+                                Console.WriteLine();
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                Console.WriteLine($"[+] Voce usou {itemDef.Name}!");
+
+                                // Show effect
+                                var character = _playerSaveService.PlayerSave.Character;
+                                switch (itemDef.Effect.Type)
+                                {
+                                    case EffectType.RestoreHealth:
+                                        Console.WriteLine($"Saude: {character.Attributes.Saude}/100");
+                                        break;
+                                    case EffectType.RestorePsychology:
+                                        Console.WriteLine($"Psicologia: {character.Attributes.Psicologia}/100");
+                                        break;
+                                }
+
+                                Console.ResetColor();
+                                Thread.Sleep(2000);
+
+                                // Refresh item list
+                                items = _inventoryService.GetAllItems();
+
+                                // Adjust selected index if list is now shorter
+                                if (items.Count == 0)
+                                {
+                                    exitMenu = true;
+                                }
+                                else if (selectedIndex >= items.Count)
+                                {
+                                    selectedIndex = items.Count - 1;
+                                }
+                            }
+                            else
+                            {
+                                // Show error message
+                                Console.WriteLine();
+                                Console.ForegroundColor = ConsoleColor.Red;
+                                Console.WriteLine("[!] Nao foi possivel usar o item!");
+                                Console.ResetColor();
+                                Thread.Sleep(1500);
+                            }
+                        }
+                        else if (itemDef != null)
+                        {
+                            // Not consumable
+                            Console.WriteLine();
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            Console.WriteLine("[!] Este item nao pode ser usado aqui.");
+                            Console.ResetColor();
+                            Thread.Sleep(1500);
+                        }
+                        break;
+
+                    case ConsoleKey.Escape:
+                        exitMenu = true;
+                        break;
+                }
+            }
+
+            return -2; // Return refresh code to update the screen
         }
     }
 }

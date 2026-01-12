@@ -10,6 +10,7 @@ namespace RetroGame2091.Core.Models
         public string CurrentChapter { get; set; } = "init_inicio";
         public string? CurrentNode { get; set; } = null;
         public Dictionary<string, object> CustomData { get; set; } = new Dictionary<string, object>();
+        public List<InventoryItem> Inventory { get; set; } = new List<InventoryItem>();
         
         [Newtonsoft.Json.JsonIgnore]
         public DateTime SessionStartTime { get; set; } = DateTime.Now;

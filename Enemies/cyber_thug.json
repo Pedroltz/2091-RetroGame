@@ -15,6 +15,12 @@
     "HackingDefense": 45,
     "FleeThreshold": 80
   },
+  "DropItems": [
+    {
+      "ItemId": "medkit",
+      "Quantity": 1
+    }
+  ],
   "Dialogs": {
     "OnEncounter": [
       "Ei, o que você está fazendo no meu território?",

@@ -14,6 +14,7 @@ namespace RetroGame2091.Services
         private readonly SettingsMenu _settingsMenu;
         private readonly IMusicService _musicService;
         private readonly ICombatOrchestrationService _combatOrchestrationService;
+        private readonly IInventoryService _inventoryService;
 
         public GameController(
             IUIService uiService,
@@ -23,7 +24,8 @@ namespace RetroGame2091.Services
             CharacterCreationMenu characterCreationMenu,
             SettingsMenu settingsMenu,
             IMusicService musicService,
-            ICombatOrchestrationService combatOrchestrationService)
+            ICombatOrchestrationService combatOrchestrationService,
+            IInventoryService inventoryService)
         {
             _uiService = uiService;
             _playerSaveService = playerSaveService;
@@ -33,6 +35,7 @@ namespace RetroGame2091.Services
             _settingsMenu = settingsMenu;
             _musicService = musicService;
             _combatOrchestrationService = combatOrchestrationService;
+            _inventoryService = inventoryService;
         }
 
         public void Run()
@@ -238,7 +241,48 @@ namespace RetroGame2091.Services
                     if (choice >= 0 && choice < currentNode.Options.Count)
                     {
                         var selectedOption = currentNode.Options[choice];
-                        
+
+                        // Check item requirements BEFORE processing action
+                        if (selectedOption.RequireItem != null)
+                        {
+                            if (!_inventoryService.HasItem(selectedOption.RequireItem.ItemId, selectedOption.RequireItem.MinQuantity))
+                            {
+                                _uiService.WriteWithColor($"\n[!] Você precisa de {selectedOption.RequireItem.ItemId} x{selectedOption.RequireItem.MinQuantity} para esta ação!",
+                                    _configService.Config.Colors.Error);
+                                Thread.Sleep(1500);
+                                continue; // Go back to options menu
+                            }
+                        }
+
+                        // Process GiveItems (rewards/pickups)
+                        if (selectedOption.GiveItems != null)
+                        {
+                            foreach (var drop in selectedOption.GiveItems)
+                            {
+                                if (_inventoryService.AddItem(drop.ItemId, drop.Quantity))
+                                {
+                                    var itemDef = _inventoryService.LoadItemDefinition(drop.ItemId);
+                                    _uiService.WriteWithColor($"\n[+] {itemDef?.Name ?? drop.ItemId} x{drop.Quantity}",
+                                        _configService.Config.Colors.HighlightedText);
+                                }
+                                else
+                                {
+                                    _uiService.WriteWithColor($"\n[!] Inventário cheio! {drop.ItemId} perdido.",
+                                        _configService.Config.Colors.Error);
+                                }
+                            }
+                            Thread.Sleep(1500);
+                        }
+
+                        // Process RemoveItems (costs/consumption)
+                        if (selectedOption.RemoveItems != null)
+                        {
+                            foreach (var removal in selectedOption.RemoveItems)
+                            {
+                                _inventoryService.RemoveItem(removal.ItemId, removal.Quantity);
+                            }
+                        }
+
                         // Check if this option starts combat
                         if (!string.IsNullOrEmpty(selectedOption.StartCombat))
                         {

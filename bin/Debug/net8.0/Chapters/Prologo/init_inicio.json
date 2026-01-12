@@ -136,13 +136,23 @@
         "O tecido é sintético, barato, e sempre deixa você suado depois de algumas horas.",
         "",
         "Pega a carteira - poucos eurodollars restantes depois de pagar a 'proteção' das Garras de Tigre.",
-        "O cartão de transporte público, um sanduíche de nutriente sintético para o almoço.",
+        "Um sanduíche de nutriente sintético para o almoço.",
         "",
-        "Mais um dia na engrenagem. Mais um dia fingindo que tem propósito."
+        "Na mesinha ao lado da porta, você vê seu passe de transporte corporativo brilhando levemente."
       ],
       "Options": [
         {
-          "Text": "Sair para pegar o bondinho",
+          "Text": "Pegar o passe de transporte e sair",
+          "NextNode": "caminho_bondinho",
+          "GiveItems": [
+            {
+              "ItemId": "access_card",
+              "Quantity": 1
+            }
+          ]
+        },
+        {
+          "Text": "Ignorar o passe e sair direto",
           "NextNode": "caminho_bondinho"
         },
         {
@@ -500,8 +510,51 @@
     },
     "bondinho_chegada": {
       "Text": [
-        "O bondinho chega pontualmente às 4:15, apinhado de trabalhadores sonolentos.",
-        "Você consegue um lugar em pé, agarrado no corrimão oxidado.",
+        "Você chega ao ponto do bondinho pontualmente às 4:15.",
+        "A plataforma elevada está repleta de trabalhadores sonolentos esperando o transporte.",
+        "",
+        "Na entrada da plataforma, um segurança corporativo com implantes de scanner óptico verifica os passageiros.",
+        "Ele usa o uniforme da TransitCorp - a empresa que gerencia o sistema de transporte público.",
+        "Sem passe corporativo válido, você não entra na plataforma.",
+        "",
+        "Ao seu lado, trabalhadores mostram seus passes magnéticos e entram sem problemas.",
+        "O segurança te olha, esperando que você faça o mesmo."
+      ],
+      "Options": [
+        {
+          "Text": "Mostrar o passe de transporte corporativo",
+          "NextNode": "entrada_bondinho_normal",
+          "RequireItem": {
+            "ItemId": "access_card",
+            "MinQuantity": 1
+          }
+        },
+        {
+          "Text": "Tentar convencer o segurança a deixar passar sem o passe",
+          "NextNode": "conversa_seguranca",
+          "SkillRequirement": {
+            "Skill": "conversacao",
+            "MinValue": 60
+          }
+        },
+        {
+          "Text": "Tentar forçar a passagem",
+          "NextNode": "confronto_seguranca"
+        },
+        {
+          "Text": "Procurar uma entrada alternativa",
+          "NextNode": "entrada_alternativa"
+        }
+      ]
+    },
+    "entrada_bondinho_normal": {
+      "Text": [
+        "Você mostra seu passe de transporte corporativo ao segurança.",
+        "Ele passa o scanner sobre o cartão magnético - um bip verde confirma sua autenticidade.",
+        "'Passe, funcionário', ele diz mecanicamente.",
+        "",
+        "Você entra na plataforma e embarca no bondinho apinhado de trabalhadores sonolentos.",
+        "Consegue um lugar em pé, agarrado no corrimão oxidado.",
         "O vagão balança e range enquanto se move pelas linhas elevadas.",
         "",
         "Pela janela suja, você vê Night City despertando:",
@@ -530,6 +583,313 @@
           "NextNode": "posicionamento_estrategico"
         }
       ]
+    },
+    "conversa_seguranca": {
+      "Text": [
+        "'Olha, eu esqueci meu passe em casa', você diz com sinceridade calculada.",
+        "'Trabalho na Biotechnica há meses, nunca tive problema. Só hoje que saí com pressa...'",
+        "O segurança te examina com olhos cibernéticos, processando suas micro-expressões.",
+        "",
+        "Você mantém a calma, demonstrando a honestidade que desenvolveu com suas habilidades sociais.",
+        "Após alguns segundos tensos, ele suspira: 'Só hoje. Mas amanhã sem passe, sem entrada.'",
+        "'Obrigado, sério', você responde aliviado.",
+        "",
+        "Você conseguiu usar sua lábia para resolver a situação."
+      ],
+      "NextNode": "entrada_bondinho_normal"
+    },
+    "confronto_seguranca": {
+      "Text": [
+        "Você tenta passar pelo segurança ignorando o protocolo.",
+        "'Ei! Pare aí!' ele grita, bloqueando seu caminho com o braço cibernético.",
+        "Outros trabalhadores param para observar a confusão.",
+        "",
+        "O segurança é grande, com implantes de combate visíveis.",
+        "'Sem passe, sem entrada. Protocolo da TransitCorp.'",
+        "'Quer tentar me forçar, cidadão?'",
+        "",
+        "A situação está escalando rapidamente."
+      ],
+      "Options": [
+        {
+          "Text": "Recuar e tentar negociar",
+          "NextNode": "tentativa_negociacao_seguranca"
+        },
+        {
+          "Text": "Aceitar o confronto físico",
+          "StartCombat": "cyber_thug",
+          "VictoryNode": "vitoria_seguranca",
+          "DefeatNode": "derrota_seguranca",
+          "FleeNode": "fuga_seguranca"
+        },
+        {
+          "Text": "Procurar entrada alternativa",
+          "NextNode": "entrada_alternativa"
+        }
+      ]
+    },
+    "tentativa_negociacao_seguranca": {
+      "Text": [
+        "Você levanta as mãos em sinal de paz.",
+        "'Desculpa, desculpa. Não quero confusão.'",
+        "'Eu realmente preciso ir trabalhar. Tem alguma outra forma?'",
+        "",
+        "O segurança relaxa ligeiramente mas mantém a postura firme.",
+        "'Pode comprar um passe temporário ali na máquina. 50 eurodollars.'",
+        "Você verifica sua carteira - só tem 47 eurodollars.",
+        "",
+        "Merda."
+      ],
+      "Options": [
+        {
+          "Text": "Tentar convencê-lo a aceitar 47 eurodollars",
+          "NextNode": "conversa_seguranca",
+          "SkillRequirement": {
+            "Skill": "conversacao",
+            "MinValue": 55
+          }
+        },
+        {
+          "Text": "Procurar entrada alternativa",
+          "NextNode": "entrada_alternativa"
+        },
+        {
+          "Text": "Aceitar que vai se atrasar",
+          "NextNode": "aceitar_atraso"
+        }
+      ]
+    },
+    "entrada_alternativa": {
+      "Text": [
+        "Você se afasta da entrada principal e procura outras formas de acessar a plataforma.",
+        "Há uma escada de manutenção nos fundos, mas está trancada com cadeado eletrônico.",
+        "Alguns trabalhadores pulam a catraca quando o segurança não está olhando.",
+        "",
+        "Você poderia tentar a mesma coisa, mas se for pego...",
+        "As câmeras de segurança estão por todo lado.",
+        "Night City não perdoa os que tentam burlar o sistema."
+      ],
+      "Options": [
+        {
+          "Text": "Tentar pular a catraca rapidamente",
+          "NextNode": "pular_catraca"
+        },
+        {
+          "Text": "Tentar hackear o cadeado eletrônico",
+          "NextNode": "hackear_cadeado",
+          "SkillRequirement": {
+            "Skill": "inteligencia",
+            "MinValue": 65
+          }
+        },
+        {
+          "Text": "Voltar e enfrentar o segurança",
+          "NextNode": "confronto_seguranca"
+        }
+      ]
+    },
+    "pular_catraca": {
+      "Text": [
+        "Você espera o momento certo - quando um grupo grande de trabalhadores passa.",
+        "Na confusão, você pula a catraca rapidamente e se mistura à multidão.",
+        "Por alguns segundos tensos, você acha que vai funcionar...",
+        "",
+        "Mas então ouve um apito atrás de você.",
+        "'EI! VOCÊ AÍ!'",
+        "O segurança te viu. E ele não parece feliz."
+      ],
+      "Options": [
+        {
+          "Text": "Correr para o bondinho antes dele te pegar",
+          "NextNode": "corrida_bondinho"
+        },
+        {
+          "Text": "Parar e tentar explicar",
+          "NextNode": "explicacao_catraca"
+        },
+        {
+          "Text": "Preparar para lutar se necessário",
+          "StartCombat": "cyber_thug",
+          "VictoryNode": "vitoria_seguranca",
+          "DefeatNode": "derrota_seguranca",
+          "FleeNode": "fuga_seguranca"
+        }
+      ]
+    },
+    "hackear_cadeado": {
+      "Text": [
+        "Você puxa seu terminal e conecta ao sistema do cadeado eletrônico.",
+        "Seu treinamento na Biotechnica finalmente serve para algo útil.",
+        "Protocolo de segurança... TransitCorp modelo T-400... senha padrão...",
+        "",
+        "CLICK. O cadeado se abre.",
+        "Você sobe rapidamente a escada de manutenção e acessa a plataforma pelos fundos.",
+        "Ninguém te viu. Você está dentro.",
+        "",
+        "Conhecimento técnico vale ouro em Night City."
+      ],
+      "NextNode": "entrada_bondinho_normal"
+    },
+    "corrida_bondinho": {
+      "Text": [
+        "Você corre em direção ao bondinho que está prestes a partir.",
+        "O segurança corre atrás, mas você é mais rápido.",
+        "Você pula para dentro do vagão segundos antes das portas fecharem.",
+        "",
+        "Através da janela, você vê o segurança frustrado gritando algo pelo rádio.",
+        "Provavelmente reportando o incidente. Isso pode dar problema depois.",
+        "Mas por agora, você conseguiu."
+      ],
+      "NextNode": "entrada_bondinho_normal"
+    },
+    "explicacao_catraca": {
+      "Text": [
+        "Você para e se vira para o segurança que se aproxima rapidamente.",
+        "'Eu... eu esqueci meu passe e não tenho dinheiro para o temporário', você explica.",
+        "Ele não parece convencido. 'Isso é invasão de propriedade corporativa.'",
+        "",
+        "'Eu trabalho na Biotechnica! Juro! Só estou tentando não me atrasar!'",
+        "O segurança hesita, analisando você com seus implantes.",
+        "A situação pode ir para qualquer lado agora."
+      ],
+      "Options": [
+        {
+          "Text": "Continuar apelando à compreensão dele",
+          "NextNode": "conversa_seguranca",
+          "SkillRequirement": {
+            "Skill": "conversacao",
+            "MinValue": 50
+          }
+        },
+        {
+          "Text": "Aceitar as consequências",
+          "NextNode": "aceitar_atraso"
+        },
+        {
+          "Text": "Tentar subornar com o que tem",
+          "NextNode": "tentativa_suborno"
+        }
+      ]
+    },
+    "tentativa_suborno": {
+      "Text": [
+        "'Olha, eu tenho 47 eurodollars aqui', você oferece discretamente.",
+        "'É tudo que tenho, mas é seu se me deixar passar.'",
+        "O segurança olha ao redor, verificando se alguém está vendo.",
+        "",
+        "Você pode ver a hesitação nos olhos cibernéticos dele.",
+        "Em Night City, todo mundo tem um preço.",
+        "A questão é se 47 eurodollars é suficiente."
+      ],
+      "Options": [
+        {
+          "Text": "Insistir na oferta com confiança",
+          "NextNode": "suborno_aceito",
+          "SkillRequirement": {
+            "Skill": "conversacao",
+            "MinValue": 45
+          }
+        },
+        {
+          "Text": "Guardar o dinheiro e procurar outra solução",
+          "NextNode": "entrada_alternativa"
+        }
+      ]
+    },
+    "suborno_aceito": {
+      "Text": [
+        "O segurança pega os créditos rapidamente e os guarda.",
+        "'Você tem 30 segundos. Não te vi.'",
+        "Você corre para a plataforma e embarca no bondinho.",
+        "",
+        "Perdeu todo seu dinheiro, mas conseguiu entrar.",
+        "Vai ser um dia longo sem dinheiro para almoço.",
+        "Mas pelo menos não vai se atrasar."
+      ],
+      "NextNode": "entrada_bondinho_normal"
+    },
+    "vitoria_seguranca": {
+      "Text": [
+        "O segurança cai pesadamente, seus implantes piscando em sobrecarga.",
+        "Outros trabalhadores gritam e se afastam.",
+        "Você está ofegante, mãos tremendo com adrenalina.",
+        "",
+        "Mas não há tempo para processar o que aconteceu.",
+        "Câmeras gravaram tudo. Reforços estão a caminho.",
+        "Você precisa sair daqui AGORA."
+      ],
+      "Options": [
+        {
+          "Text": "Correr para o bondinho",
+          "NextNode": "corrida_bondinho"
+        },
+        {
+          "Text": "Fugir da estação completamente",
+          "NextNode": "fuga_estacao"
+        }
+      ]
+    },
+    "derrota_seguranca": {
+      "Text": [
+        "Você cai no chão, derrotado.",
+        "O segurança te imobiliza com facilidade profissional.",
+        "'Resistência a autoridade corporativa. Agressão a funcionário de segurança.'",
+        "",
+        "Ele fala pelo comunicador: 'Preciso de reforços. Tenho um detido.'",
+        "Sirenes ao longe. Você está ferrado.",
+        "Isso vai dar muito problema."
+      ],
+      "NextNode": "prisao_temporaria"
+    },
+    "fuga_seguranca": {
+      "Text": [
+        "Você se afasta rapidamente do combate, recuando pela multidão.",
+        "O segurança não persegue - não pode abandonar o posto.",
+        "Mas você o ouve falando pelo rádio, reportando o incidente.",
+        "",
+        "Você está livre, mas agora tem um registro de incidente.",
+        "Isso pode complicar sua vida corporativa.",
+        "Night City sempre cobra seu preço."
+      ],
+      "NextNode": "entrada_alternativa"
+    },
+    "fuga_estacao": {
+      "Text": [
+        "Você corre para longe da estação, perdendo-se nas ruas de Japantown.",
+        "Não vai conseguir pegar o bondinho hoje.",
+        "Vai se atrasar no trabalho. Muito.",
+        "",
+        "Mas pelo menos não foi preso.",
+        "Pequenas vitórias em Night City.",
+        "Você vai ter que lidar com as consequências depois."
+      ],
+      "NextNode": "aceitar_atraso"
+    },
+    "prisao_temporaria": {
+      "Text": [
+        "Você é levado para uma sala de detenção temporária da TransitCorp.",
+        "Três horas depois, após verificações e multa pesada descontada do seu salário,",
+        "você é liberado com uma advertência oficial.",
+        "",
+        "Perdeu o turno inteiro de trabalho.",
+        "Sua ficha agora tem um registro de incidente.",
+        "E você está completamente fodido com seus superiores.",
+        "",
+        "Talvez tivesse sido melhor só pegar o maldito passe."
+      ],
+      "NextNode": "chegada_final_prologo"
+    },
+    "aceitar_atraso": {
+      "Text": [
+        "Você aceita que vai se atrasar.",
+        "Senta num banco da estação e espera conseguir dinheiro emprestado ou outra solução.",
+        "Duas horas depois, consegue convencer um colega a te emprestar créditos para o passe temporário.",
+        "",
+        "Quando finalmente chega à Biotechnica, está atrasado.",
+        "Seu supervisor não vai gostar nada disso.",
+        "Mais um dia merda em Night City."
+      ],
+      "NextNode": "chegada_final_prologo"
     },
     "descanso_bondinho": {
       "Text": [

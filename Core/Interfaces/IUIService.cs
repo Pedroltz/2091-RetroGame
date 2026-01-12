@@ -19,5 +19,6 @@ namespace RetroGame2091.Core.Interfaces
         void ShowContinuePrompt();
         void SafeReadKey();
         void SafeReadKeyNoCombatSave();
+        int ShowInventoryMenu();
     }
 }

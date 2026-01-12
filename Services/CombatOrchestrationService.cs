@@ -11,6 +11,7 @@ namespace RetroGame2091.Services
         private readonly IUIService _uiService;
         private readonly IPlayerSaveService _playerSaveService;
         private readonly IGameConfigService _configService;
+        private readonly IInventoryService _inventoryService;
 
         public CombatOrchestrationService(
             ICombatService combatService,
@@ -18,7 +19,8 @@ namespace RetroGame2091.Services
             ICombatUIService combatUIService,
             IUIService uiService,
             IPlayerSaveService playerSaveService,
-            IGameConfigService configService)
+            IGameConfigService configService,
+            IInventoryService inventoryService)
         {
             _combatService = combatService;
             _enemyService = enemyService;
@@ -26,6 +28,7 @@ namespace RetroGame2091.Services
             _uiService = uiService;
             _playerSaveService = playerSaveService;
             _configService = configService;
+            _inventoryService = inventoryService;
         }
 
         public string? StartCombat(string enemyId, string? victoryChapter = null, string? defeatChapter = null, string? fleeChapter = null, string? victoryNode = null, string? defeatNode = null, string? fleeNode = null)
@@ -120,6 +123,27 @@ namespace RetroGame2091.Services
 
         private string? GetDestinationFromResult(CombatResult result, CombatState combatState)
         {
+            // Process item drops on victory
+            if (result.Outcome == CombatOutcome.Victory && combatState.Enemy.DropItems != null && combatState.Enemy.DropItems.Count > 0)
+            {
+                _uiService.WriteWithColor("\n=== ITENS ENCONTRADOS ===", _configService.Config.Colors.HighlightedText);
+                foreach (var drop in combatState.Enemy.DropItems)
+                {
+                    if (_inventoryService.AddItem(drop.ItemId, drop.Quantity))
+                    {
+                        var itemDef = _inventoryService.LoadItemDefinition(drop.ItemId);
+                        _uiService.WriteWithColor($"[+] {itemDef?.Name ?? drop.ItemId} x{drop.Quantity}",
+                            _configService.Config.Colors.Options);
+                    }
+                    else
+                    {
+                        _uiService.WriteWithColor($"[!] Inventário cheio! {drop.ItemId} perdido.",
+                            _configService.Config.Colors.Error);
+                    }
+                }
+                Thread.Sleep(2000);
+            }
+
             return result.Outcome switch
             {
                 CombatOutcome.Victory => combatState.VictoryNode ?? combatState.VictoryChapter,

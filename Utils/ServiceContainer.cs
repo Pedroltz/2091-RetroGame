@@ -14,26 +14,28 @@ namespace RetroGame2091.Utils
             // Register services
             var configService = new GameConfigService();
             var playerSaveService = new PlayerSaveService();
-            var uiService = new UIService(configService, playerSaveService);
+            var inventoryService = new InventoryService(playerSaveService);
+            var uiService = new UIService(configService, playerSaveService, inventoryService);
             var chapterService = new ChapterService(playerSaveService);
             var musicService = new MusicService();
-            
+
             // Register combat services
             var enemyService = new EnemyService();
             var combatService = new CombatService();
             var combatUIService = new CombatUIService(uiService, configService);
-            var combatOrchestrationService = new CombatOrchestrationService(combatService, enemyService, combatUIService, uiService, playerSaveService, configService);
+            var combatOrchestrationService = new CombatOrchestrationService(combatService, enemyService, combatUIService, uiService, playerSaveService, configService, inventoryService);
 
             // Register menus
             var characterCreationMenu = new CharacterCreationMenu(uiService, playerSaveService, configService);
             var settingsMenu = new SettingsMenu(uiService, playerSaveService, configService);
 
             // Register game controller
-            var gameController = new GameController(uiService, playerSaveService, chapterService, configService, characterCreationMenu, settingsMenu, musicService, combatOrchestrationService);
+            var gameController = new GameController(uiService, playerSaveService, chapterService, configService, characterCreationMenu, settingsMenu, musicService, combatOrchestrationService, inventoryService);
 
             // Store in container
             _services[typeof(IGameConfigService)] = configService;
             _services[typeof(IPlayerSaveService)] = playerSaveService;
+            _services[typeof(IInventoryService)] = inventoryService;
             _services[typeof(IUIService)] = uiService;
             _services[typeof(IChapterService)] = chapterService;
             _services[typeof(IMusicService)] = musicService;
