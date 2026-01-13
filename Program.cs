@@ -18,7 +18,7 @@ namespace RetroGame2091
 
             // Check and install FFmpeg if needed
             var installationResult = await FFmpegInstaller.CheckAndInstallFFmpegAsync();
-            
+
             switch (installationResult)
             {
                 case InstallationResult.InstallationFailed:

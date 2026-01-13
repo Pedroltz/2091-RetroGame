@@ -176,10 +176,23 @@ namespace RetroGame2091.Services
         {
             try
             {
-                string itemPath = Path.Combine("Items", $"{itemId}.json");
-                if (File.Exists(itemPath))
+                string resourcePath = $"Items/{itemId}.json";
+
+                // Try to load from embedded resources first (for build)
+                string? json = RetroGame2091.Utils.ResourceLoader.LoadEmbeddedJson(resourcePath);
+
+                // Fallback to file system (for debug mode)
+                if (json == null)
                 {
-                    string json = File.ReadAllText(itemPath);
+                    string itemPath = Path.Combine("Items", $"{itemId}.json");
+                    if (File.Exists(itemPath))
+                    {
+                        json = File.ReadAllText(itemPath);
+                    }
+                }
+
+                if (json != null)
+                {
                     return JsonConvert.DeserializeObject<Item>(json);
                 }
             }

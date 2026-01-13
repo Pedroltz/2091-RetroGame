@@ -1,0 +1,16 @@
+{
+  "Colors": {
+    "Title": "Cyan",
+    "NormalText": "White",
+    "HighlightedText": "Yellow",
+    "Options": "Green",
+    "Error": "Red",
+    "Background": "Black"
+  },
+  "Settings": {
+    "TextSpeed": 35,
+    "ClearScreen": true,
+    "SoundEnabled": false,
+    "ShowHints": true
+  }
+}

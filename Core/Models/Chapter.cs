@@ -97,10 +97,23 @@ namespace RetroGame2091.Core.Models
         {
             try
             {
-                string chapterPath = Path.Combine("Chapters", "Prologo", $"{id}.json");
-                if (File.Exists(chapterPath))
+                string resourcePath = $"Chapters/Prologo/{id}.json";
+
+                // Try to load from embedded resources first (for build)
+                string? json = RetroGame2091.Utils.ResourceLoader.LoadEmbeddedJson(resourcePath);
+
+                // Fallback to file system (for debug mode)
+                if (json == null)
                 {
-                    string json = File.ReadAllText(chapterPath);
+                    string chapterPath = Path.Combine("Chapters", "Prologo", $"{id}.json");
+                    if (File.Exists(chapterPath))
+                    {
+                        json = File.ReadAllText(chapterPath);
+                    }
+                }
+
+                if (json != null)
+                {
                     return JsonConvert.DeserializeObject<Chapter>(json);
                 }
             }
@@ -108,7 +121,7 @@ namespace RetroGame2091.Core.Models
             {
                 Console.WriteLine($"Error loading chapter {id}: {ex.Message}");
             }
-            
+
             return null;
         }
 

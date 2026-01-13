@@ -5,6 +5,8 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <RootNamespace>RetroGame2091</RootNamespace>
+    <AssemblyName>2091</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,24 +14,22 @@
     <PackageReference Include="System.Text.Encoding.CodePages" Version="8.0.0" />
   </ItemGroup>
 
-  <!-- Copy content folders to output directory -->
+  <!-- Embed protected resources inside executable -->
+  <ItemGroup>
+    <EmbeddedResource Include="Chapters\**\*.json" />
+    <EmbeddedResource Include="Enemies\**\*.json" />
+    <EmbeddedResource Include="Items\**\*.json" />
+  </ItemGroup>
+
+  <!-- Copy accessible folders to output directory -->
   <ItemGroup>
     <None Update="Sounds\**\*">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Chapters\**\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Config\**\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Enemies\**\*">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Update="Saves\**\*">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Items\**\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

@@ -1,10 +1,4 @@
-C:\Users\Usuario\Documents\Projetos\2091-RetroGame\bin\Release\net8.0\win-x64\Chapters\Prologo\init_inicio.json
 C:\Users\Usuario\Documents\Projetos\2091-RetroGame\bin\Release\net8.0\win-x64\Config\config.json
-C:\Users\Usuario\Documents\Projetos\2091-RetroGame\bin\Release\net8.0\win-x64\Enemies\cyber_thug.json
-C:\Users\Usuario\Documents\Projetos\2091-RetroGame\bin\Release\net8.0\win-x64\Items\access_card.json
-C:\Users\Usuario\Documents\Projetos\2091-RetroGame\bin\Release\net8.0\win-x64\Items\medkit.json
-C:\Users\Usuario\Documents\Projetos\2091-RetroGame\bin\Release\net8.0\win-x64\Items\synth_calm.json
-C:\Users\Usuario\Documents\Projetos\2091-RetroGame\bin\Release\net8.0\win-x64\Saves\player.json
 C:\Users\Usuario\Documents\Projetos\2091-RetroGame\bin\Release\net8.0\win-x64\Sounds\Menus\Cyberpunk 2077 - Never Fade Away __ Knight972 ret..mp3
 C:\Users\Usuario\Documents\Projetos\2091-RetroGame\bin\Release\net8.0\win-x64\2091.exe
 C:\Users\Usuario\Documents\Projetos\2091-RetroGame\bin\Release\net8.0\win-x64\2091.deps.json

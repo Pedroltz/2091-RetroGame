@@ -324,6 +324,9 @@ namespace RetroGame2091.Services
                         // Check if navigating to another chapter
                         else if (!string.IsNullOrEmpty(selectedOption.NextChapter))
                         {
+                            // Ask to save before changing chapter
+                            AskToSaveAfterChapter(currentChapter?.Id ?? "Desconhecido");
+
                             currentChapter = _chapterService.LoadChapter(selectedOption.NextChapter);
                             currentNodeId = null; // Reset to start node of new chapter
                         }
@@ -347,6 +350,10 @@ namespace RetroGame2091.Services
                 {
                     _uiService.ShowContinuePrompt();
                     HandleContinueWithSave();
+
+                    // Ask to save before changing chapter
+                    AskToSaveAfterChapter(currentChapter?.Id ?? "Desconhecido");
+
                     currentChapter = _chapterService.LoadChapter(currentNode.NextChapter);
                     currentNodeId = null; // Reset to start node of new chapter
                 }
@@ -384,6 +391,39 @@ namespace RetroGame2091.Services
                 {
                     break; // Any other key continues the game
                 }
+            }
+        }
+
+        private void AskToSaveAfterChapter(string currentChapterName)
+        {
+            Console.WriteLine();
+            _uiService.WriteWithColor("═══════════════════════════════════════", _configService.Config.Colors.Title);
+            _uiService.WriteWithColor($"FIM DO CAPÍTULO: {currentChapterName}", _configService.Config.Colors.HighlightedText);
+            _uiService.WriteWithColor("═══════════════════════════════════════", _configService.Config.Colors.Title);
+            Console.WriteLine();
+
+            _uiService.WriteWithColor("Deseja salvar seu progresso antes de continuar? (S/N): ", _configService.Config.Colors.NormalText);
+
+            ConsoleKeyInfo key;
+            try
+            {
+                key = Console.ReadKey(true);
+            }
+            catch (InvalidOperationException)
+            {
+                key = new ConsoleKeyInfo('n', ConsoleKey.N, false, false, false);
+            }
+
+            if (key.Key == ConsoleKey.S || key.KeyChar == 's' || key.KeyChar == 'S')
+            {
+                _playerSaveService.SaveGame();
+                _uiService.WriteWithColor("Jogo salvo com sucesso!", _configService.Config.Colors.HighlightedText);
+                Thread.Sleep(1500);
+            }
+            else
+            {
+                _uiService.WriteWithColor("Continuando sem salvar...", _configService.Config.Colors.NormalText);
+                Thread.Sleep(1000);
             }
         }
     }

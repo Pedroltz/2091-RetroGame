@@ -12,10 +12,23 @@ namespace RetroGame2091.Services
         {
             try
             {
-                string enemyPath = Path.Combine(EnemiesFolder, $"{enemyId}.json");
-                if (File.Exists(enemyPath))
+                string resourcePath = $"Enemies/{enemyId}.json";
+
+                // Try to load from embedded resources first (for build)
+                string? json = RetroGame2091.Utils.ResourceLoader.LoadEmbeddedJson(resourcePath);
+
+                // Fallback to file system (for debug mode)
+                if (json == null)
                 {
-                    string json = File.ReadAllText(enemyPath);
+                    string enemyPath = Path.Combine(EnemiesFolder, $"{enemyId}.json");
+                    if (File.Exists(enemyPath))
+                    {
+                        json = File.ReadAllText(enemyPath);
+                    }
+                }
+
+                if (json != null)
+                {
                     return JsonConvert.DeserializeObject<Enemy>(json);
                 }
             }
@@ -23,7 +36,7 @@ namespace RetroGame2091.Services
             {
                 Console.WriteLine($"Error loading enemy {enemyId}: {ex.Message}");
             }
-            
+
             return null;
         }
 
