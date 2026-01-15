@@ -92,11 +92,12 @@ Write-Host "  [PROTEGIDO] Items/    - Embutido no executável" -ForegroundColor 
 Write-Host ""
 
 # Note: Chapters, Enemies, and Items are now embedded in the executable for protection
-# Only Config, Saves, and Sounds need to be copied as external files
+# Only Config, Saves, Sounds, and NPCs need to be copied as external files
 $dataFolders = @(
     "Config",
     "Saves",
-    "Sounds"
+    "Sounds",
+    "NPCs"
 )
 
 foreach ($folder in $dataFolders) {
@@ -120,6 +121,25 @@ foreach ($folder in $dataFolders) {
         Copy-Item -Path "$sourcePath\*" -Destination $destPath -Recurse -Force
     } else {
         Write-Host "  -> Aviso: Pasta $folder não encontrada, ignorando..." -ForegroundColor Yellow
+    }
+}
+
+# Handle API keys separately
+Write-Host ""
+Write-Host "Verificando configuração de API..." -ForegroundColor Green
+$apiKeysSource = "Config\api-keys.json"
+$apiKeysExample = "Config\api-keys.example.json"
+$apiKeysDest = "$outputFolder\$appName\Config\api-keys.json"
+
+if (Test-Path $apiKeysSource) {
+    Copy-Item -Path $apiKeysSource -Destination $apiKeysDest -Force
+    Write-Host "  [✓] API keys copiadas para o build" -ForegroundColor Green
+    Write-Host "  [!] AVISO: Mantenha sua chave API segura!" -ForegroundColor Yellow
+} else {
+    if (Test-Path $apiKeysExample) {
+        Copy-Item -Path $apiKeysExample -Destination $apiKeysDest -Force
+        Write-Host "  [!] Arquivo de exemplo copiado como api-keys.json" -ForegroundColor Yellow
+        Write-Host "  [!] Configure a chave DeepSeek API para usar o sistema de chat" -ForegroundColor Yellow
     }
 }
 

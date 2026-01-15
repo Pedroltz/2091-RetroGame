@@ -408,6 +408,101 @@
         {
           "Text": "Cumprimentar outros trabalhadores",
           "NextNode": "interacao_trabalhadores"
+        },
+        {
+          "Text": "Parar no Neon Dragon Bar para um café",
+          "NextNode": "entrada_neon_dragon"
+        },
+        {
+          "Text": "Falar com a vendedora de rua na esquina",
+          "NextNode": "encontro_vendedora"
+        }
+      ]
+    },
+    "entrada_neon_dragon": {
+      "Text": [
+        "Você empurra a porta do Neon Dragon Bar, um estabelecimento decadente que já viu dias melhores.",
+        "O ar está denso com fumaça sintética e o cheiro de álcool barato.",
+        "Luzes neon piscam fracamente nas paredes, projetando sombras distorcidas.",
+        "",
+        "Atrás do balcão, Tom 'Wirehead' limpa copos com movimentos mecânicos.",
+        "Ex-netrunner da Arasaka, ele conhece mais segredos de Night City do que qualquer um.",
+        "Os implantes neurais baratos nas têmporas dele piscam fracamente."
+      ],
+      "Options": [
+        {
+          "Text": "Sentar no balcão e conversar com Tom",
+          "StartChat": "bartender_tom",
+          "PostChatNode": "apos_conversa_tom"
+        },
+        {
+          "Text": "Apenas pegar um café sintético e sair",
+          "NextNode": "caminho_bondinho"
+        }
+      ]
+    },
+    "apos_conversa_tom": {
+      "Text": [
+        "Você encerra a conversa com Tom e se levanta do balcão.",
+        "O bartender volta a limpar copos, mas você nota um leve aceno de reconhecimento.",
+        "Talvez tenha feito um aliado útil em Night City.",
+        "",
+        "Melhor voltar para a rua antes de se atrasar mais."
+      ],
+      "Options": [
+        {
+          "Text": "Continuar para o trabalho",
+          "NextNode": "bondinho_chegada"
+        },
+        {
+          "Text": "Falar com Tom novamente",
+          "StartChat": "bartender_tom",
+          "PostChatNode": "apos_conversa_tom"
+        }
+      ]
+    },
+    "encontro_vendedora": {
+      "Text": [
+        "Você se aproxima de uma barraca colorida na esquina da rua.",
+        "Uma jovem asiática de cabelos pretos com mechas rosa neon te olha com um sorriso comercial.",
+        "",
+        "'Ei, choom! Quer dar uma olhada? Tenho estimulantes, snacks sintéticos, gadgets!'",
+        "Seus implantes oculares mudam de cor enquanto ela te analisa.",
+        "Apesar da alegria na voz, você percebe uma tensão nos olhos dela."
+      ],
+      "Options": [
+        {
+          "Text": "Conversar com a vendedora",
+          "StartChat": "street_vendor_yuki",
+          "PostChatNode": "apos_conversa_vendedora"
+        },
+        {
+          "Text": "Apenas acenar e seguir em frente",
+          "NextNode": "caminho_bondinho"
+        }
+      ]
+    },
+    "apos_conversa_vendedora": {
+      "Text": [
+        "Você se despede da vendedora e volta para a rua principal.",
+        "Ela acena de volta, já focando no próximo potencial cliente.",
+        "A vida nas ruas de Japantown não espera por ninguém.",
+        "",
+        "Você ainda precisa chegar ao trabalho."
+      ],
+      "Options": [
+        {
+          "Text": "Continuar para o bondinho",
+          "NextNode": "bondinho_chegada"
+        },
+        {
+          "Text": "Conversar com ela novamente",
+          "StartChat": "street_vendor_yuki",
+          "PostChatNode": "apos_conversa_vendedora"
+        },
+        {
+          "Text": "Parar no Neon Dragon Bar",
+          "NextNode": "entrada_neon_dragon"
         }
       ]
     },

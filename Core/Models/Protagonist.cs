@@ -11,7 +11,10 @@ namespace RetroGame2091.Core.Models
         public string? CurrentNode { get; set; } = null;
         public Dictionary<string, object> CustomData { get; set; } = new Dictionary<string, object>();
         public List<InventoryItem> Inventory { get; set; } = new List<InventoryItem>();
-        
+
+        // NPC conversation history
+        public Dictionary<string, ChatSession> NPCConversations { get; set; } = new Dictionary<string, ChatSession>();
+
         [Newtonsoft.Json.JsonIgnore]
         public DateTime SessionStartTime { get; set; } = DateTime.Now;
     }
