@@ -43,7 +43,7 @@ namespace RetroGame2091
 
             // Get the game controller and run the game
             var gameController = serviceContainer.GetService<GameController>();
-            gameController.Run();
+            await gameController.Run();
         }
     }
 }

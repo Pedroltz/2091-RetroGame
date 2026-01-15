@@ -25,12 +25,18 @@ namespace RetroGame2091.Utils
             var combatUIService = new CombatUIService(uiService, configService);
             var combatOrchestrationService = new CombatOrchestrationService(combatService, enemyService, combatUIService, uiService, playerSaveService, configService, inventoryService);
 
+            // Register NPC chat services
+            var npcService = new NPCService();
+            var deepSeekService = new DeepSeekService();
+            var chatService = new ChatService(npcService, deepSeekService, playerSaveService);
+            var chatUIService = new ChatUIService(uiService, configService, chatService, npcService, deepSeekService, playerSaveService);
+
             // Register menus
             var characterCreationMenu = new CharacterCreationMenu(uiService, playerSaveService, configService);
             var settingsMenu = new SettingsMenu(uiService, playerSaveService, configService);
 
             // Register game controller
-            var gameController = new GameController(uiService, playerSaveService, chapterService, configService, characterCreationMenu, settingsMenu, musicService, combatOrchestrationService, inventoryService);
+            var gameController = new GameController(uiService, playerSaveService, chapterService, configService, characterCreationMenu, settingsMenu, musicService, combatOrchestrationService, inventoryService, chatUIService);
 
             // Store in container
             _services[typeof(IGameConfigService)] = configService;
@@ -43,6 +49,10 @@ namespace RetroGame2091.Utils
             _services[typeof(ICombatService)] = combatService;
             _services[typeof(ICombatUIService)] = combatUIService;
             _services[typeof(ICombatOrchestrationService)] = combatOrchestrationService;
+            _services[typeof(INPCService)] = npcService;
+            _services[typeof(IDeepSeekService)] = deepSeekService;
+            _services[typeof(IChatService)] = chatService;
+            _services[typeof(IChatUIService)] = chatUIService;
             _services[typeof(CharacterCreationMenu)] = characterCreationMenu;
             _services[typeof(SettingsMenu)] = settingsMenu;
             _services[typeof(GameController)] = gameController;

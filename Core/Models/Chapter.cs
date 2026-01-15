@@ -43,6 +43,11 @@ namespace RetroGame2091.Core.Models
         public List<ItemDrop>? GiveItems { get; set; }
         public List<ItemDrop>? RemoveItems { get; set; }
         public ItemRequirement? RequireItem { get; set; }
+
+        // Chat support
+        public string? StartChat { get; set; }
+        public string? PostChatChapter { get; set; }
+        public string? PostChatNode { get; set; }
     }
 
     public class ChapterNode

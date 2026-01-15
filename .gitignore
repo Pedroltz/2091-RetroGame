@@ -1,3 +1,6 @@
 .claude/
 DEVELOPMENT_GUIDE.md
 COMBAT_SYSTEM.md
+
+# API Keys - NEVER COMMIT
+Config/api-keys.json

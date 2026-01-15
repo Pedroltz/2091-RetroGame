@@ -1,0 +1,4 @@
+{
+  "deepseek_api_key": "",
+  "_instructions": "Renomeie este arquivo para 'api-keys.json' e adicione sua chave DeepSeek API. Obtenha sua chave em: https://platform.deepseek.com/api_keys"
+}

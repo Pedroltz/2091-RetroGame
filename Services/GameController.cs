@@ -15,6 +15,7 @@ namespace RetroGame2091.Services
         private readonly IMusicService _musicService;
         private readonly ICombatOrchestrationService _combatOrchestrationService;
         private readonly IInventoryService _inventoryService;
+        private readonly IChatUIService _chatUIService;
 
         public GameController(
             IUIService uiService,
@@ -25,7 +26,8 @@ namespace RetroGame2091.Services
             SettingsMenu settingsMenu,
             IMusicService musicService,
             ICombatOrchestrationService combatOrchestrationService,
-            IInventoryService inventoryService)
+            IInventoryService inventoryService,
+            IChatUIService chatUIService)
         {
             _uiService = uiService;
             _playerSaveService = playerSaveService;
@@ -36,9 +38,10 @@ namespace RetroGame2091.Services
             _musicService = musicService;
             _combatOrchestrationService = combatOrchestrationService;
             _inventoryService = inventoryService;
+            _chatUIService = chatUIService;
         }
 
-        public void Run()
+        public async Task Run()
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             Console.InputEncoding = System.Text.Encoding.UTF8;
@@ -60,7 +63,7 @@ namespace RetroGame2091.Services
                 switch (choice)
                 {
                     case 0: // Play
-                        ShowPlayMenu();
+                        await ShowPlayMenu();
                         break;
                     case 1: // Settings
                         _settingsMenu.ShowSettings();
@@ -76,7 +79,7 @@ namespace RetroGame2091.Services
             _uiService.WriteWithColor("\nObrigado por jogar 2091!\n", _configService.Config.Colors.HighlightedText);
         }
 
-        private void ShowPlayMenu()
+        private async Task ShowPlayMenu()
         {
             bool hasSave = _playerSaveService.HasSaveFile();
             
@@ -95,11 +98,11 @@ namespace RetroGame2091.Services
                     case 0: // New Game
                         if (ConfirmNewGame())
                         {
-                            StartNewGame();
+                            await StartNewGame();
                         }
                         break;
                     case 1: // Load Game
-                        LoadGame();
+                        await LoadGame();
                         break;
                     case 2: // Back
                     case -1: // Escape
@@ -108,7 +111,7 @@ namespace RetroGame2091.Services
             }
             else
             {
-                StartNewGame();
+                await StartNewGame();
             }
         }
 
@@ -124,15 +127,15 @@ namespace RetroGame2091.Services
             return choice == 0;
         }
 
-        private void StartNewGame()
+        private async Task StartNewGame()
         {
             _playerSaveService.PlayerSave.Character = new Protagonist();
             _playerSaveService.StartNewSession(); // Initialize session timer
             _playerSaveService.SaveGame();
-            StartGame(true);
+            await StartGame(true);
         }
 
-        private void LoadGame()
+        private async Task LoadGame()
         {
             _playerSaveService.LoadSave();
             var character = _playerSaveService.PlayerSave.Character;
@@ -166,10 +169,10 @@ namespace RetroGame2091.Services
             }
             
             _playerSaveService.StartNewSession(); // Initialize session timer for loaded game
-            StartGame(false);
+            await StartGame(false);
         }
 
-        private void StartGame(bool isNewGame = true)
+        private async Task StartGame(bool isNewGame = true)
         {
             _uiService.ClearScreen();
             
@@ -283,8 +286,25 @@ namespace RetroGame2091.Services
                             }
                         }
 
+                        // Check if this option starts a chat
+                        if (!string.IsNullOrEmpty(selectedOption.StartChat))
+                        {
+                            await _chatUIService.ShowChatInterface(selectedOption.StartChat);
+
+                            // After chat, navigate to specified destination
+                            if (!string.IsNullOrEmpty(selectedOption.PostChatNode))
+                            {
+                                currentNodeId = selectedOption.PostChatNode;
+                            }
+                            else if (!string.IsNullOrEmpty(selectedOption.PostChatChapter))
+                            {
+                                currentChapter = _chapterService.LoadChapter(selectedOption.PostChatChapter);
+                                currentNodeId = null;
+                            }
+                            // If no navigation specified, stay at current node (will re-render)
+                        }
                         // Check if this option starts combat
-                        if (!string.IsNullOrEmpty(selectedOption.StartCombat))
+                        else if (!string.IsNullOrEmpty(selectedOption.StartCombat))
                         {
                             string? nextDestination = _combatOrchestrationService.StartCombat(
                                 selectedOption.StartCombat,
