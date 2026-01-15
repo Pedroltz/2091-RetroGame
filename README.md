@@ -17,7 +17,7 @@ This project is currently in **pre-alpha** stage. Core systems are implemented a
 - Cross-platform audio system (optional FFmpeg integration)
 - Corporate-themed UI with ASCII art
 - Settings management
-- Chapter navigation system
+- Chapter navigation system"
 
 ### In Development
 - Complete story content
